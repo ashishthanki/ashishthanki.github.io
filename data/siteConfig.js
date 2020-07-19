@@ -201,6 +201,16 @@ module.exports = {
       description: "Transportation Project",
       url: "https://github.com/ashishthanki/MLProjects/blob/master/SupervisedLearning/Transport/_InterstateTraffic.ipynb"
     },
+    {
+      image: "/images/wines-glasses.jpg",
+      description: "Quality Wines",
+      url: "https://github.com/ashishthanki/MLProjects/blob/master/SupervisedLearning/WineData/Ensemble_Dimensionality_Reduction.ipynb"
+    },
+    {
+      image: "/images/Artificial_Neural_Network.jpg",
+      description: "Neural Networks",
+      url: "https://github.com/ashishthanki/MLProjects/tree/master/NeuralNetworks"
+    },
     /* more portifolio items here */
   ],
   social: {
@@ -213,8 +223,8 @@ module.exports = {
   siteCover: '/images/cover.JPG',
   googleAnalyticsId: 'UA-000000000-1',
   background_color: '#ffffff',
-  theme_color: '#25303B',
-  fontColor: "#000000cc",
+  theme_color: '#F3F4F4',
+  fontColor: "#2C3E50",
   enableDarkmode: false, // If true, enables dark mode switch
   display: 'minimal-ui',
   icon: 'src/assets/icon.png',
