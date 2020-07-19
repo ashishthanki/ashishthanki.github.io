@@ -1,5 +1,5 @@
 module.exports = {
-  siteTitle: 'A Thanki',
+  siteTitle: 'MEng to DS',
   siteDescription: `About`,
   keyWords: ['ashish', 'thanki', 'curriculum'],
   authorName: 'Ashish Thanki',
@@ -219,7 +219,7 @@ module.exports = {
     email: "ashish_thanki@hotmail.com"
   },
   siteUrl: 'https://github.com/ashishthanki/ashishthanki.github.io',
-  pathPrefix: '/gatsby-starter-cv', // Note: it must *not* have a trailing slash.
+  pathPrefix: '/ashishthanki.github.io', // Note: it must *not* have a trailing slash.
   siteCover: '/images/cover.JPG',
   googleAnalyticsId: 'UA-000000000-1',
   background_color: '#ffffff',
