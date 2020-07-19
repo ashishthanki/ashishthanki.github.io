@@ -1,6 +1,6 @@
 module.exports = {
-  siteTitle: '',
-  siteDescription: `About Ashish Thanki`,
+  siteTitle: 'A Thanki',
+  siteDescription: `About`,
   keyWords: ['ashish', 'thanki', 'curriculum'],
   authorName: 'Ashish Thanki',
   githubUsername: 'ashishthanki',
@@ -197,7 +197,7 @@ module.exports = {
   ],
   portifolio: [
     {
-      image: "/images/awesome-grid.png",
+      image: "/images/Minneapolis_motorways.jpg",
       description: "Transportation Project",
       url: "https://github.com/ashishthanki/MLProjects/blob/master/SupervisedLearning/Transport/_InterstateTraffic.ipynb"
     },
@@ -207,7 +207,7 @@ module.exports = {
       url: "https://github.com/ashishthanki/MLProjects/blob/master/SupervisedLearning/WineData/Ensemble_Dimensionality_Reduction.ipynb"
     },
     {
-      image: "/images/wines-glasses.jpg",
+      image: "/images/Artificial_Neural_Network.jpg",
       description: "Neural Networks",
       url: "https://github.com/ashishthanki/MLProjects/tree/master/NeuralNetworks"
     },
