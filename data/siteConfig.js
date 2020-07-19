@@ -219,7 +219,7 @@ module.exports = {
     email: "ashish_thanki@hotmail.com"
   },
   siteUrl: 'https://github.com/ashishthanki/ashishthanki.github.io',
-  pathPrefix: '/ashishthanki.github.io', // Note: it must *not* have a trailing slash.
+  pathPrefix: '', // Note: it must *not* have a trailing slash.
   siteCover: '/images/cover.JPG',
   googleAnalyticsId: 'UA-000000000-1',
   background_color: '#ffffff',
