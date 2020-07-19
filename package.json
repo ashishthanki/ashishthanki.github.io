@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-cv",
+  "name": "ashishthanki.github.io",
   "private": true,
   "description": "A simple starter to get up and developing your digital curriculum with GatsbyJS",
   "version": "0.0.1",
-  "author": "Francisco Santos <yoshi.df@gmail.com>",
+  "author": "Ashish Thanki <ashish_thanki@hotmail.com>",
   "dependencies": {
     "@loadable/component": "5.12.0",
     "babel-plugin-styled-components": "1.10.6",
@@ -46,9 +46,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/santosfrancisco/gatsby-starter-cv"
+    "url": "https://github.com/ashishthanki/ashishthanki.github.io"
   },
   "bugs": {
-    "url": "https://github.com/santosfrancisco/gatsby-starter-cv/issues"
+    "url": "https://github.com/ashishthanki/ashishthanki.github.io"
   }
 }
