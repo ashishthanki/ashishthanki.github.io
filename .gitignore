@@ -1,5 +1,5 @@
 # Ignore current unfinished posts
-/posts/*
+/posts/*/*
 
 # ignore READ me
 *.md
