@@ -1,3 +1,6 @@
+# Ignore current unfinished posts
+/posts/*
+
 # Logs
 logs
 *.log
