@@ -1,6 +1,8 @@
 # Ignore current unfinished posts
 /posts/*
 
+# ignore READ me
+*.md
 # Logs
 logs
 *.log
