@@ -6,8 +6,10 @@ const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE
 
 module.exports = {
   siteMetadata: {
+    siteTitle: `Ashish Thanki`,
     siteTitleAlt: `Mathematics, Engineering and Data Science by Ashish Thanki`,
     siteImage: `/icon.png`,
+    siteUrl: 'https://github.com/ashishthanki/ashishthanki.github.io',
   },
   plugins: [
     {

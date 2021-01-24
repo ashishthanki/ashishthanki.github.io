@@ -1,6 +1,8 @@
 # Ignore current unfinished posts
 /*/posts/*/*
 
+# keep folder but ignore contents
+!/content/posts/.gitkeep 
 
 # ignore READ me
 README.md
@@ -42,9 +44,7 @@ build/Release
 node_modules
 jspm_packages
 **/node_modules/**
-/node_modules/
-node_modules/
-/node_modules
+
 
 # Typescript v1 declaration files
 typings/
