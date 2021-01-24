@@ -1,8 +1,6 @@
 # Ignore current unfinished posts
-/content/posts/*
+/*/posts/*/*
 
-# keep folder but ignore contents
-!/content/posts/.gitkeep 
 
 # ignore READ me
 README.md
