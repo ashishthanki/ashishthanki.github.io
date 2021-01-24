@@ -5,7 +5,7 @@ module.exports = {
   authorName: 'Ashish Thanki',
   githubUsername: 'ashishthanki',
   authorAvatar: '/images/avatar.jpeg',
-  authorDescription: `A <strong>Data Scientist</strong> and professionally registered mechanical engineer..<br /><br />
+  authorDescription: `A <strong>Data Scientist</strong> and professionally registered mechanical engineer.<br /><br />
     
     Before becoming a Data Scientist, Ashish was a Mechancial Engineer for WSP in London,
     where he designed several large commercial office buildings. <br /><br />
