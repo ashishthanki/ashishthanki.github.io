@@ -1,0 +1,16 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: Ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v1
+      - uses: xmflsct/action-publish-gatsby@v1.0.0
+        with:
+          publishBranch: 'master'
+          token: ${{ secrets.ACCESS_TOKEN }}

@@ -1,38 +1,82 @@
-const config = require("./data/siteConfig");
+require(`dotenv`).config({
+  path: `.env`,
+})
+
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE
 
 module.exports = {
   siteMetadata: {
-    title: config.siteTitle,
-    description: config.siteDescription,
-    author: config.authorName,
-    ...config
+    siteTitleAlt: `Mathematics, Engineering and Data Science by Ashish Thanki`,
+    siteImage: `/icon.png`,
   },
-  pathPrefix: config.pathPrefix,
   plugins: [
-    `gatsby-plugin-react-helmet`,
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: `@lekoarts/gatsby-theme-minimal-blog`,
+      // See the theme's README for all available options
       options: {
-        name: config.siteTitle,
-        short_name: config.siteTitle,
-        start_url: config.pathPrefix,
-        background_color: config.background_color,
-        theme_color: config.theme_color,
-        display: config.display,
-        icon: config.icon,
+        navigation: [
+          {
+            title: `Welcome`,
+            slug: `/`,
+          },
+          {
+            title: `About`,
+            slug: `/about`,
+          },
+          {
+            title: `Blogs`,
+            slug: `/blog`,
+          },
+          {
+            title: `Tags`,
+            slug: `/tags`,
+          }, 
+        ],
+        externalLinks: [
+          {
+            name: `Twitter`,
+            url: `https://twitter.com/ashish__thanki`,
+          },
+          {
+            name: `LinkedIn`,
+            url: `https://www.linkedin.com/in/athanki/`,
+          },
+          {
+            name: `GitHub`,
+            url: `https://github.com/ashishthanki`,
+          },
+        ],
       },
     },
-    `gatsby-plugin-styled-components`,
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: config.googleAnalyticsId,
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.app/offline
-    // 'gatsby-plugin-offline',
-  ],
+    `gatsby-plugin-sitemap`,
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `minimal-blog - @lekoarts/gatsby-theme-minimal-blog`,
+        short_name: `minimal-blog`,
+        description: `Articles about Data Science, Statitstics, Machine Learning and many more.`,
+        start_url: `/`,
+        background_color: `#fff`,
+        theme_color: `#6B46C1`,
+        display: `standalone`,
+        icon: `static/icon.png`,
+          },
+      },
+    `gatsby-plugin-offline`,
+    `gatsby-plugin-netlify`,
+    shouldAnalyseBundle && {
+      resolve: `gatsby-plugin-webpack-bundle-analyser-v2`,
+      options: {
+        analyzerMode: `static`,
+        reportFilename: `_bundle.html`,
+        openAnalyzer: false,
+      },
+    },
+  ].filter(Boolean),
 }
