@@ -25,20 +25,14 @@ const Footer = () => {
       </div>
 
       <div>
-        <Link
-        aria-label="Link to Top of Page"
-        href="."
-        >
-          <small>Top of Page</small>
-        </Link>
+        <a href="#"><small> Top of Page</small></a>
       </div>
       <div>
         <Link
           aria-label="Link to Home Page"
           href="#"
         >
-          Home
-        </Link>
+          Home</Link>
         {` `}
         |
         {` `}
@@ -46,56 +40,50 @@ const Footer = () => {
           aria-label="Link to About"
           href="/about"
         >
-          About
-        </Link>
-        {` `}
-        |
-        {` `}
+          {' '}About</Link>
+          {' '}
+          |
+          {` `}
         <Link
           aria-label="Link to Articles"
           href="/blog"
         >
-          Blogs
+          {' '}Blogs</Link>
+          {' '}
+          |
           {` `}
-        |
-        {` `}
-        </Link>
+        
         <Link
           aria-label="Link to Tags"
           href="/tags"
         >
-          Tags
+          {' '}Tags</Link>
+          {' '}
+          |
           {` `}
-        |
-        {` `}
-        </Link>
+        
         <Link
           aria-label="Link to Twitter"
           href="https://twitter.com/ashish__thanki"
         >
-          Twitter
+          {' '}Twitter</Link>
+          {' '}
+          |
           {` `}
-        |
-        {` `}
-        </Link>
         <Link
           aria-label="Link to Linkedin"
           href="https://www.linkedin.com/in/athanki/"
         >
-          Linkedin
+          {' '}Linkedin</Link>
+          {' '}
+          |
           {` `}
-        |
-        {` `}
-        </Link>
         <Link
           aria-label="Link to GitHub"
           href="https://github.com/ashishthanki"
         >
-          GitHub
-          {` `}
-        |
-        {` `}
-        </Link>
+          {' '}GitHub</Link>
+          {' '}
       </div>
     </footer>
   )
