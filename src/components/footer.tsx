@@ -19,7 +19,7 @@ const Footer = () => {
         flexDirection: [`column`, `column`, `row`],
         variant: `dividers.top`,
       }}
-    >
+    >      
       <div>
         <small>Site written by {siteTitle} {new Date().getFullYear()} &copy;</small>
       </div>
