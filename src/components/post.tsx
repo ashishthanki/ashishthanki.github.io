@@ -63,8 +63,7 @@ const Post = ({ data: { post } }: PostProps) => (
         my: 5,
         ".gatsby-resp-image-wrapper": { my: [4, 4, 5], boxShadow: shadow.join(`, `) },
         variant: `layout.content`,
-      }}
-    >
+      }}>
       <MDXRenderer>{post.body}</MDXRenderer>
     </section>
   </Layout>
