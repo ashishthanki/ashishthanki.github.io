@@ -3,6 +3,7 @@
 
 # keep folder but ignore contents
 !/content/posts/.gitkeep 
+!/content/posts/Starting-with-Package-Managers/*
 
 # ignore READ me
 README.md
