@@ -4,7 +4,6 @@
 # keep folder but ignore contents
 !/content/posts/.gitkeep 
 !/content/posts/Starting-with-Package-Managers/*
-!/content/posts/gini-vs-entropy/*
 !/content/posts/Docker-Devcontainers/*
 
 # ignore READ me
