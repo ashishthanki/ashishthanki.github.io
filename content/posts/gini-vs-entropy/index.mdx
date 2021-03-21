@@ -55,9 +55,7 @@ The term entropy does come up a lot, but this is very similar to the definition 
 
 > Entropy is a measure of the energy dispersal within a system. Entropy is greater when there is more random movement within the molecules and zero when absolute zero. 
 
-<center><img src="https://digitalhealth336302788.files.wordpress.com/2020/04/biro-2nd-law.jpg" style="width:70%; height:10%"/></center>
-
-![Thermodynamics 2nd Law](/Thermodynamic-1st-law.PNG)
+![Thermodynamics 2nd Law](./Thermodynamic-1st-law.PNG)
 
 Similarly, for machine learning, a larger entropy is observed when there is maximum randomness, such as predicting a head and tails coin toss - it is a complete chance! Meaning, when a binary split is performed using a feature that results in a large entropy it implies the feature, or threshold, is poor. 
 
@@ -92,6 +90,6 @@ From looking at the formula we can conclude:
 
 Both of these formula are similar by using the $p(i|t)$ term but differ computational because of the additional logarithmic function. Moreover, from the formula we can see that the range of entropy lies in between 0 to 1 and the range of gini impurity lies in between 0 to 0.5. Therefore, we can conclude that gini impurity is most often superior compared to entropy for selecting the best features but as with all projects, it depends on the data you have. Most often the gini impurity and entropy performance is similar and does not warrant the additional time to train on both. 
 
-Regardless of the impurity criteria selected, decision trees have an automatic feature selection process. Whereby, the impurity reduction has to be large enough to warrant the use of the feature. In a wider perspective, decision trees should be a small part of an ensemble model, either through gradient boosting, stacking, voting etc., as they independent from other gradient descent based models. -->
+Regardless of the impurity criteria selected, decision trees have an automatic feature selection process. Whereby, the impurity reduction has to be large enough to warrant the use of the feature. In a wider perspective, decision trees should be a small part of an ensemble model, either through gradient boosting, stacking, voting etc., as they independent from other gradient descent based models.
 
-***note: the Greek symbols may not render in your browser. An update of this webpage will be posted soon.***
+***Note: The Greek symbols may not render in your browser. An update of this webpage will be posted soon.***
