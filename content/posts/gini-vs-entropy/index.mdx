@@ -9,7 +9,16 @@ tags:
 
 **TLDR**: Gini impurity and entropy are similar in most cases, however, in practice you may find that gini impurity is faster as log values do not need to be computed. 
 
+<!-- import { KatexBlock, KatexInline } from '..src/components/blog.tsx' -->
+qwertyuwedrfgthyfvgb
+<p>
+$$
+a^2
+$$
+</p>
+$ a^2  $
 
+<!-- 
 ##### Introduction
 
 Machine learning algorithms can be complex but in simple terms, training a machine learning model is essentially an optimization problem where training is performed to find model parameters (i.e. weights and hyperparameters) that reduce the cost function.
@@ -40,12 +49,14 @@ The “tuning” of the decision trees does not use gradient descent to find its
 
 The generic information gain formula, can be simplified into the information gain formula specific for binary splits, as shown here: 
 
-```markup
-I_G (D_p, f) = I(D_p) - \displaystyle \sum_{j=1}^{m} \frac{N_j}{N} I(D_j)  =  I(D_p) - \frac{N_{left}}{N} I(D_{left}) - \frac{N_{right}}{N} I(D_{right})
-```
-.
 
-`$I_G$` is the information gain, $f$ is the feature to perform the split, $D_p$ and $D_j$ are the datasets for the parent and the $j^{th}$ child nodes, respectively. $N$ is the total number of samples, and $N_j$ is the number of samples within the $j^{th}$ child node. $I$ is the impurity measure is a formula based on the selected splitting criteria.
+
+
+$$
+I_G (D_p, f) = I(D_p) - \displaystyle \sum_{j=1}^{m} \frac{N_j}{N} I(D_j)  =  I(D_p) - \rac{N_{left}}{N} I(D_{left}) - \frac{N_{right}}{N} I(D_{right})
+$$
+
+$ I_G $ is the information gain, $f$ is the feature to perform the split, $ D_p $ and $ D_j $ are the datasets for the parent and the $j^{th}$ child nodes, respectively. $N$ is the total number of samples, and $N_j$ is the number of samples within the $ j^{th} $ child node. $I$ is the impurity measure is a formula based on the selected splitting criteria.
 
 From the equation, it is clear that the impurity measure, $I$, aids in maximizing the information gain; meanwhile, the impurity measure for either the left, right or both, nodes need to be minimized. The two commonly used splitting criteria are the Gini Impurity and Entropy. 
 
@@ -81,7 +92,9 @@ If you require a worked example, then i would highly recommend going through thi
 
 Gini impurity is easier to understand and can be grasped by just looking at the Gini impurity formula: 
 
-$I_G (t) = \displaystyle \sum_{i=1}^{C} p(i|t)( 1- p(i|t)) = 1 - \displaystyle \sum_{i=1}^{C} p(i|t)^2$ 
+$$
+I_G (t) = \displaystyle \sum_{i=1}^{C} p(i|t)( 1- p(i|t)) = 1 - \displaystyle \sum_{i=1}^{C} p(i|t)^2
+$$ 
 From looking at the formula we can conclude:
 - when $p(i|t)$ is minimized the gini impurity is far greater,
 - the impurity is maximal if the classes are perfectly mixed, and,
@@ -91,4 +104,4 @@ From looking at the formula we can conclude:
 
 Both of these formula are similar by using the $p(i|t)$ term but differ computational because of the additional logarithmic function. Moreover, from the formula we can see that the range of entropy lies in between 0 to 1 and the range of gini impurity lies in between 0 to 0.5. Therefore, we can conclude that gini impurity is most often superior compared to entropy for selecting the best features but as with all projects, it depends on the data you have. Most often the gini impurity and entropy performance is similar and does not warrant the additional time to train on both. 
 
-Regardless of the impurity criteria selected, decision trees have an automatic feature selection process. Whereby, the impurity reduction has to be large enough to warrant the use of the feature. In a wider perspective, decision trees should be a small part of an ensemble model, either through gradient boosting, stacking, voting etc., as they independent from other gradient descent based models.
+Regardless of the impurity criteria selected, decision trees have an automatic feature selection process. Whereby, the impurity reduction has to be large enough to warrant the use of the feature. In a wider perspective, decision trees should be a small part of an ensemble model, either through gradient boosting, stacking, voting etc., as they independent from other gradient descent based models. -->

@@ -11,6 +11,9 @@ banner: ./Mini-CondavsAncaconda.png
 ---
 **TLDR**: Most Data Scientists need Anaconda, rather than Mini-Anaconda, as it comes with all the important packages we would want. Anaconda is necessary as it helps us to manage our packages and package versions across multiple projects.
 
+
+**EDIT:** * Package managers are a great starting point, but when you start to develop applications, dashboards or sharing your code with others it becomes difficult to replicate the environment you were using. This is where Docker containers, images and deamons come in! I would recommend reading [this](./docker-devcontainers) blog.*
+
 > Learning a programming language is a marathon, where hard work always beats talent when talent fails to work hard.
 
 <br />
@@ -47,12 +50,12 @@ import re
 
 The project has progressed with the use of a few packages from the Standard Library, but you need to add a villain in your game, plot a few things and possibly hit an API or two. This is where you enter the world of downloading packages using a command line argument `pip`. Python makes it super easy to download modules, simply go to your operating systems command line and type the following:
 
-```bash
+```bash noLineNumbers
 pip install <package-you-want-to-install>
 ```
 For example,
 
-```bash
+```bash noLineNumbers
 pip install pandas
 ```
 
