@@ -47,6 +47,10 @@ module.exports = {
             name: `GitHub`,
             url: `https://github.com/ashishthanki`,
           },
+          {
+            name: `Kaggle`,
+            url: `https://www.kaggle.com/ashishthanki95`,
+          }
         ],
       },
     },
