@@ -1,14 +1,9 @@
 # Ignore current unfinished posts
-/*/posts/*/*
+/*/posts/tutorial_post/
 
-# keep folder but ignore contents
-!/content/posts/.gitkeep 
-!/content/posts/Starting-with-Package-Managers/*
-!/content/posts/gini-vs-entropy/*
-!/content/posts/Docker-Devcontainers/*
-!/content/posts/cloud-computing-services/*
-!/content/posts/short-series-three-fundamentals-Modularity,-Documentation-and-Testing/*
-!/content/posts/Wisdom-of-the-Crowds/*
+# ignore current WIP posts
+!/content/posts/Using Git/*
+!/content/posts/Interpretting-ML-Models
 
 # ignore READ me
 README.md
