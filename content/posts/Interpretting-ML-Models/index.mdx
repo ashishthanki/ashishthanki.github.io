@@ -1,6 +1,6 @@
 ---
 title: Interpretting ML Models
-date: 2020-06-27
+date: 2021-06-27
 tags:
   - Data Science
   - Machine Learning
@@ -8,18 +8,19 @@ tags:
 
 ## Introduction
 
-Explaining features and interpreting your models has taken a sharp rise in Europe. The new laws and regulatory measures being taken (i.e. GDPR and the EU’s “Right to Explanations”) and the rise in interest in applying machine learning has mandated data scientists to explain why a model has given a certain prediction. For industries that deal with highly sensitive data, for example personal data, and to output a potentially life changing decision would mandate regulations and require the data scientists to explain the decision that had been made. 
+Explaining features and interpreting your models has taken a sharp rise in Europe. Partly because of new laws and regulatory measures being taken, such as GDPR and the EU’s "[Right to Explanations](https://en.wikipedia.org/wiki/Right_to_explanation)", alongside the rise in interest in applying machine learning. This has mandated data scientists to explain why a model has given a certain prediction. For example, institutions with highly sensitive data (i.e. personal data), that have models that output a potentially life changing decision would mandate regulations and require the data scientists to explain the decision that had been made. Hence, this blog post on model interpreting.
 
-This blog post covers Feature importance, permutation importance, partial dependency, LIME and SHAP.
-SHAP is a game theory approach to explain the output of any machine learning model.  
+This blog post covers Feature Importance, Permutation Importance, Partial Dependency, LIME and SHAP.
 
 
 
 ### Feature Importance and Permutation Importance
 
-Machine learning models are often considered black boxes. Meaning, data goes in and a prediction comes out, with no understanding on how that decision was made. Almost similar to how covid restrictions have been, what is essential? But I digress.
+Machine learning models are often considered black boxes. Meaning, data goes in and a prediction comes out, with no understanding on how that decision was made.
 
-There are many types of machine learning models with many ways to interpret it. A Decision Tree based model is one of the most popular mainly because of its white box nature and that it can be visualized with useful modules like `graphiviz`. 
+There are many types of machine learning models with various algorithms. There are also many ways to interpret a model's prediction. A Decision Tree based model is one of the most popular, mainly because of its white box nature and that it can be visualized with useful modules like `graphiviz`.
+
+![Decison Tree](./decision_tree_model.png)<center><sup><i>As shown on Sci-kit learn Decision Trees tutorial.</i></sup></center>
 
 Feature importance can be measured in multiple ways but in Decision Tree based models use the Gini importance - read this blog post to understand what Gini impurity is. Once you have this you can plot it and see which feature is most important for the Decision Tree. However, this can be misleading, particularly for high cardinality data. A popular alternative, which can also be generalized for various machine learning models, is Permutation Importance. 
 
@@ -32,7 +33,8 @@ We then calculate the reduction between the baseline score and the model score w
 Occasionally, there would even be an increase in the score, in such instances random chance has caused this to occur and, therefore, those features are also not relevant. Multicollinear or correlated features may return with a permutation importance as zero, when in fact they are important once combined together - think dividing or multiplying features  to create a new feature. When correlated features are apparent, within the dataset, you can cluster them by using the Spearman’s Rank correlation. You then pick out one feature from each cluster. 
 
 
-A module to visualize PI is eli5 - https://eli5.readthedocs.io/en/latest/index.html 
+A module to visualize PI is [eli5](https://eli5.readthedocs.io/en/latest/index.html).
+
 Regardless of the PI value observed you should take your time to understand why you are obtaining this PI value. Just because a feature’s PI value is greater than other features PI we cannot conclude that it is causation or a possible reason for a given target value. You should look for cues within each of the columns and compare values like standard deviation, mean and range. 
 
 
@@ -72,7 +74,12 @@ In some cases using both PI and PD is great, but assumptions should not be made 
 Examples of PI and PD
 if y = X1 * X2, then expect PD to be flat but PI, importance, to be high. 
 
+<br/>
+
 #### SHapley Additive exPlanations
+
+SHAP is a game theory approach to explain the output of any machine learning model.  
+
 
 By using Permutation Importance you can identify which features are important and then by using Partial Dependence plots you understand how the prediction varies based on the changes to individual features. But what if you want to know the impact each feature has on the prediction. Perhaps, you need to classify and then explain why you reached that prediction. This is where SHAP comes in. 
 
@@ -113,6 +120,8 @@ The SHAP library also has many other visualizations which are comparable to perm
 !(SHAP Values adding up to make a prediction)[]
 https://christophm.github.io/interpretable-ml-book/shap.html#shap 
 
+<br/>
+
 #### Local Interpretable Model-Agnostic Explanations - LIME
 
 Using `PI` and `PD` have their limitations. They work really well with simple models but can be difficult to use and interpret when using it on complex models. Furthermore, depending on the model runtime it could take up a lot of computational resources. This is where LIME (Local Interpretable Model-Agnostic Explanations) comes in. 
@@ -120,6 +129,8 @@ Using `PI` and `PD` have their limitations. They work really well with simple mo
 The library is : https://github.com/marcotcr/lime 
 
 You need to format your data and pass it to the Explainer class. Once you have the explainer you can pass an observation and a prediction function. You can then visualize how each of the features influences the prediction. As the values are dependent on the linear model being fit locally around a given observation, you should also check the r2 score. If the value is low then you cannot be confident with the LIME outcome. However, if all your models show a feature which continuously negatively affects the decision then this feature should be removed. 
+
+<br/>
 
 #### Summary Plots
 
@@ -132,6 +143,8 @@ Each dot shows three characteristics:
 - Horizontal location is the effect of that value causing a higher or lower prediction. 
 
 In the plots you can gain a strong intuition on how a decision was made by your black box model. Some features will generally have no input in the prediction until a certain feature value, whereas some features will have zero input and is ignored entirely by the model. 
+
+<br/>
 
 #### SHAP Dependence Plots
 
@@ -182,25 +195,45 @@ shap.force_plot(explainer.expected_value[0], shap_values[0], data_for_prediction
 ```
 
 
-##### When to use each?
+<br/>
 
-Use permutation importance if you require a succinct model summary. Summarizing importance of all features in a global sense. 
+### When to use each?
 
-Use partial plot to understand individual features or relationships between features (i.e. using 2D partial dependence plots). Summarizing the importance of a single feature and its effect on the prediction in a global sense.
+Use **permutation importance** if you require a **succinct model summary**. Summarizing importance of all features in a global sense. 
 
-Use SHAP when you need to show the impact of each feature for a given row. If you require a global sense of a feature you can also use this too. 
+Use **partial plot** to understand **individual features or relationships** between features (i.e. using 2D partial dependence plots). Summarizing the importance of a single feature and its effect on the prediction in a global sense.
+
+Use **SHAP** when you need to show the **impact of each feature for a given row**. If you require a global sense of a feature you can also use this too. 
 
 
 ## Conclusion
 
-Being able to use machine learning to predict the probability of a patient having cancer is a great asset to have for any health care professional. But telling a patient, “ you have a high probability of having cancer” is not enough. Interpreting a machine learning model prediction can break down what features an individual should focus on in order to reduce their risk.
+Being able to use machine learning to predict the probability of a patient having cancer is a great asset to have for any health care professional. But telling a patient, “you have a high probability of having cancer” is not enough. 
 
-Many methods can help us identify which features to focus on and then measure individual feature importance. However, interpreting these values are crucial for data scientists to avoid introducing biases into the prediction. SHAP is widely considered the optimal solution due to its Game Theory approach, however, all methods should be understood and interpreted by a domain expert. 
+Interpreting a machine learning model prediction can break down what features an individual should focus on in order to reduce their risk.
 
-Things to avoid when interpreting models - highly recommend reading this paper by Standford: https://arxiv.org/pdf/2007.04131.pdf 
+Many methods can help us identify which features to focus on and then measure individual feature importance. However, interpreting these values are crucial for data scientists to avoid introducing biases into the prediction. SHAP is widely considered the optimal solution due to its Game Theory approach, however, all interpretation methods should be explored before being confirmed by a domain expert. 
 
-Also this book: https://christophm.github.io/interpretable-ml-book/ 
+Model interpretation is not going away. Law makers will demand data scientists to interpret their models and these tools are just the start of an expanding specialism within data science.
 
-Video on interpreting models with LIME and SHAPE: https://www.youtube.com/watch?v=C80SQe16Rao 
+<br/>
 
-Lundberg lecture: https://www.youtube.com/watch?v=0yXtdkIL3Xk 
+#### Further reading:
+
+- Things to avoid when interpreting models - highly recommend reading [this paper by Standford](https://arxiv.org/pdf/2007.04131.pdf)
+
+- [Interpretable Machine Learning Book](https://christophm.github.io/interpretable-ml-book/) by Christoph Molnar
+
+- PyData Talk on [Interpreting models with LIME and SHAPE](https://www.youtube.com/watch?v=C80SQe16Rao)
+
+- PyData Talk on [SHAP Values](https://www.youtube.com/watch?v=0yXtdkIL3Xk)
+
+<br/>
+
+---
+
+** If you are interested in more data science topics then check out my other blogs [here](./blog).**
+
+- [Starting with Package Managers](./starting-with-package-managers)
+- [Docker Devcontainers](./docker-devcontainers)
+- [Impurity Criterions](./gini-vs-entropy)
