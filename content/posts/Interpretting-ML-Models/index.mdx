@@ -6,15 +6,15 @@ tags:
   - Machine Learning
 ---
 
-## Introduction
+# Introduction
 
 Explaining features and interpreting your models has taken a sharp rise in Europe. Partly because of new laws and regulatory measures being taken, such as GDPR and the EU’s "[Right to Explanations](https://en.wikipedia.org/wiki/Right_to_explanation)", alongside the rise in interest in applying machine learning. This has mandated data scientists to explain why a model has given a certain prediction. For example, institutions with highly sensitive data (i.e. personal data), that have models that output a potentially life changing decision would mandate regulations and require the data scientists to explain the decision that had been made. Hence, this blog post on model interpreting.
 
 This blog post covers Feature Importance, Permutation Importance, Partial Dependency, LIME and SHAP.
 
+---
 
-
-### Feature Importance and Permutation Importance
+## Feature Importance
 
 Machine learning models are often considered black boxes. Meaning, data goes in and a prediction comes out, with no understanding on how that decision was made.
 
@@ -22,42 +22,48 @@ There are many types of machine learning models with various algorithms. There a
 
 ![Decison Tree](./decision_tree_model.png)<center><sup><i>As shown on Sci-kit learn Decision Trees tutorial.</i></sup></center>
 
-Feature importance can be measured in multiple ways but in Decision Tree based models use the Gini importance - read this blog post to understand what Gini impurity is. Once you have this you can plot it and see which feature is most important for the Decision Tree. However, this can be misleading, particularly for high cardinality data. A popular alternative, which can also be generalized for various machine learning models, is Permutation Importance. 
+Feature importance can be measured in multiple ways, for example, Decision Tree based models use the Gini importance - read [this](./gini-vs-entropy) blog post to understand what Gini impurity is. Once you have this you can plot it and see which feature is most important for the Decision Tree. For linear models, such as linear regression, the coefficients are used to establish whether a feature is important. Feature selection methods such as `l1` norm reduce dimensionality by selecting only non-zero coefficients. 
 
-Permutation importance is used for feature evaluation. After fitting a model to the training data we observe the score when randomly shuffling a single column of the validation dataset while keeping all other columns the same. This effectively makes the target value independent of the feature. 
+However, this can be misleading, particularly for high cardinality data (i.e. attributes with many unique values). Feature importance values will be greater for high cardinality attributes. A popular alternative, which can also be generalized for various machine learning models, is Permutation Importance. 
+
+## Permutation Importance
+
+Permutation importance (PI) is used for feature evaluation and is not biased towards high cardinality features. After fitting a model to the training data, we observe the score of the model when randomly shuffling a single column while keeping all other columns the same. This effectively makes the target value independent of the feature. Computation to calculate PI is more costly compared to impurity or coefficient based importance computations. 
+
+![Permutation Importance Shuffling](./permutation_importance_shuffle.png)<center><sup><i>Shuffling values within a single attribute.</i></sup></center>
+
+We then calculate the reduction between the baseline score and the model score when shuffling a single column. If the shuffling leads to a worse model score then we know that the feature was important. However, if the feature was not important there would not be much of a drop in the model’s score. On the other hand, if you shuffled the sex column within the Titanic dataset, you would quickly realise that the [sex column was very important](https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance.html), because the model score would significantly decrease. Occasionally, you may find that there would be an unexpected increase in the score for columns you did not expect. In such instances random chance may have caused this. Further analysis should be carried out on the validation set (i.e. unseen data), or, an assessment of the correlation between features should be looked at - the [multicollinearity](https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance_multicollinear.html#sphx-glr-auto-examples-inspection-plot-permutation-importance-multicollinear-py).
+
+![Titanic Dataset](./titanic_dataset.png)<center><sup><i>Figure from Sci-kit learn Permutation Importance.</i></sup></center>
+
+Multicollinear, or correlated features, may return with PI values as zero, when in fact they are important once combined together - *think dividing or multiplying features to create a new feature*. When correlated features are apparent, within the dataset, you can cluster them by using the value calculated on the Spearman’s Rank correlation and then manually pick a threshold value to keep only those features from each cluster. 
+
+![Clustering Multicollinear attributes](./multicollinear_plot.png)<center><sup><i>Figure from Sci-kit learn. Understanding Multicollinearity through dendrogram and heatmaps.</i></sup></center>
+
+Regardless of the PI value observed you should take your time to understand why you are obtaining this PI value. Just because a feature’s PI value is greater than other features PI values we cannot conclude that it is important. The PI does not tell us how each feature matters, if an attribute has an 'average' PI value then it could imply that the feature was not useful for many instances but large for others. This is not very helpful, which is why summary SHAP plots provide an even better solution - more on that later. 
+
+*Note, the feature magnitude does not affect the PI, it will affect it indirectly through the machine learning model selected. For example, in Decision Tree based models scaling has no effect on the model score. However, with Gradient Descent based models it would.*
+
+#### Further reading:
+- [Plotting Feature Importance for Tree based model](https://scikit-learn.org/stable/auto_examples/ensemble/plot_forest_importances.html)
+- [Permutation Feature Importance](https://scikit-learn.org/stable/modules/permutation_importance.html#permutation-importance)
+- [Permutation Importance vs Feature Importance](https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance.html#sphx-glr-auto-examples-inspection-plot-permutation-importance-py)
+- [Permutation Importance with Multicollinear or Correlated Features](https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance_multicollinear.html#sphx-glr-auto-examples-inspection-plot-permutation-importance-multicollinear-py)
 
 
-We then calculate the reduction between the baseline score and the model score when shuffling a single column of the validation dataset. If the shuffling leads to a worse model score then we know that the feature is important. However, if the feature was not important there would not be much of a drop in model’s score. 
+## Partial Dependence 
 
+Partial dependence plots (PDP) show the dependence between the target and a set of features, whereby we repeatedly change the value of the feature we are interested in. We are essentially plotting the target value response as a function of the feature of interest. We repeat this process for multiple rows across the dataset and plot the average of the outcome on the vertical axis (i.e. partial dependence ~ the change in the prediction). PDP can be thought of as plotting coefficients for simple models like linear or logistic regression. For complex models, it captures more complex patterns.
 
-Occasionally, there would even be an increase in the score, in such instances random chance has caused this to occur and, therefore, those features are also not relevant. Multicollinear or correlated features may return with a permutation importance as zero, when in fact they are important once combined together - think dividing or multiplying features  to create a new feature. When correlated features are apparent, within the dataset, you can cluster them by using the Spearman’s Rank correlation. You then pick out one feature from each cluster. 
+![Partial Dependence Plots](./plot_partial_dependence.png)<center><sup><i>Figure from Sci-kit learn. Partial Dependence Plots for California Housing Prices.</i></sup></center>
 
+You can also observe and plot the interactions between features as a function of the target. For example, in the figure above, the `HouseAge` and `AveOccup` attributes, show that the `HousePrice` is independent of the house age when the average occupancy is greater than two. 
 
-A module to visualize PI is [eli5](https://eli5.readthedocs.io/en/latest/index.html).
+This level of analysis and understanding of a particular feature is not possible with Permutation Importance. Although, these plots are meaningless if features are correlated. PDP should typically be performed with the most important independent features and those of particular interest. 
 
-Regardless of the PI value observed you should take your time to understand why you are obtaining this PI value. Just because a feature’s PI value is greater than other features PI we cannot conclude that it is causation or a possible reason for a given target value. You should look for cues within each of the columns and compare values like standard deviation, mean and range. 
+---
+# TO DO HERE ONWARDS
 
-
-The PI does not tell us how each feature matters, if a medium PI measure was observed then it could imply that the feature was not useful for many instances but large for the remainder, or, a medium affect for all predictions. This is not very helpful which is why summary SHAP plots provide an even better solution. 
-
-Note, the feature magnitude does not affect the PI, it will affect it indirectly through the machine learning model selected. For example, in Decision Tree based models scaling has no effect on the model’ score. However, with Gradient Descent based models it would. 
-
-Permutation Importance with Multicollinear or Correlated Features — scikit-learn 0.24.1 documentation (scikit-learn.org) 
-
-Permutation Importance: Which variables most affect predictions. 
-
-Partial Dependence: How a variable affects predictions. 
-
-#### Partial Dependence 
-
-Partial dependence plots can be produced once a model has been fitted, unlike PI we are not going to manipulate the data at all. Instead, we predict the outcome by repeatedly changing the value of one variable, resulting in a series of predictions. We repeat this process for multiple rows across the dataset and plot the average of the outcome on the vertical axis, also called change in the prediction. 
-
-Partial dependence plots can be thought of as plotting coefficients for simple models like linear or logistic regression. For complex models, it captures more complex patterns. 
-
-> Partial dependence plots show how the target changes based on an input feature of interest. In affect, setting the expected target as a function of the input feature of interest.
-
-Because of the size of the set of features, you should typically on perform these steps with the most important features. 
- 
 [Insert picture here]
 
 A library named `PDPbox` helps visualize the partial dependence plots - https://pdpbox.readthedocs.io/en/latest/ 
@@ -76,12 +82,22 @@ if y = X1 * X2, then expect PD to be flat but PI, importance, to be high.
 
 <br/>
 
-#### SHapley Additive exPlanations
+### Summary:
+Some of this might be overwhelming, so here are two sentences to summarise what each of these tell us:
+
+- Permutation Importance: *Which* variables most affect predictions. 
+- Partial Dependence: *How* a variable affects predictions. 
+
+#### Further reading:
+- [Plot Partial Dependence](https://scikit-learn.org/stable/auto_examples/inspection/plot_partial_dependence.html)
+- [Kaggle Partial Plots](https://www.kaggle.com/dansbecker/partial-plots)
+
+## SHapley Additive exPlanations
 
 SHAP is a game theory approach to explain the output of any machine learning model.  
 
 
-By using Permutation Importance you can identify which features are important and then by using Partial Dependence plots you understand how the prediction varies based on the changes to individual features. But what if you want to know the impact each feature has on the prediction. Perhaps, you need to classify and then explain why you reached that prediction. This is where SHAP comes in. 
+By using Permutation Importance you can identify which features are important and then by using Partial Dependence plots you understand how the prediction varies based on the changes to individual features. But what if you want to know the *impact each feature has* on the prediction. Perhaps, you need to classify and then explain why you reached that prediction. This is where SHAP comes in. 
 
 SHapley Additive exPlanations, SHAP, can break down a prediction to show the impact of each feature. 
 
@@ -122,7 +138,7 @@ https://christophm.github.io/interpretable-ml-book/shap.html#shap
 
 <br/>
 
-#### Local Interpretable Model-Agnostic Explanations - LIME
+## Local Interpretable Model-Agnostic Explanations - LIME
 
 Using `PI` and `PD` have their limitations. They work really well with simple models but can be difficult to use and interpret when using it on complex models. Furthermore, depending on the model runtime it could take up a lot of computational resources. This is where LIME (Local Interpretable Model-Agnostic Explanations) comes in. 
 
@@ -146,13 +162,17 @@ In the plots you can gain a strong intuition on how a decision was made by your 
 
 <br/>
 
-#### SHAP Dependence Plots
+## SHAP Dependence Plots
 
 You can then single our individual dots and see how each of the rows differ. For example, if there is a wide spread then we can assume that other features are interacting with the feature also. You should also look for dots that are far away from the trend. This will give further insight about the data. 
 
 A wider spread implies a bigger range of effects on predictions. The range does not indicate a higher permutation importance, because a few outliers can ruin this assumption. However, if all the dots are widely spread out then we can assume the permutation importance is high because the range of effects is sensitive to outliers within that feature.
 
 If a feature has jumbled values then the feature values leads to high or low predictions. This implies the feature has an interaction with another feature. For example, a binary feature 0 which could make this feature more relevant but when it is 1 it is no longer relevant. 
+
+
+## Python Package `eli5`
+A popular Python Package to help debug and explain machine learning models is [eli5](https://eli5.readthedocs.io/en/latest/index.html). It works with many of the popular machine learning frameworks and packages, including: Scikit-Learn, Keras, XGBoost, CatBoost and Keras.
 
 Data science is about exploring and there is a huge element of that when it comes to debugging models, building trust, and learning insights to make better decisions. 
 https://slundberg.github.io/shap/notebooks/plots/dependence_plot.html 
