@@ -1,0 +1,187 @@
+---
+title: Interpretting ML Models Part 2
+date: 2021-07-10
+tags:
+  - Data Science
+  - Machine Learning
+  - Interpreting Machine Learning Models
+---
+
+# Introduction
+
+Explaining features and interpreting your models has taken a sharp rise in Europe. Partly because of new laws and regulatory measures being taken, such as GDPR and the EU’s "[Right to Explanations](https://en.wikipedia.org/wiki/Right_to_explanation)", alongside the rise in interest in applying machine learning. This has mandated data scientists to explain why a model has given a certain prediction. For example, institutions with highly sensitive data (i.e. personal data), that have models that output a potentially life changing decision would mandate regulations and require the data scientists to explain the decision that had been made. Hence, this blog post on model interpreting.
+
+This blog post covers Feature Importance, Permutation Importance, Partial Dependency, LIME and SHAP.
+
+--- 
+
+## SHapley Additive exPlanations
+
+SHAP is a game theory approach to explain the output of any machine learning model.  
+
+
+By using Permutation Importance you can identify which features are important and then by using Partial Dependence plots you understand how the prediction varies based on the changes to individual features. But what if you want to know the *impact each feature has* on the prediction. Perhaps, you need to classify and then explain why you reached that prediction. This is where SHAP comes in. 
+
+SHapley Additive exPlanations, SHAP, can break down a prediction to show the impact of each feature. 
+
+A shapley value is based on game theory. Each feature represents a “player” in the game and the prediction represents the pay-out. The distribution of the pay-outs are shapley values. The shapley values is a method that assigns payouts to features depending on their contribution to the prediction. The features cooperate in a coalition and receive a certain payout because of this corporation. The shapley value is the average marginal contribution of a feature value when making predictions. 
+
+**WARNING**: The shapley value is not the prediction if we had removed a feature from the dataset. It is the average contribution of a feature value to a prediction across all possible coalitions. 
+
+If that didnt make sense then i would suggest learning a bit more about Game Theory, once you do that replace the word “features” with “players” in the above explanation and it should click.
+
+Shapley values are the only method that provides contrastive explanations where it has the potential to compare predictions to a subset of data or a single data point. Methods like LIME assume that there a local linear relationship when it might not always be the case. 
+
+However, the downside of calculating shapley values is the computational load. The number of coalitions can grow exponentially based on the number of features and the number of iterations can contribute a large amount to the computational time. We handle both of these by taking a sample of coalitions and limiting the number of iterations both of which contribute towards the variance in the final shapley value. 
+
+This leads very nicely to SHAP. SHAP uses efficient methods to estimate the shapley values for a given machine learning model. For example, it has TreeSHAP estimation for models that are decision tree based, and kernel SHAP which is kernel based inspired by local surrogate models.
+
+The downside to KernalSHAP is that the kernel may be weightings for samples that are unrealistic. 
+
+Computational complexity from KernelSHAP to TreeSHAP is reduced significantly, O(TL^2M) to O(TLD^2)
+
+SHAP values for each feature sums up why a prediction was different from the baseline. The baseline is the average shapley value for all predictions. You can use SHAP for categorical data too.  https://slundberg.github.io/shap/notebooks/plots/dependence_plot.html 
+
+Shapley values can be used in a global sense, where the SHAP value is calculated for every instance to obtain a matrix of values. We can then interpret the model across the entire dataset. The features with large SHAP values are important. SHAP is similar to permutation importance. However, Permutation feature importance is based on the decrease in model performance. SHAP is based on the magnitude of feature attributions. The feature importance plot does not provide much explanation on a feature apart from the fact it is more important than others. Instead, you should look at the SHAP force summary and SHAP feature dependence plots. 
+
+A force plot shows, for a single instance, which features contribute towards pushing the model to a certain value. We can combine multiple force plots together and then rotate it to have a summary across the entire dataset. https://slundberg.github.io/shap/notebooks/tree_explainer/Census%20income%20classification%20with%20LightGBM.html 
+
+You can cluster shape values for instances that are similar. 
+
+The benefits from shapley values applies with SHAP values too. The have a solid theory (from Game Theory) and provides contrastive explanation while connecting with LIME too. 
+
+Overall, using SHAP provides a consistent approach for both global and local explanations. Meanwhile, the alternative to use LIME for local explanations, and permutation importance and partial dependence for global explanations will lack clarity. 
+
+SHAP is subject to misinterpretation and can hide biases if you’re not careful. 
+
+The SHAP library also has many other visualizations which are comparable to permutation importance and partial dependence plots. 
+
+!(SHAP Values adding up to make a prediction)[]
+https://christophm.github.io/interpretable-ml-book/shap.html#shap 
+
+<br/>
+
+## Local Interpretable Model-Agnostic Explanations - LIME
+
+Using `PI` and `PD` have their limitations. They work really well with simple models but can be difficult to use and interpret when using it on complex models. Furthermore, depending on the model runtime it could take up a lot of computational resources. This is where LIME (Local Interpretable Model-Agnostic Explanations) comes in. 
+
+The library is : https://github.com/marcotcr/lime 
+
+You need to format your data and pass it to the Explainer class. Once you have the explainer you can pass an observation and a prediction function. You can then visualize how each of the features influences the prediction. As the values are dependent on the linear model being fit locally around a given observation, you should also check the r2 score. If the value is low then you cannot be confident with the LIME outcome. However, if all your models show a feature which continuously negatively affects the decision then this feature should be removed. 
+
+<br/>
+
+#### Summary Plots
+
+Summary plots show many useful insights into all the features.
+
+Each dot shows three characteristics: 
+
+- Vertical location is the feature it is representing.
+- Color shows the magnitude of the feature value for that row. 
+- Horizontal location is the effect of that value causing a higher or lower prediction. 
+
+In the plots you can gain a strong intuition on how a decision was made by your black box model. Some features will generally have no input in the prediction until a certain feature value, whereas some features will have zero input and is ignored entirely by the model. 
+
+<br/>
+
+## SHAP Dependence Plots
+
+You can then single our individual dots and see how each of the rows differ. For example, if there is a wide spread then we can assume that other features are interacting with the feature also. You should also look for dots that are far away from the trend. This will give further insight about the data. 
+
+A wider spread implies a bigger range of effects on predictions. The range does not indicate a higher permutation importance, because a few outliers can ruin this assumption. However, if all the dots are widely spread out then we can assume the permutation importance is high because the range of effects is sensitive to outliers within that feature.
+
+If a feature has jumbled values then the feature values leads to high or low predictions. This implies the feature has an interaction with another feature. For example, a binary feature 0 which could make this feature more relevant but when it is 1 it is no longer relevant. 
+
+
+## Python Libraries
+
+A library named `PDPbox` helps visualize the partial dependence plots - https://pdpbox.readthedocs.io/en/latest/ 
+
+#### Python Package `eli5`
+
+A popular Python Package to help debug and explain machine learning models is [eli5](https://eli5.readthedocs.io/en/latest/index.html). It works with many of the popular machine learning frameworks and packages, including: Scikit-Learn, Keras, XGBoost, CatBoost and Keras.
+
+Data science is about exploring and there is a huge element of that when it comes to debugging models, building trust, and learning insights to make better decisions. 
+https://slundberg.github.io/shap/notebooks/plots/dependence_plot.html 
+https://www.kaggle.com/dansbecker/advanced-uses-of-shap-values  
+**Calculate and show permutation importance:**
+
+```py
+import eli5
+from eli5.sklearn import PermutationImportance
+
+perm = PermutationImportance(my_model, random_state=1).fit(val_X, val_y)
+eli5.show_weights(perm, feature_names = val_X.columns.tolist())
+```
+
+**Calculate and show partial dependence plot:**
+
+```py
+from matplotlib import pyplot as plt
+from pdpbox import pdp, get_dataset, info_plots
+
+# Create the data that we will plot
+pdp_goals = pdp.pdp_isolate(model=my_model, dataset=val_X, model_features=feature_names, feature='Goal Scored')
+
+# plot it
+pdp.pdp_plot(pdp_goals, 'Goal Scored')
+plt.show()
+```
+
+**Calculate and show Shap Values for One Prediction:**
+```py 
+import shap  # package used to calculate Shap values
+
+data_for_prediction = val_X.iloc[0,:]  # use 1 row of data here. Could use multiple rows if desired
+
+# Create object that can calculate shap values
+explainer = shap.TreeExplainer(my_model)
+shap_values = explainer.shap_values(data_for_prediction)
+shap.initjs()
+shap.force_plot(explainer.expected_value[0], shap_values[0], data_for_prediction)
+```
+
+
+<br/>
+
+### When to use each?
+
+Use **permutation importance** if you require a **succinct model summary**. Summarizing importance of all features in a global sense. 
+
+Use **partial plot** to understand **individual features or relationships** between features (i.e. using 2D partial dependence plots). Summarizing the importance of a single feature and its effect on the prediction in a global sense.
+
+Use **SHAP** when you need to show the **impact of each feature for a given row**. If you require a global sense of a feature you can also use this too. 
+
+
+## Conclusion
+
+Being able to use machine learning to predict the probability of a patient having cancer is a great asset to have for any health care professional. But telling a patient, “you have a high probability of having cancer” is not enough. 
+
+Interpreting a machine learning model prediction can break down what features an individual should focus on in order to reduce their risk.
+
+Many methods can help us identify which features to focus on and then measure individual feature importance. However, interpreting these values are crucial for data scientists to avoid introducing biases into the prediction. SHAP is widely considered the optimal solution due to its Game Theory approach, however, all interpretation methods should be explored before being confirmed by a domain expert. 
+
+Model interpretation is not going away. Law makers will demand data scientists to interpret their models and these tools are just the start of an expanding specialism within data science.
+
+<br/>
+
+#### Further reading:
+
+- Things to avoid when interpreting models - highly recommend reading [this paper by Standford](https://arxiv.org/pdf/2007.04131.pdf)
+
+- [Interpretable Machine Learning Book](https://christophm.github.io/interpretable-ml-book/) by Christoph Molnar
+
+- PyData Talk on [Interpreting models with LIME and SHAPE](https://www.youtube.com/watch?v=C80SQe16Rao)
+
+- PyData Talk on [SHAP Values](https://www.youtube.com/watch?v=0yXtdkIL3Xk)
+
+<br/>
+
+---
+
+** If you are interested in more data science topics then check out my other blogs [here](./blog).**
+
+- [Starting with Package Managers](./starting-with-package-managers)
+- [Docker Devcontainers](./docker-devcontainers)
+- [Impurity Criterions](./gini-vs-entropy)
