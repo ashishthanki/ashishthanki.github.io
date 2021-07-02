@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/blog</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/interpretting-ml-models</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/Wisdom-of-the-Crowds</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/short-series-three-fundamentals</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/cloud-computing-infrastructure</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/docker-devcontainers</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/gini-vs-entropy</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/starting-with-package-managers</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/consulting</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/anaconda</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/cloud-computing</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/container</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/data-science</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/dependency</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/docker</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/ensemble</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/fundamentals</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/infrastructure</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/interpreting-machine-learning-models</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/machine-learning</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/mathematics</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/pip</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/package-manager</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/shorts</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/software-engineering</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://github.com/ashishthanki/ashishthanki.github.io/tags/startup</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+</urlset>
