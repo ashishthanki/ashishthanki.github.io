@@ -1,9 +1,11 @@
 # Ignore current unfinished posts
 /*/posts/tutorial_post/
+/*/posts/Interpretting-ML-Models-Part2/
+/*/posts/Using Git/*
 
 # ignore current WIP posts
-!/content/posts/Using Git/*
-!/content/posts/Interpretting-ML-Models-Part2/*
+
+
 
 # ignore READ me
 README.md
