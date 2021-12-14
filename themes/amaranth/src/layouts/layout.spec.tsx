@@ -17,7 +17,7 @@ describe("website layout", () => {
       expect.arrayContaining([
         {
           name: "description",
-          content: "A GatsbyJS starter equipped with advanced features.",
+          content: "Data Science Blog posts written by Ashish Thanki.",
         },
       ])
     );

@@ -13,7 +13,7 @@ describe("page component AboutPage", () => {
 
     // Verify that a footer segment exists, which indicates that the layout was included.
     const copyrightNotice = await screen.findByText(
-      "© Copyright 2021 | Ruben Harutyunyan"
+      "© Copyright 2021 | Ashish Thanki"
     );
 
     expect(copyrightNotice).toBeInTheDocument();
@@ -26,6 +26,6 @@ describe("page component AboutPage", () => {
 
     const helmet = Helmet.peek();
 
-    expect(helmet.title).toBe("About | Gatsby Advanced Starter");
+    expect(helmet.title).toBe("About | Ashish Thanki");
   });
 });

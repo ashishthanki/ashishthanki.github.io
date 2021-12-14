@@ -19,9 +19,9 @@ const Footer = (): JSX.Element => {
       </S.LinkGrid>
       <S.Info>
         <Caption>
-          Based on{" "}
-          <AnimatedLink to="https://github.com/Vagr9K/gatsby-advanced-starter">
-            Gatsby Advanced Starter
+          {" "}
+          <AnimatedLink to="/">
+            Ashish Thanki
           </AnimatedLink>
         </Caption>
         <Caption>{config.website.copyright}</Caption>
