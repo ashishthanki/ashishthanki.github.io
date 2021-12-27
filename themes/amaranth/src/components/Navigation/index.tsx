@@ -20,10 +20,10 @@ const Navigation = (): JSX.Element => {
         <S.NavButton noBasePath to="/about">
           About
         </S.NavButton>
-        <S.NavButton noBasePath to="/about">
+        <S.NavButton noBasePath to="/consultancy">
           Consultancy
         </S.NavButton>
-        <S.NavButton noBasePath to="/about">
+        <S.NavButton noBasePath to="/certificates">
           Certificates
         </S.NavButton>
         <S.NavButton noBasePath to="https://www.github.com/ashishthanki">

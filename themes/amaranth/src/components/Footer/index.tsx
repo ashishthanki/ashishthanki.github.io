@@ -20,8 +20,32 @@ const Footer = (): JSX.Element => {
       <S.Info>
         <Caption>
           {" "}
-          <AnimatedLink to="/">
-            Ashish Thanki
+          <AnimatedLink noBasePath to="/">
+            Ashish Thanki 
+          </AnimatedLink>
+          |
+          <AnimatedLink noBasePath to="/about">
+             About 
+          </AnimatedLink>
+           |  
+          <AnimatedLink noBasePath to="/consultancy">
+             Consultancy 
+          </AnimatedLink>
+          |  
+          <AnimatedLink noBasePath to="/certificates">
+             Certificates 
+          </AnimatedLink>
+          |  
+          <AnimatedLink noBasePath to="https://www.github.com/ashishthanki">
+             GitHub 
+          </AnimatedLink>
+          |  
+          <AnimatedLink noBasePath to="https://uk.linkedin.com/in/athanki">
+             LinkedIn 
+          </AnimatedLink>
+          |  
+          <AnimatedLink noBasePath to="https://twitter.com/ashish__thanki">
+             Twitter 
           </AnimatedLink>
         </Caption>
         <Caption>{config.website.copyright}</Caption>
