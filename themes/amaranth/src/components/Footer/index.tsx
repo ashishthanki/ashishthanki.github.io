@@ -21,29 +21,29 @@ const Footer = (): JSX.Element => {
         <Caption>
           {" "}
           <AnimatedLink noBasePath to="/">
-            Ashish Thanki 
+            Posts
           </AnimatedLink>
-          |
+           {" | "} 
           <AnimatedLink noBasePath to="/about">
-             About 
+             About
           </AnimatedLink>
-           |  
+          {" | "} 
           <AnimatedLink noBasePath to="/consultancy">
              Consultancy 
           </AnimatedLink>
-          |  
+          {" | "} 
           <AnimatedLink noBasePath to="/certificates">
              Certificates 
           </AnimatedLink>
-          |  
+          {" | "} 
           <AnimatedLink noBasePath to="https://www.github.com/ashishthanki">
              GitHub 
           </AnimatedLink>
-          |  
+          {" | "} 
           <AnimatedLink noBasePath to="https://uk.linkedin.com/in/athanki">
              LinkedIn 
           </AnimatedLink>
-          |  
+          {" | "} 
           <AnimatedLink noBasePath to="https://twitter.com/ashish__thanki">
              Twitter 
           </AnimatedLink>

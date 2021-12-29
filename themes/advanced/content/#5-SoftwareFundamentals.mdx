@@ -1,0 +1,114 @@
+---
+title: "Three Fundamentals"
+cover: images/software-fundamentals/data-science-venn-diagram.png
+coverAlt: "Three Fundamentals of Data Science."
+description: "This blog covers the 3 fundamentals a data scientist should be aware of, especially when coming from another field of study."
+datePublished: "2021-04-18"
+dateModified: "2021-04-18"
+category: "Shorts"
+tags:
+  - Fundamentals
+  - Software Engineering
+---
+
+<!-- markdownlint-disable-->
+
+
+*This blog is part of the short blog series, where I will give a brief insight on various key topics.*
+
+**TLDR**: The best way to learn data science is by doing it in the form a project. I would not typically recommend MOOCs as many of them brush over key concepts without explaining algorithms or lines of code. This makes data science seem like an organised structured process with the same steps for every project. This could not be further from the truth. The word "science" from data science highlights why. You need to carry out controlled experiments and discuss what you have observed before making a final conclusion. Only proceeding forward when you have clear understanding on how things work. 
+
+![Degree Field of Study](./images/software-fundamentals/degree-field-study.png)
+
+I recently took Data Camp's [Software Development for Data Scientist](https://campus.datacamp.com/courses/software-engineering-for-data-scientists-in-python/software-engineering-data-science?ex=1) course and would highly recommend that you check it out too. It is a great course for someone who has some data science project experience but is lacking in the software development front - which most data scientists are! Most of us do not come from a computer science background. 80% of data scientists do not have computer science degree and learn on the job or outside of work. 
+
+
+The infamous data science venn diagram springs to mind. Majority of us have a strong mathematical background and are able to adapt to the domain that we will be working with. Platforms like Kaggle expose us to multiple domains of data and the internet gives us domain insight. However, in order to fill that final circle of computer science, we need to dedicate time and effort into it because, most often, it is not the skill that comes naturally.  
+
+
+### Three software engineering fundamentals when coding as a data scientist:
+
+<br/>
+
+#### 1. Modularity
+Write your code in modules rather than stand alone python scripts or jupyter notebooks.
+
+Many of us choose notebooks because it helps us visualize our code and data better. This is fine. But problems occur when you need to change a piece of code right at the top of the notebook. This would mean running all of the cells again and, hoping you ran the cells in the correct order without calling a `variable` before you have assigned it. Even I have fallen into this trap. Check out my Github on [Wine Quality prediction](https://github.com/ashishthanki/MLProjects/blob/master/SupervisedLearning/WineData/Predicting_Wine_Quality.ipynb) as an example of a notebook with no modularity in mind.
+
+Another approach would be to code the data processing, visuals, and machine learning into separate `.py` files and import them into your notebook. This will prevent you from having lengthy cells with more than 5 lines of code. It is best to limit the code per cell to less than 5 lines of code. Every cell should have ONE process and outcome, not multiple. For example, data importing and cleaning should not happen in one cell. 
+
+![Cell with less than 5 lines of code combining the 2 datasets together.](./images/software-fundamentals/combine-dataset.PNG)
+
+Watch [this Pydata video](https://www.youtube.com/watch?v=2QLgf2YLlus) for more best practices for working with jupyter notebooks. The speaker even goes has far as saying that your notebooks should be as small as 4-10 cells each. 
+
+You can run your jupyter notebooks without opening the jupyter kernel and can convert it into multiple formats, such as PDF or HTML, using the [`nbconvert'](https://nbconvert.readthedocs.io/en/latest/index.html) module.
+
+```bash noLineNumbers
+#  a notebook being executed from a command line using nbconvert
+jupyter nbconvert --to notebook --execute mynotebook.ipynb
+```
+<br/>
+
+#### 2. Documentation
+Now that you have opted against a strictly jupyter notebook approach, a well documented project is the best way forward. Make sure you follow PEP8.
+
+PEP8 is a convention for writing code in python. Readability should not be overlooked. You should document your code well and for data science, specifically, make sure that you have documented the methodology of your data cleaning and processing strategy. For example, if you have imputed median or mean into a numerical attribute, or performed count encoding instead of one hot encoding, you should state clearly why you have opted for this approach over others.
+
+To quote PEP8:
+> "code is more often read than it is written."
+
+Fortunately, there are many tools to aid us in writing PEP8 format code. You can use an IDE's in-built tools or the `pycodestyle` module. I recommend reading the zen of python. The code `import this` will show you the zen. 
+
+```py noLineNumbers
+>>> import this
+"""
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren't special enough to break the rules.
+Although practicality beats purity.
+Errors should never pass silently.
+Unless explicitly silenced.
+In the face of ambiguity, refuse the temptation to guess.
+There should be one-- and preferably only one --obvious way to do it.
+Although that way may not be obvious at first unless you're Dutch.
+Now is better than never.
+Although never is often better than *right* now.
+If the implementation is hard to explain, it's a bad idea.
+If the implementation is easy to explain, it may be a good idea.
+Namespaces are one honking great idea -- let's do more of those!
+"""
+```
+
+The benefit of well documented code allows you to use tools such as [Sphinx](https://pypi.org/project/Sphinx/). Sphinx is a documentation generator.
+
+<br/>
+
+#### 3. Testing
+
+Having tests to check whether you get back what you expect from your code can increase your [productivity massively](https://realpython.com/python-testing/). You may be required to change a function or class within your code to factor in a new category or column. A well written test would be able to catch any bugs that may have been introduced from the changes. Google's approach is to write tests first before you code. This is a good practice to take on board. Without tests this would go by unnoticed. 
+
+![Tests](./images/software-fundamentals/tests.jpg)
+
+Tests are a complex topic, which is why they are most often not carried out. However, having simple tests are better than having none. Being able to write maintainable methods to validate your code, alongside other tools, such as [Codecov](https://about.codecov.io/) will tell you which part of your code is being covered by your tests. This will make writing your test methods easier.
+
+As discussed in my [Starting with Package Managers](./Starting-with-Package-Managers) and [Docker Devcontainers](./Docker-Devcontainers) blogs, the problem of "does not work on my computer" can occur. Having a well written test in place can check and allow you to understand what the problems are. This can avoid having to interpret the generic `ImportError` or `ValueError`.
+
+![Travis CI with GCP](./images/software-fundamentals/continuous-delivery-with-travis-ci.png)
+
+Tools such as Travis CI can help, by continuously running your tests without you explicitly calling them via the command line. You can even introduce scheduled tests which can notify you if a test fails, this can allow you to catch bugs introduced by updates to your dependencies.
+
+## Summary
+
+Learning key software engineering concepts can make your life easier as a data scientist. Utilising these concepts will make you productive, flexible and allow your solutions to be sustainable for long-term results. My next [shorts](./tags/shorts) blog post will cover python classes and object orientated programming (OOP).
+
+<br/>
+
+--- 
+
+** If you are interested in more data science topics then check out my other blogs [here](./).**
+**Check out my other shorts blogs [here](./category/Shorts).**
