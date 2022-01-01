@@ -26,15 +26,16 @@ const AboutPage = (): JSX.Element => {
         <p>
         <br></br>
         <br></br>
-        Ashish has experience in data extraction and retrieval. He is proficient in using SQL, Python and AWS. He has extensive experience in geospatial analysis and is able to build automated models using geospatial software such as ESRI ArcGIS.
+        Ashish has experience in data extraction and retrieval. He is proficient in SQL, Python and AWS. He has extensive experience in geospatial analysis and can build automated models using geospatial software such as ESRI ArcGIS.
         <br></br>
         <br></br>
-        On the analytical side, Ashish has experience using 'simple' linear to, more advanced, ensemble machine learning models, as well as performing statistical tests. He once performed statistical tests on Hertfordshire County's collision data and identified hypotheses concerning age group and weather type variables.
+        On the analytical side, Ashish has experience using 'simple' linear to, more advanced, ensemble machine learning models, as well as performing statistical tests. He has performed statistical tests on Hertfordshire County's collision data and has identified hypotheses concerning age group and weather type variables.
         <br></br>
         <br></br>
-        Finally, Ashish takes pride in clear, intuitive summaries and data visualizations. He is comfortable with public speaking and report writing, and is able to communicate his findings to all levels in the chain of command.
+        Finally, Ashish takes pride in clear, intuitive summaries and data visualizations. He is well established within public speaking and report writing and can communicate findings to all levels in the chain of command. 
 
-        If these are the types of skills your team needs, please reach out to Ashish.
+        If these are skills that your team needs, please do not hesitate to contact Ashish. 
+
         </p></Wrapper>
       </div>
     </Layout>

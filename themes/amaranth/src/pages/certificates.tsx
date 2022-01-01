@@ -26,7 +26,7 @@ const AboutPage = (): JSX.Element => {
         <h1>Certifications</h1>
         <p>
         <br></br>
-        The certifications that Ashish has achieved are the following:
+        Ashish has achieved the following accredited certifications:
         <br></br>
         <br></br>
         <li><AnimatedLink href="https://www.yAnimatedLinkuracclaim.com/badges/0edcedc7-761d-4096-9c1f-0e5d5a4d5de0?source=linked_in_profile">Microsoft: Azure Fundamentals</AnimatedLink></li>
