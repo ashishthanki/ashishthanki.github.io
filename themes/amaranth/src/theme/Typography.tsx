@@ -14,7 +14,7 @@ const MobileH1 = css`
 `;
 
 const MobileH2 = css`
-  font-family: "Alfa Slab One", serif;
+  font-family: "Fira Code", serif;
   font-style: normal;
   font-weight: normal;
   font-size: 29px;

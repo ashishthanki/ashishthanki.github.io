@@ -55,7 +55,7 @@ const renderLinkedInLink = (
 
   if (!userName) return null;
 
-  const url = `https://www.linkedin.com/in/${userName}`;
+  const url = `https://uk.linkedin.com/in/${userName}`;
   return renderLink(url, "LinkedIn Profile", LinkedinSquare);
 };
 

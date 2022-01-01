@@ -18,6 +18,8 @@ import { Types, useConfig } from "gatsby-theme-advanced";
 import LinkCopyNotification from "./LinkCopyNotification";
 import Separator from "../../shared/Separator";
 import * as S from "./styles";
+import { Body } from "../../../theme";
+import { AnimatedLink } from "../../Links/styles";
 
 const generateRelatedTwitterNames = (
   config: Types.SiteConfig
@@ -46,6 +48,12 @@ const ArticleShare = ({ post }: ArticleShareProps): JSX.Element => {
   const relatedTwitterNames = generateRelatedTwitterNames(config);
 
   return (
+    [
+    <Body>
+      <br></br>
+      <i>
+        If you are interested in more data science topics then check out my other blogs <AnimatedLink href="./" to="here">here</AnimatedLink>.</i>
+    </Body>,
     <S.Wrapper aria-label="Share on social media">
       <S.LinkWrapper>
         <S.Label>SHARE</S.Label>
@@ -55,7 +63,7 @@ const ArticleShare = ({ post }: ArticleShareProps): JSX.Element => {
           </FacebookShareButton>
           <TwitterShareButton
             url={url}
-            title={title}
+            title={post.title}
             via={config.website.name}
             related={relatedTwitterNames}
           >
@@ -91,7 +99,8 @@ const ArticleShare = ({ post }: ArticleShareProps): JSX.Element => {
       </S.LinkWrapper>
       <Separator />
     </S.Wrapper>
-  );
-};
+    ]
+    );
+  };
 
 export default ArticleShare;

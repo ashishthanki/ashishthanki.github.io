@@ -47,18 +47,18 @@ describe("component UserLinks", () => {
 
     render(<UserLinks includeRss />);
 
-    const rssLink = await screen.findByRole("link", { name: "RSS Feed" });
+
+    render(<UserLinks />);
+
+    const rssLink = screen.queryByRole("link", { name: "RSS Feed" });
+    expect(rssLink).not.toBeInTheDocument();
+  });    const rssLink = await screen.findByRole("link", { name: "RSS Feed" });
     expect(rssLink).toHaveAttribute("href", "/rss.xml");
   });
 
   it("doesn't render RSS link when includeRss is not passed", () => {
     expect.assertions(1);
 
-    render(<UserLinks />);
-
-    const rssLink = screen.queryByRole("link", { name: "RSS Feed" });
-    expect(rssLink).not.toBeInTheDocument();
-  });
 
   it("returns null when user information is missing", () => {
     expect.assertions(1);

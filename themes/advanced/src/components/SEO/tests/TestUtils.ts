@@ -81,28 +81,26 @@ export const sampleSeoData: {
 
   // Website data
   website: {
-    title: "Gatsby Advanced Starter", // Site title.
+    title: "Ashish Thanki", // Site title.
     titleShort: "GA Starter", // Short site title for homescreen (PWA). Preferably should be under 12 characters to prevent truncation
-    name: "Gatsby Advanced Starter", // Website name used for homescreen (PWA) and SEO
+    name: "Ashishh Thanki", // Website name used for homescreen (PWA) and SEO
     description: "A GatsbyJS starter with Advanced design in mind.", // Website description used for RSS feeds/meta description tag
     language: "en",
     logoUrl: "/logos/logo-1024.png", // Logo used for SEO and manifest
     fbAppId: "1825356251115265", // FB Application ID for using app insights
-    twitterName: "Vagr9K",
+    twitterName: "ashish__thanki",
     url: "https://gatsby-advanced-starter-demo.netlify.com", // Domain of your website without pathPrefix
-    rss: "/rss.xml", // Path to the RSS file
-    rssTitle: "Gatsby Advanced Starter RSS feed", // Title of the RSS feed
-    copyright: "© Copyright 2021 | Ruben Harutyunyan", // Copyright string for the footer of the website and RSS feed.
+    copyright: "© Copyright 2022 | Ashish Thanki", // Copyright string for the footer of the website and RSS feed.
     themeColor: "#D83850", // Used for setting manifest and progress theme colors.
     backgroundColor: "#F7F7F7", // Used for setting manifest background color.
   },
 
   // User data
   user: {
-    id: "AdvancedUser",
-    firstName: "First",
-    lastName: "Last",
-    twitterName: "Vagr9K", // Twitter username used for SEO and rendering the "Follow me button"
+    id: "AshishThanki",
+    firstName: "ashish",
+    lastName: "Thanki",
+    twitterName: "ashish__thanki", // Twitter username used for SEO and rendering the "Follow me button"
     email: "AdvancedUser@example.com", // Email used for RSS feed's author segment
     about: "A full-stack web developer looking for a challenge!", // User information used for the author segment.
     location: "A full-stack web developer looking for a challenge!", // User location used for SEO and for the author segment.

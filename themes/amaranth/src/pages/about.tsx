@@ -28,7 +28,7 @@ const AboutPage = (): JSX.Element => {
         This blog is written by a Data Scientist and professionally registered Mechanical Engineer, Ashish Thanki.
         <br></br>
         <br></br>
-        Before becoming a Data Scientist, Ashish was a Mechancial Engineer for WSP in London, where he designed several large commercial office buildings. During his time as a Mechanical Engineer, he was named as the Head of Early Professionals, where he served as the leader and played a key role in representing young engineers across the business. Outside of work, he fell in love with Machine Learning and this drove him to transition his career.
+        Before becoming a Data Scientist, Ashish was a Mechanical Engineer for WSP in London, where he designed several large commercial office buildings. During his time as a Mechanical Engineer, he was named the Head of Early Professionals, where he served as the leader and played a key role in representing young engineers across the business. Outside of work, he fell in love with Machine Learning and this drove him to transition his career.
         <br></br>
         <br></br>
         This website holds a series of blogs written by Ashish, which will be short enough yet sufficiently technical to increase your competence in the subject; giving insights in:

@@ -13,7 +13,7 @@ describe("page component AboutPage", () => {
 
     // Verify that a footer segment exists, which indicates that the layout was included.
     const copyrightNotice = await screen.findByText(
-      "© Copyright 2021 | Ashish Thanki"
+      "© Copyright 2022 | Ashish Thanki"
     );
 
     expect(copyrightNotice).toBeInTheDocument();

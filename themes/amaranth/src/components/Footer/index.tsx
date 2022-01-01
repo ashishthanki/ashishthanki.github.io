@@ -15,7 +15,7 @@ const Footer = (): JSX.Element => {
     <S.Wrapper>
       <S.LinkGrid>
         <H3>LINKS</H3>
-        <UserLinks includeRss />
+        <UserLinks />
       </S.LinkGrid>
       <S.Info>
         <Caption>
@@ -36,16 +36,16 @@ const Footer = (): JSX.Element => {
              Certificates 
           </AnimatedLink>
           {" | "} 
+          <AnimatedLink noBasePath to="https://twitter.com/ashish__thanki">
+             Twitter 
+          </AnimatedLink>
+          {" | "} 
           <AnimatedLink noBasePath to="https://www.github.com/ashishthanki">
              GitHub 
           </AnimatedLink>
           {" | "} 
           <AnimatedLink noBasePath to="https://uk.linkedin.com/in/athanki">
              LinkedIn 
-          </AnimatedLink>
-          {" | "} 
-          <AnimatedLink noBasePath to="https://twitter.com/ashish__thanki">
-             Twitter 
           </AnimatedLink>
         </Caption>
         <Caption>{config.website.copyright}</Caption>
