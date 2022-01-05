@@ -25,10 +25,13 @@ const AboutPage = (): JSX.Element => {
         <h1>About Ashish Thanki</h1>
         <p>
         <br></br>
-        This blog is written by a Data Scientist and professionally registered Mechanical Engineer, Ashish Thanki.
+        Ashish is a Data Scientist, and was a professionally registered Mechanical Engineer in London, where he designed several large commercial office buildings. During his time as a Mechanical Engineer, he was named the Head of Early Professionals, where he served as the leader and played a key role in representing young engineers across the business. He led the restructuring and formalised numerous processes. During this time outside of work, he fell in love with Machine Learning which drove him to transition his career.
         <br></br>
         <br></br>
-        Before becoming a Data Scientist, Ashish was a Mechanical Engineer for WSP in London, where he designed several large commercial office buildings. During his time as a Mechanical Engineer, he was named the Head of Early Professionals, where he served as the leader and played a key role in representing young engineers across the business. Outside of work, he fell in love with Machine Learning which drove him to transition his career.
+        He started working, as a Data Scientist, for the local council where he built and led the automation of data analysis and reporting tools. He drove the motivation and was responsible for integrating AWS data pipelines into multiple projects that included IoT devices and APIs. With his help, the council were able to use it for transport planning, evaluation and government bids.     
+        <br></br>
+        <br></br>
+        Currently, Ashish works with marketing data, where he is part of a data science team working in a SCRUM environment. He contributes towards the data-driven attribution model and mixed media marketing model that aids the decision making for direct to consumer brands. He works closely with product, customer success, sales and software engineering teams to identify and solve key product and client problems.
         <br></br>
         <br></br>
         This website holds a series of blogs written by Ashish, which will be short enough yet sufficiently technical to increase your competence in the subject; giving insights in:
@@ -36,6 +39,8 @@ const AboutPage = (): JSX.Element => {
         <li>The latest technologies,</li>
         <li>providing tutorial based notebooks, and,</li>
         <li>best working practices in Data Science.</li>
+        <br></br>
+        Feel free to reach out to Ashish if you have any questions.
         </p>
         </Wrapper>
       </div>
