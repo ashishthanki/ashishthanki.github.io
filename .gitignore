@@ -82,3 +82,5 @@ coverage-ts/
 cypress/screenshots
 cypress/videos
 
+themes/advanced/content/Big_Sample_Test.mdx
+themes/advanced/content/#11-Git.mdx
