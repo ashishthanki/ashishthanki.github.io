@@ -1,10 +1,10 @@
 ---
 title: "ML vs Probabilistic Programming"
-cover: images/stats-tests/ml-vs-stats.png
+cover: images/probabilistic-programming/data_science_use_cases.png
 coverAlt: "ML vs Probabilistic Programming"
 description: "Performing a Statistic tests"
-datePublished: "2022-03-21"
-dateModified: "2022-03-21"
+datePublished: "2022-03-27"
+dateModified: "2022-03-27"
 category: "Statistics"
 tags:
   - Machine Learning
@@ -14,17 +14,16 @@ tags:
 
 # Introduction
 
-
-This blog covers:
-- Comparing ML and statistics
-
-- Conclusion
+This blog is under development. Please come back later.
 
 
 ## Comparing ML and Statistics
-Machine learning are black box models. They are used to  is used for predictions while Statistics uses the underlining data to infer a probability distribution. 
- 
-Gelman suggests rescaling by 2 standard deviations when working with binary untransformed predictors.
+
+Machine learning is used to solve unsupervised and supervised learning problems. For supervised learning, their primary purpose are to provide predictions for regression and classification problems but are often expanded to gain interpretable insights about the data against the target. Meanwhile, statistics is used to infer a probability distribution about the data.
+
+Tips when working with Probabilistic programming:
+
+Claimed to help with Hierarchical Bayesian Modelling. Gelman suggests rescaling by 2 standard deviations when working with binary untransformed predictors.
  
 This is to allow features to be within the same scale of 0 to 1. This makes the multiple regression coefficients on the same scale as correlations. Gelman said “you can interpret the coefficient as the number of standard deviation changes in y that correspond to a 1 standard deviation change in x.”
  
@@ -33,39 +32,37 @@ The paper was written back in 2009. The authors claim that scaling features by d
 Here is the original paper: http://www.stat.columbia.edu/~gelman/research/published/standardizing7.pdf
  
  
-Other than that, the reason why I bring it up is because it is claimed to help with Hierarchical Bayesian Modelling. Has anyone heard about this before?
 Reference saying ".There is a reasonable literature on various standardizing approaches, but mean-centering and dividing by 1 or 2 standard deviations are very common and usually produce good results." - https://bookdown.org/steve_midway/BHME/Ch5.html
-bookdown.org
+
 Chapter 6 Simple Models in JAGS | Bayesian Hierarchical Models in Ecology
 References:
  
 Gelman responded to a question about scaling: https://statmodeling.stat.columbia.edu/2010/04/12/a_question_abou_9/
  
  
- 
- 
 Black box vs Probabilistic Programming
  
-Opaque inference, constrained moels and uncertainty – Black model ML
-Like a playmobile kit where you can only build a certain number of things
+Opaque inference, constrained models and uncertainty – Black model ML
+Like a play mobile kit where you can only build a certain number of things
  
 Clear inference extreme flexibility and full uncertainty – probabilistic programming
 Like a whole bunch of lego pieces where the possibilities are endless
-Nowadays it is easy to build a custom bayesion model and get back probabilities based from our data.
-Customize and tailor model while incorproating expert domain knowledge
-Probabilistic programming is getting faster and starting scale more. This is because the Monte-Carlo algirthms (NUTS algorithm)
-Bayesian is great for smaller datasets because we can incorproate priors (i.e. doman knowledge)
+Nowadays it is easy to build a custom Bayesian model and get back probabilities based from our data.
+
+Customize and tailor model while incorporating expert domain knowledge
+Probabilistic programming is getting faster and starting scale more. This is because the Monte-Carlo algorithms (NUTS algorithm)
+Bayesian is great for smaller datasets because we can incorporate priors (i.e. domain knowledge)
  
-Baesian Modelling works best:
-When not a simple prediction problem
-Gain insight into the data
-Structure data (i.e. hirearchical, time series,…)
-Intergrate domain knowledge into models as priors.
-Uncertainty plays an important role
+Bayesian Modelling works best:
+- When not a simple prediction problem.
+- Gain insight into the data
+- Structured data (i.e. hierarchical, time series,…)
+- Integrate domain knowledge into models as priors.
+- Uncertainty plays an important role
  
 It is difficult to establish when a ML model is bad, espcially if you don’t have a thorough understanding of the metrics (RMSE, AUC, ROC etc.) or how your model works. Whereas the Bayesian model will very clearly show you when the model is poor. This can be seen by looking at whether or not the model has converged or not. Bayesian models are generative
  
-Frequenist and Bayesian models both produce
+Frequentist and Bayesian models both produce
  
 Note: “computational problems often means there’s a problem with your model”  said by Gelman 2008.
  
@@ -73,14 +70,16 @@ PyMC 4.0 has better scalability: JAX and Numbda backend, GPU support
 Samplers writtein aesara
 Automatic graph rewrites
  
-References:
-https://www.youtube.com/watch?v=VVbJ4jEoOfU&ab_channel=PyData
-PyData  Global 2021 The State of the art for Probabilistic Programming - https://www.youtube.com/watch?v=Q9_S7rRnMRs&ab_channel=PyData
-Intuitive Guide to Bayesian Statistics: https://twiecki.io/pages/an-intuitive-guide-to-bayesian-statistics.html
- 
+
 
 ## Conclusion
 
 
 
-#### Further resources
+#### Further resources:
+
+- [Data Science Use Cases](https://docs.nersc.gov/machinelearning/science-use-cases/)
+- [Bayesian inference with PyMC 3](https://www.youtube.com/watch?v=VVbJ4jEoOfU&ab_channel=PyData)
+- [PyData  Global 2021 The State of the art for Probabilistic Programming](https://www.youtube.com/watch?v=Q9_S7rRnMRs&ab_channel=PyData)
+- [Intuitive Guide to Bayesian Statistics](https://twiecki.io/pages/an-intuitive-guide-to-bayesian-statistics.html)
+ 
