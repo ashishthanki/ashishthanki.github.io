@@ -1,12 +1,12 @@
-import React from "react";
-
 import { useConfig } from "gatsby-theme-advanced";
-
-import UserLinks from "../UserLinks";
+import React from "react";
 import { Caption, H3 } from "../../theme";
 import { AnimatedLink } from "../Links";
-
+import UserLinks from "../UserLinks";
 import * as S from "./styles";
+
+
+
 
 const Footer = (): JSX.Element => {
   const config = useConfig();
@@ -26,14 +26,6 @@ const Footer = (): JSX.Element => {
            {" | "} 
           <AnimatedLink noBasePath to="/about">
              About
-          </AnimatedLink>
-          {" | "} 
-          <AnimatedLink noBasePath to="/consultancy">
-             Consultancy 
-          </AnimatedLink>
-          {" | "} 
-          <AnimatedLink noBasePath to="/certificates">
-             Certificates 
           </AnimatedLink>
           {" | "} 
           <AnimatedLink noBasePath to="https://twitter.com/ashish__thanki">

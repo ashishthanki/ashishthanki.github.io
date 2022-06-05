@@ -1,8 +1,9 @@
+import { useConfig } from "gatsby-theme-advanced";
 import * as React from "react";
 import { Helmet } from "react-helmet";
-import { useConfig } from "gatsby-theme-advanced";
-import Layout from "../layouts";
 import styled from "styled-components";
+import { AnimatedLink } from "../components/Links/styles";
+import Layout from "../layouts";
 
 const AboutPage = (): JSX.Element => {
   const config = useConfig();
@@ -39,6 +40,29 @@ const AboutPage = (): JSX.Element => {
         <li>The latest technologies,</li>
         <li>providing tutorial based notebooks, and,</li>
         <li>best working practices in Data Science.</li>
+        <br></br>
+        <h2>About Ashish's Hands-on Experience</h2>
+        <br></br>
+        Ashish has experience in data extraction and retrieval. He is proficient in SQL, Python and AWS. He has extensive experience in geospatial analysis and can build automated models using geospatial software such as ESRI ArcGIS. He has extensive experience working with tabular, natural language and image data. 
+        <br></br>
+        <br></br>
+        On the analytical side, Ashish has experience using 'simple' linear to, more advanced, ensemble machine learning models, as well as performing statistical tests. He has performed statistical tests on collision data and has identified hypotheses concerning age group and weather type variables. Ashish is able to build data pipelines and can allow dashboarding of your data.
+        <br></br>
+        <br></br>
+        Finally, Ashish takes pride in clear, intuitive summaries and data visualizations. He is well established within public speaking and report writing and can communicate findings to all levels in the chain of command. 
+<br></br>
+<br></br>
+            <h2>Certifications</h2>
+            <p>
+              <br></br>
+              Ashish has achieved the following accredited certifications:
+              <br></br>
+              <br></br>
+              <li><AnimatedLink href="https://www.yAnimatedLinkuracclaim.com/badges/0edcedc7-761d-4096-9c1f-0e5d5a4d5de0?source=linked_in_profile">Microsoft: Azure Fundamentals</AnimatedLink></li>
+              <li><AnimatedLink href="https://courses.edx.org/certificates/81bef9d107b84843b839010ae2b7d849">Microsoft: Analyzing and Visualizing Data with Power BI</AnimatedLink></li>
+              <li><AnimatedLink href="https://courses.edx.org/certificates/fc93f8e5fb4e44b284942a5734eb21c7">Massachusetts Institute of Technology: Sustainable Building Design</AnimatedLink></li>
+              <li><AnimatedLink href="https://coursera.org/share/1a86eab386d1c66f418b3ef1b73915e8">Meta Marketing Science</AnimatedLink></li>
+            </p>
         <br></br>
         Feel free to reach out to Ashish if you have any questions.
         </p>
