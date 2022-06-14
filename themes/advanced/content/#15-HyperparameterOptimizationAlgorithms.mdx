@@ -1,23 +1,29 @@
 ---
 title: "Hyperparameter Optimization Algorithms"
-cover: images/HPO/HPO_Libaries.png
+cover: images/HPO/hpo.jpeg
 coverAlt: "Hyperparameter Optimization Algorithms"
 description: "Hyperparameter Tuning"
-datePublished: "2022-06-27"
-dateModified: "2022-06-27"
+datePublished: "2022-10-20"
+dateModified: "2022-10-20"
 category: "Machine Learning"
 tags:
   - Machine Learning
 ---
 
+READING:
+
+- [Massive Parallel Hyperparameter Optimization](https://blog.ml.cmu.edu/2018/12/12/massively-parallel-hyperparameter-optimization/)
+
+
 # Introduction
 
-There are many Hyperparameter Optimization (HPO) libraries to aid in finding the best hyperparameters for ML models but all of them incorporate different search algorithms, consequently, outputing different parameters and model scores. The library to use ultimately depends on the machine learning problem that you are trying to solve. 
+There are many Hyperparameter Optimization (HPO) libraries to aid in finding the best hyperparameters for ML models but all of them incorporate different search algorithms, thus, outputting different parameters and model scores if the number of iterations are not sufficient.
 
-Nonetheless, the two most popular HPO search algorithms: Bayesian Optimization and Sequential model-based optimization (SMBO). These methods are far superior when compared to exhaustive methods such as grid search and randomized grid search. 
+The library to use ultimately depends on the machine learning problem that you are trying to solve and complexity of the model, for example, deep neural networks have a larger number of parameters and an exhaustive search would take days (or even weeks!).
 
-The issues with the exhaustive methods is that we do not use past evaluation results to select next hyperparameters to evaluate. It evaluates all possible combinations (or number of defined iterations, `n_iters`, for randomized) within the parameter grid and reports back the best combination. 
+Exhaustive methods such as grid search (and randomized grid search) evaluates all possible hyperparameter combinations (or number of defined iterations, `n_iters`, for randomized) within the parameter grid and reports back the best combination. The issues with the exhaustive methods is that we do not use past evaluation results to select next hyperparameters to evaluate. The two most popular HPO search algorithms: Bayesian Optimization and Sequential model-based optimization (SMBO).
 
+![Hyperparameter tuning problem with a 2D search space from CMU ML Blog.](images/HPO/hpo.jpeg)
 
 ### Bayesian Optimization
 
