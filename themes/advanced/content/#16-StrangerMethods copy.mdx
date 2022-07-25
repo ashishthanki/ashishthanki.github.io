@@ -1,0 +1,27 @@
+---
+title: "Stranger Methods"
+cover: images/cover_1.jpeg
+coverAlt: "Clear Beach"
+description: "Understanding dunder methods"
+datePublished: "2022-06-14"
+dateModified: "2022-06-14"
+category: "Shorts"
+tags:
+  - Programming
+  - Python
+---
+
+
+The Python `Data Model` has more than 80 special method names. Special methods are symbolised with two underscores on either side of a word, for example "`__add__`". By implementing your own dunder methods Python then calls them when you use them with operators or python's built-ins.
+
+**The Python interpreter calls special methods so you do not have to!** You do not typically write `my_object.__add__`, you simple would call `+` or make another method `add` that calls the `__add__` method you implemented.
+
+Another great example of Python's interpreting calling dunder methods without you know is the `__repr__` special method. This is the built-in string representation of the object for inspection. Without a custom `__repr__`, the Python console would display your class instance as `<MyObject object @ 0X11e123476>`. The `repr` built-in is called as a fallback if a `__str__` is not created - which is why Python programmers choose to implement `__repr__` over `__str__` special method. The method can be used with the `!r` operator when using `f-strings` or the `.format`'s string method.
+
+Implementing special methods allows our objects to play nice with Python's built-ins and symbol operations. You can inherit an interface by using the Abstract Base Classes (ABCs) defined within the `collections.abc` module. The ABCs have several abstract method that **must** be implemented within your sub-class class, otherwise your sub-class class would fail - more on that in another post!
+
+
+Further Reading:
+
+
+- Fluent Python book by Luciano Ramalho

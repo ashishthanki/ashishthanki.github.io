@@ -1,0 +1,64 @@
+---
+title: "Hyperparameter Optimization Algorithms"
+cover: images/HPO/hpo.jpeg
+coverAlt: "Hyperparameter Optimization Algorithms"
+description: "Hyperparameter Tuning"
+datePublished: "2022-07-25"
+dateModified: "2022-07-25"
+category: "Machine Learning"
+tags:
+  - Machine Learning
+---
+
+
+# Introduction
+
+There are many Hyperparameter Optimization (HPO) libraries to aid in finding the best hyperparameters for ML models but all of them incorporate different search algorithms, thus, outputting different parameters and model scores if the number of iterations are not sufficient.
+
+The library to use ultimately depends on the machine learning problem that you are trying to solve and complexity of the model, for example, deep neural networks have a larger number of parameters and an exhaustive search would take days (or even weeks!) and would be far from the best approach.
+
+Exhaustive methods such as grid search (and randomized grid search) evaluates all possible hyperparameter combinations (or number of defined iterations, `n_iters`, for randomized) within the parameter grid and reports back the best combination. The issues with the exhaustive methods is that we do not use past evaluation results to select next hyperparameters to evaluate. The two most popular HPO search algorithms: Bayesian Optimization and Sequential model-based optimization (SMBO) use knowledge from previous hyperparameter combinations to select the next set.
+
+![Illustrative diagram showing Hyperparameter tuning problem with a 2D search space from CMU ML Blog.](images/HPO/hpo.jpeg)
+
+### Bayesian Optimization
+
+Similar to the workflow of Bayesian statistics, by keeping track of past evaluation results, we can build a probabilistic model (called a surrogate) that can be represented as p(y | x). The surrogate model is easier to optimize than the objective function, as we are selecting hyperparameters that perform best on the surrogate function. Essentially, this method selects the next hyperparameters in an informed manner unlike grid search or random search. Spending more time in selecting the hyperparameters and fewer calls to the objective function itself – even though the time spent choosing them are incomparable to the time spent in the objective function.
+
+The downside of the Bayesian approach is that many runs of the objective function need to be performed in order to get a representative surrogate model.
+
+### Sequential Model Based Optimization (SMBO)
+
+The Sequential model-based optimization (SMBO) methods are a formalization of Bayesian optimization. Similar to Bayesian optimization, it applies Bayesian reasoning and updates the surrogate model. The popular surrogate models could be Gaussian processes, Random Forest Regressions and Tree Parzen Estimators (TPE).
+
+Surrogate models can be thought of as probability representation of the objective function built using previous evaluation trials. The high dimensional mapping of hyperparameters is called the response surface. The SMBO method has several variations while the Bayesian Optimization approach uses a probabilistic model of the objective function and is less efficient than SMBO methods at finding the best hyperparameters. 
+
+The process then uses the Expecting Improvement criteria (EI) to balance exploration versus exploitation when selecting the next hyperparameters. It creates 2 distributions where the objective function is positive and one that is negative, one distribution where the values are definitely below a threshold (score, i.e. RMSE), l(x), and one distribution where the value are definitely above a threshold, g(x). After doing a bit of maths, it turns out that the EI is proportional to this ratio (i.e. l(x) / g(x)) and maximizing it leads to a larger EI value. 
+
+Using the EI, surrogate model and objective function. We evaluate hyperparameters with the greatest EI on the objective function using its result we can build an accurate surrogate model. An accurate surrogate model will then allow fewer calls to the objective function.
+
+There are many popular python libraries that use SMBO including the extremely popular: [hyperopt](http://hyperopt.github.io/hyperopt/) and [optuna](https://optuna.readthedocs.io/en/stable/index.html).
+
+
+#### Scheduling
+Scheduling is an important aspect of HPO. We can save a lot of time by not following through on poor trials. Some Scheduling algorithms work extremely well with some Bayesian optimisation based libraries and SMBO libraries, the popular ones tend to be Asynchronous Successive Halving Algorithm (ASHA), Median stopping, Hyperband, population based training (PBT).
+
+All of these scheduling algorithms have there use cases and should be looked into further based on your application. For example, PBT takes its inspiration from genetic algorithms where each member of the population can exploit information from the remainder of the population. For example, a worker might copy the model parameters from a better performing worker and randomly explore new hyperparameters by changing the current values randomly.
+
+Some of the best libraries for hyperparameter tuning uses aggressive scheduling to stop poor trials quickly and use this information to select the next hyperparameter set. I would recommend diving deep into the parameters that the scheduler takes, as the default values will mostly likely not be sufficient.
+
+My recommendation would be to use [ASHA schedular](https://arxiv.org/abs/1810.05934) in majority of machine learning problems as it has been shown to outperform existing state-of-the-art hyperparameter optimization methods.
+
+
+# Conclusion
+
+Hyperparameter optimization libraries would select from any number of search algorithms and schedulers. Many, if not all, would offer runtime gains over exhaustive methods. A combination of Bayesian approaches and aggressive early stopping can help evaluate the optimal parameters that we are searching for, even with deep neural networks or tabular search space models. Many libraries offer asynchronous capabilities and GPU compatibility which can introduce 10x speed gains. I would recommend taking a look at [Ray Tune](https://docs.ray.io/en/latest/tune/index.html) HPO library. It is one of the very few HPO libraries that offers experiment execution and hyperparameter tuning at any scale while being able to tune many machine learning frameworks. 
+
+Further Reading:
+
+- [Hyperparameter Optimization for Machine Learning Models Based on Bayesian Optimization](https://www.sciencedirect.com/science/article/pii/S1674862X19300047)
+- [Massive Parallel Hyperparameter Optimization](https://blog.ml.cmu.edu/2018/12/12/massively-parallel-hyperparameter-optimization/)
+- [What is Optuna blog](https://tech.preferred.jp/en/blog/optuna-release/)
+- [New Automatic machine learning based hyperparameter optimization](https://journals.sagepub.com/doi/pdf/10.1177/0020294020932347)
+- [Beyond Grid Search](https://druce.ai/2020/10/hyperparameter-tuning-with-xgboost-ray-tune-hyperopt-and-optuna)
+- [Bayesian Hyperparameter Optimization blog](https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f)
