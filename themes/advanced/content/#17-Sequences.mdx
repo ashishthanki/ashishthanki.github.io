@@ -1,0 +1,66 @@
+---
+title: "Sequences"
+cover: images/array_vs_list.png
+coverAlt: "Arrays vs Lists in memory"
+description: "Interesting facts about sequences."
+datePublished: "2023-01-14"
+dateModified: "2023-01-14"
+category: "Shorts"
+tags:
+  - Programming
+  - Python
+---
+
+I recently started to re-learn parts of Python, and wanted to write this [shorts](category/Shorts) blog post on a few interesting things I have learnt.
+
+Python lists and numpy arrays are both used to store collections of items, but they have some important differences. Every Python object in memory has metadata attached to it. Alongside the header (i.e. the location), Python stores the object's reference count, a pointer to the object's type and a `C` double holding the value.
+
+Lists can perform mathematical operations, but they are not optimized for this task. Numpy arrays, on the other hand, are specifically designed for mathematical operations, and they provide a wide range of built-in functions and methods for performing mathematical operations on arrays. 
+
+Meanwhile, an `array` of floats (for example, `numpy` arrays), only stores the value of the contents, and not as a sequence of Python objects. This is why arrays are much more compact and utilises less memory space.
+
+Performing a concatenation, such as `a += b`, and depending on the object type, would either perform `a.extend(b)` for mutable object, or `a = a + b` for immutable objects. This sort of *augmented assignment* (and others such as `*=` and `-=`) is only possible of the objects has an `__iadd__` ("in-place addition") method otherwise Python falls back to `__add__` method.
+
+Repeated *augmented assignment* for immutable sequences (tuples) is inefficient because the items are not appending to the end of the item but a copy of the target sequence is made with the new items concatenated. 
+
+Another type of sequence in Python is the tuple. Tuples are similar to lists but they are immutable, meaning that once they are created, you cannot change the items inside them. So try answer the question below where we use augmented assignment. 
+
+Question:
+
+What happens when we run the below python code? 
+
+```python
+>>> t = (0, 1, [30, 40])
+>>> t[2] += [50, 60]
+```
+
+Answers?
+
+A: No issues.
+
+```python
+>>> print(t)
+(1, 2, [30, 40, 50, 60])
+```
+
+B: Type Error
+
+```python
+>>> print(t)
+TypeError: 'tuple' object does not support item assignment
+```
+
+C:. Neither of the above.
+
+D: Both 1 and 2.
+
+The answer is actually both A and B. This occurs because when we access the object within the tuple it is a list which is mutable, however, when we assign this new list to the immutable tuple object Python realises that this is an immutable object, hence, fails. 
+
+I will continue to add to this blog as more interesting facts come along.
+
+
+Further Reading:
+
+
+- Fluent Python book by Luciano Ramalho
+- [Deep Dive Into Iterators and Itertools in Python](https://www.youtube.com/watch?v=aumxFs2DO5o&ab_channel=ArjanCodes)
