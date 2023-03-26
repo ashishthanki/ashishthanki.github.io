@@ -1,0 +1,239 @@
+---
+title: "Objects in Python"
+cover: images/python_tutor_online.png
+coverAlt: "Mutable Python data types"
+description: "Python objects can be sneaky and we need to be careful when passing mutable data types as parameters."
+datePublished: "2023-03-26"
+dateModified: "2023-03-26"
+category: "Python"
+tags:
+  - Python
+  - Programming
+---
+
+Python users often forget that everything in Python is an object. Objects work by having a fixed 'address' in memory, as well a reference count and the actual object value (technically also the type). If we are able to understand how objects work and are manipulated in Python we prevent 'ghost' values from appearing, shallow or deep copy conundrum and using mutable types as parameter defaults. 
+
+All of these problems can occur if we skip understanding object references, mutability and recycling. Python can be easy to learn but covertly introduces errors related to mutable objects such as lists.
+
+## Mutable types should not be parameter defaults
+
+Mutable types should not be used as default parameters. Below is an example of using an empty list as a default value for a class parameter.
+
+
+```python
+
+class StaffMembers:
+  def __init__(self, staff=[]):
+    self.staff = staff
+
+  def join(self, name):
+    self.staff.append(name)
+
+  def left(self, name):
+    self.staff.remove(name)
+```
+
+We have a simple class that has methods that either adds and removes staff from your original staff list. Lets start by adding a few names on the staff list and then remove them - checking to see if everything works as it should. 
+
+
+```python
+>>> staff_list = ['Ashish', 'Lucy', 'John']
+>>> shop1 = StaffMembers(staff_list)
+>>> shop1.staff
+['Ashish', 'Lucy', 'John']
+>>> shop1.join('Pratik')
+>>>shop1.left('John')
+>>>shop1.staff
+['Ashish', 'Lucy', 'Pratik']
+>>> ghost_shop1 = StaffMembers()
+>>> ghost_shop1.join('Casper')
+>>> ghost_shop1.staff
+['Casper']
+>>> ghost_shop2 = StaffMembers()
+>>> ghost_shop2.staff
+['Casper']
+```
+
+Oh no! 'Casper' has managed to ghost his way onto `ghost_shop2` staff list! That is because instances of the `StaffMembers` class with no `staff` argument provided shares the same object amongst themselves. In this case the default `staff` value `['Casper']`.
+
+This bug is subtle but can cause catastrophic problems when creating multiple instances using default mutable parameters. The subtle problems don't stop there though! 
+
+## Defend against Mutable Parameters
+
+Lets handle the ghost problem by writing an `if-else` condition that creates an empty list.
+
+Lets see an example of a class that uses a mutable parameter, `list`: 
+
+```python
+
+class StaffMembers:
+  def __init__(self, staff=None):
+    if staff is None:
+      self.staff = []
+
+    else:
+      self.staff = staff
+
+  def join(self, name):
+    self.staff.append(name)
+
+  def left(self, name):
+    self.staff.remove(name)
+```
+
+Unlike the previous example this `Staff Members` class handles the scenario where we create an empty list if the `staff` argument is empty.
+
+
+```python
+>>> staff_list = ['Ashish', 'Lucy', 'John']
+>>> shop1 = StaffMembers(staff_list)
+>>> shop1.join('Tracy')
+>>> shop1.staff
+['Ashish', 'Lucy', 'John', 'Tracy']
+>>> shop2 = StaffMembers()
+>>> shop2.staff
+[]
+>>> shop3 = StaffMembers()
+>>> shop3.staff
+[]
+```
+
+So far so good, everything is what we would expect. But lets have a look at the original `staff_list`
+
+```python
+>>> staff_list
+['Ashish', 'Lucy', 'John', 'Tracy']
+```
+
+Whoops! Looks like we have inadvertently changed the original `staff_list` variable.
+
+### solution
+
+Now that we understand how Python objects work. We must ensure that we are aware of how mutable and immutable objects can affect our code and the bugs it might introduce.
+
+The solution involves making a copy of the parameter within the class, unless we **intended** to mutate the object itself. Sure, this does increase CPU and memory but a compromise between making things a little slower and using more resources is better than introducing hidden bugs.
+
+
+```python
+# The solution requires changing the __init__ function.
+
+def __init__(self, staff):
+  if staff is None:
+    self.staff = []
+  else:
+    self.staff = list(staff)
+```
+
+This ensures `staff` attribute is a list and the class methods do not affect the original list parameter. The `list` built in creates a new list object in memory. However, this is a shallow copy of the list and fails when we have nested mutable objects. The shallow copy only copies the container but uses pointers for the objects within it. I highly recommend running the code below at [Online Python Tutor](https://pythontutor.com/) to visualise what happens.
+
+```python
+l1 = [1, [22, 33, 44], (2, 3, 4)]
+l2 = list(l1)
+l1.append(100)
+l1[1].remove(33)
+print('l1: ', l1)
+print('l2: ', l2)
+l2[1] += [55, 66]
+l2[2] += (5, 6)
+print('l1: ', l1)
+print('l2: ', l2)
+```
+Notice how a new tuple object was created for `l2` but both `l1` and `l2` reference the same list.
+
+
+The `copy` module was created to handle these subtle bugs. We can use the `deepcopy` function if we have nested mutable objects but be careful as this might cause problems if you have cyclic references! 
+
+```python
+>>> a = [1, 2]
+>>> b = [a, 3]
+>>> a.append(b)
+>>> a
+[1, 2, [[...], 3]]
+```
+
+## Variables are not Boxes
+
+> Variables are not boxes. 
+Lynn Stein, professor at MIT. 
+
+Hopefully by now this quote becomes obvious to you. Variables, in Python, are like sticky notes (or another other type of label!) not like boxes. We can assign variables to an object but not the other way around. 
+
+```py
+>>> a = [1, 2, 3]
+>>> a = b
+>>> a.append(4)
+>>> b
+[1, 2, 3, 4]
+```
+
+Notice how `b` changes even though we explicitly asked to change `a`. When we use the `=` operator we are *binding* the `b` to the object on the right, in our case, `a` (which is is bound to the list `[1, 2, 3]`).
+
+Variables are bound to objects only after the object has been successfully created. 
+
+```python
+class Example:
+  def __init__(self):
+    print('My Example Class')
+```
+
+Simple class that prints when the object is called.
+
+```python
+>>> x = Example() * 10
+My Example Class
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Input In [10], in <cell line: 1>()
+----> 1 x = Example() * 10
+
+TypeError: unsupported operand type(s) for *: 'Example' and 'int'
+>>> dir()
+['Example', '__builtin__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__',]
+```
+
+The `x` variable was never created, the `Example` class instance was initialized but the multiplication resulted in an error so nothing actually got bound to `x`. To read an assignment in Python, read the right hand side first because that is where the object is created or retrieved from. After that the left hand side is simply just a label stuck to it.
+
+The Python Garbage collector is responsible for cleaning objects from memory. The primary algorithm it uses is the object's reference count, `refcount`. Once this value reaches zero the object is immediately destroyed. CPython calls the objects `__del__` method when the `refcount` reaches zero. Most data scientists won't need to implement their own `__del__` method anyway but is good to know what happens under the hood when python cleans memory. 
+
+### First class objects
+
+Now that we understand objects we can move on to functions. Functions in Python are first-class objects and are commonly defined when the entity can be:
+- Created at runtime.
+- Assigned to a variable or element in a data structure.
+- Passed as an argument to a function.
+- Returned as the result of a function.
+
+Integers, strings and dictionaries are other examples of first-class objects in Python.
+
+
+### Callable objects
+
+Callable objects are objects that the call operator `()` can be applied to. To find out if an object is callable, you can use the `callable()`  built-it function. There are nine callable types in Python (from version 3.9):
+
+- User defined functions: using the `def` statements or `lambda` expressions.
+
+- Built-in function: function implemented in C or CPython, such as `len`.
+
+- Built in methods: methods implemented in C, like `dict.get`.
+
+- Methods: functions defined the body of a class.
+
+- Classes: a class runs `__new__` method to create an instance.
+
+- Class instances: if a class has a `__call__` method then you can use its instance to invoke functions. 
+
+- Generator functions: functions or methods that use a `yield` keyword in the body. 
+
+- Native coroutine functions: functions or methods defined with `async def`. 
+
+- Asynchronous generator functions: functions or methods defined with `async def` and have a `yield` in their body.
+
+The safest way to determine if an object is callable is to use the `callable()` built in function.
+
+All nine types of functions have a first-class nature in Python. This means we can assign functions to variables and pass them to other functions, store them in data structures and access function attributes for tasks.
+
+While we talk about functions, I would encourage against using `lambda` expressions because they can be difficult to read (sometimes unreadable) but not complex enough in their nature as they must not contain other Python statements such as `while`, `try`, `if`, etc. Most functions should be converted to a `def statement` or use a functional programming style by importing the `operator` module.
+
+
+There are times when we need a pass a function as argument or return a function as a result. These are called Higher order functions. Examples includes `map` and `filter`, while the `key` argument for the built in `sorted` uses a function to determine how to sort each item.
+
