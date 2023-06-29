@@ -16,7 +16,7 @@ const config: SiteConfig = {
     themeColor: "#000",
     rss: "test",
     rssTitle: "test",
-    googleAnalyticsId: "UA-173551441-1",
+    googleAnalyticsId: "G-LTSDW45Z4C",
   },
 
   // User configuration
