@@ -1,0 +1,74 @@
+---
+title: "Model Drift and Concept Drift"
+cover: images/data-science/data-science-process.png
+coverAlt: "Model and Concept Drift"
+description: "Maintaing a good in-production model requires understanding the understanding of model and concept drift."
+datePublished: "2023-07-31"
+dateModified: "2023-07-31"
+category: "Ops"
+tags:
+  - Machine Learning
+  - DevOps
+---
+
+
+Model drift is a silent killer for in-production models and something that data scientists need to be mindful of. The importance of MLOps has been discussed in my previous blogs [here]() but model drift requires a lot of upfront thinking and tying in with the wider software developing teams.
+
+Model drift is the occurrence of the deterioration in performance of a machine learning model over time due to underlying changes in the input data distribution. This is commonly referred to as model degradation. Addressing model drift early is crucial in maintaining accuracy and relativity of models in production. 
+
+There are several reasons why this happens, it ranges from changes in user behaviour to faulty sensors. 
+
+There are different types of model drift:
+- Concept drift: although part of a larger umbrella of various types of drift, it can be summarised as the changes in the underlying pattern in the data which then causes degradation in the model. It occurs when statistical properties of the target variable and the relationship to the feature (or between features!) changes over time. For example, if we gather data using equipment that suddenly becomes faulty then it will impact model performance overtime. The new data no longer reflects the data distribution we previous had. A real life example could be the sudden changes in data during the COVID-19 pandemic.
+
+- Hidden context: when an unmeasured feature affects the prediction. For example, predicting the Earth's temperature would eventually become inaccurate as climate change is the hidden context behind it. Climate change is inaccessible information from the model's view.
+
+
+
+# Stability–Plasticity Dilemma and Blind Adaptation
+
+When implementing a concept drift handling framework, a system automatically that reacts to the changes in the data stream, we must be aware of the Stability-Plasticity Dilemma. Stability is defined as maintaining relevant and reoccurring knowledge, while plasticity is replacing outdated knowledge in response to the new experience. Ideally, the framework that we enforce should have a balance between these concepts.
+
+
+The other strategy is blind adaptation, which is passive approach and is where the model is constantly updated upon new input data instances.
+
+
+# Detecting Concept drift
+
+There is no single God level metric that is used to track drift. We have several options available and it really just depends on the domain.
+
+The typical approach is to utilise test stiastic to keep tabs on the data stream and then calculate the statistic against old samples. The value being calculate is then compared against a pre-defined threshold in order to calculate drift magnitude. 
+
+
+![Concept Drift Detection Method, red lines represent largest group of concept drift detectors.](https://ars.els-cdn.com/content/image/1-s2.0-S0950705122002854-gr2_lrg.jpg)
+
+
+
+There are many names and terms used in the literature to describe the Concept drift. The popular and widely used terms are sudden, gradual, recurring and incremental drifts, this has been explained diagrammatically below.
+
+![Concept drift type])(https://ars.els-cdn.com/content/image/1-s2.0-S0950705122002854-gr8_lrg.jpg)
+
+
+There are different applications areas on which concept drift has been recognised and each application requires different adaptations because of their learning tasks. [This](https://repositorio.inesctec.pt/server/api/core/bitstreams/7f101638-0b33-4863-9dd2-cf991f192c9f/content) paper discusses evaluation methodology of adaptive algorithms for various applications in what problems drift can cause and potential solutions. 
+
+- Monitoring and Control: time series forecasting and anomaly detection. Concept drift can happen due to short interruptions caused by outage or slower interruptions that can occur overtime perhaps due to a faulty sensor. For example, drift in boiler demand prediction can cause incomplete mixing of fuel. This problem may require ADWIN
+
+- Management and Strategic Planning: analyse existing data to plan and manage assets. Concept drift may become apparent because of the static nature of the model. For example, if we used existing data to predict window power it would eventually drift as winds conditions can quickly change and we should opt in online applications instead.
+
+
+- Personal Assistance and Information
+- Ubiquitous Environment Applications
+
+
+
+# Conclusion
+
+There is no single drift detecting metric or method that works better than all others for all scenarios. You need to try several approaches and speak to domain experts on what quantifies bad model performance or concept drift originating from features or target variables.
+
+
+
+
+Further Reading:
+
+- [From concept drift to model degradation: An overview on performance-aware drift detectors](https://doi.org/10.1016/j.knosys.2022.108632)
+- [A survey on concept drift adaptation](https://dl.acm.org/doi/abs/10.1145/2523813)
