@@ -26,30 +26,30 @@ const AboutPage = (): JSX.Element => {
         <h1>About Ashish Thanki</h1>
         <p>
         <br></br>
-        Ashish is a data scientist working works with marketing data, where he has worked in both SCRUM and AGILE environments. He contributes towards the data-driven attribution model and mixed media marketing model that aids the decision making for direct to consumer brands. He works closely with product, customer success, sales and software engineering teams to identify and solve key product and client problems.
+        Ashish is a data scientist who has contributed towards award winning models which have been adopted by multi-million dollar companies. At Fospha he contributes towards the multi-layer data science attribution model and mixed media marketing model that aids the decision making for direct to consumer brands. He works closely with product, customer success, sales and software engineering teams to identify and solve key product and client problems.
         <br></br>
         <br></br>
-        Ashish is a data scientist, and was a professionally registered Mechanical Engineer in London, where he designed several large commercial office buildings. During his time as a Mechanical Engineer, he was named the Head of Early Professionals, where he served as the leader and played a key role in representing young engineers across the business. He led the restructuring and formalised numerous processes. During this time outside of work, he fell in love with Machine Learning which drove him to transition his career.
+        Ashish started as a professionally registered Mechanical Engineer in London, where he designed several large commercial office buildings. During his time as a Mechanical Engineer, he was named the Head of Early Career Professionals, where he served as the leader and played a key role in representing young engineers across the business. He led the restructuring of the organisation and formalised numerous processes. During this time, he fell in love with Machine Learning which drove him to transition his career.
         <br></br>
         <br></br>
-        He started working, as a data scientist, for the local council where he built and led the automation of data analysis and reporting tools. He drove the motivation and was responsible for integrating AWS data pipelines into multiple projects that included IoT devices and APIs. With his help, the council were able to use it for transport planning, evaluation and government bids.     
+        He started working, as a data scientist, for the local government where he built and led the automation of data analysis & reporting tools alongside the design of the data architecture in AWS. He drove the motivation and was responsible for integrating AWS data pipelines into multiple projects that included IoT devices and APIs. With his help, the council improved their transport planning, evaluation and government bids. He created multiple data science projects and identified opportunities on where it could be applied, working in both SCRUM and AGILE environments.
         <br></br>
         <br></br>
-        This website holds a series of blogs written by Ashish, which will be short enough yet sufficiently technical to increase your competence in the subject; giving insights in:
+        This website holds a series of blogs written by Ashish, which will be short enough, yet, sufficiently technical to increase your competence in the subject; giving insights in:
         <br></br>
-        <li>The latest technologies,</li>
+        <li>The latest machine learning technologies,</li>
         <li>providing tutorial based notebooks, and,</li>
         <li>best working practices in Data Science.</li>
         <br></br>
         <h2>About Ashish's Hands-on Experience</h2>
         <br></br>
-        Ashish has experience in data extraction and retrieval. He is proficient in SQL, Python and AWS. He has extensive experience in geospatial analysis and can build automated models using geospatial software such as ESRI ArcGIS. He has extensive experience working with tabular, natural language and image data. 
+        Ashish has experience in data extraction and retrieval. He is proficient in SQL, Python and AWS, with extensive experience in geospatial analysis and building automated models using geospatial software such as ESRI ArcGIS. He also has extensive experience working with tabular, natural language and image data, with in-depth feature analysis and model explainability for each. 
         <br></br>
         <br></br>
-        On the analytical side, Ashish has experience using 'simple' linear to, more advanced, ensemble machine learning models, as well as performing statistical tests. He has performed statistical tests on collision data and has identified hypotheses concerning age group and weather type variables. Ashish is able to build data pipelines and can allow dashboarding of your data.
+        On the analytical side, Ashish has experience using 'simple' linear to, more advanced, ensemble machine learning models, as well as performing statistical tests such as A/B and Chi Squared. He has performed statistical tests on collision data and has identified hypotheses concerning age group and weather type variables. Ashish is able to build data pipelines and dashboarding of data.
         <br></br>
         <br></br>
-        Finally, Ashish takes pride in clear, intuitive summaries and data visualizations. He is well established within public speaking and report writing and can communicate findings to all levels in the chain of command. 
+        Finally, Ashish takes pride in clear, intuitive summaries and data visualizations. He is well established within public speaking and report writing and can communicate findings to all levels in the chain of command. Taking initiative in his work and completes work to highest of standards.
 <br></br>
 <br></br>
             <h2>Certifications</h2>
