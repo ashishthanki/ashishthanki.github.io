@@ -1,0 +1,209 @@
+---
+title: "ML vs Probabilistic Programming"
+cover: images/probabilistic-programming/data_science_use_cases.png
+coverAlt: "ML vs Probabilistic Programming"
+description: "Performing a Statistic tests"
+datePublished: "2023-11-7"
+dateModified: "2023-11-27"
+category: "Statistics"
+tags:
+  - Machine Learning
+  - Statistics
+  - Probabilistic Programming
+---
+
+
+# Introduction
+
+
+Bayesian statistics has had a re-emergence over the last few decades, following the previous century of Non-Bayesian approached which are dominated by statistical theory and practice.
+
+This emergence has been driven more by the availability of new computational techniques than by what many would see as the theoretical and logical advantages of Bayesian thinking.
+
+Bayesian methods uses probability for quantifying uncertainty in inferences based on statistical data analysis. The process of Bayesian data analysis is as follows:
+
+1. Setting the full probability model. A joint probability distribution for all observable and unobservable quantities in a problem. The model should use existing knowledge and understanding of the scientific problem.
+
+2. Conditioning on observed data. Calculating and interpreting the posterior distribution, given the observed data we can find the conditional probability distribution of the unobserved quantities.
+
+3. Evaluating fit of the model and implications of the posterior distribution. This step then allows us to understand if the model assumptions in step 1 are valid or should be modified or expanded.
+
+
+
+## Comparing ML and Statistics
+
+Machine learning is used to solve unsupervised and supervised learning problems. For supervised learning, their primary purpose are to provide predictions for regression and classification problems but are often expanded to gain interpretable insights about the data against the target. Meanwhile, statistics is used to infer a probability distribution about the data.
+ 
+ 
+## Black box vs Probabilistic Programming
+ 
+Machine learning models offer opaque inference, constrained models and uncertainty – black box models. You can only use ML models for certain tasks and inference is very limited, although, shapely makes a good attempt at addressing this - see my [Interpretability](./interpretability) blog posts for more on explaining ML models.
+ 
+Probability programming offers clear inference extreme flexibility and full uncertainty. Bayesian statistics allows us to customize and tailor models while incorporating expert domain knowledge. It is becoming easier to build a custom Bayesian model and get back probabilities based from our data. We can have a good understanding of the posterior distribution and the effectiveness of the prior due to the rapid advancements in computational runtime.
+
+
+## Bayes Formula
+
+We should pause for a second and talk about the Bayes formula. 
+
+Bayesian is great for smaller datasets (as well as large) because we can incorporate priors (i.e. domain knowledge).
+ 
+Bayesian Modelling works best:
+- When there is not a simple prediction problem,
+- Gain insight into the data,
+- Structured data (i.e. hierarchical, time series,…),
+- Integrate domain knowledge into models as priors,
+- Uncertainty plays an important role.
+ 
+It is difficult to establish when a ML model is bad, especially if you don’t have a thorough understanding of the metrics (RMSE, AUC, ROC etc.) or how your model works. Whereas, the Bayesian model will very clearly show you when the model is poor. This can be seen by looking at whether or not the model has converged or not. Bayesian models are generative. They can build new data based on what it has learnt about the existing data.
+
+
+Frequentist and Bayesian models both produce
+ 
+> “computational problems often means there’s a problem with your model”. Gelman 2008.
+
+Unlike ML models which are finely optimized with just a handful of parameters to tune, Bayesian models require more thinking about the data at hand. We need to set the distributions, priors, thoroughly interpret the post model fit visualizations, amongst many more factors. 
+
+Similar to ML models, understanding the low level functionality can help decide which parameters we need to tune. We start with the [Markov Chain Monte Carlo algorithms](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo).
+
+
+## Monte-Carlo
+
+As we cannot easily compute the posterior - because of the integration required! - then we could try to Monte Carlo approximate it. By randomly sampling points in the volume and simulating a random walk - more details on how Monte Carlo methods work below.  However, inversing in order to sample data could be difficult and computationally intensive too. However, an [ergondic](https://qr.ae/pvJFEd) approach could be used to produce a reversible Markov chain that has a near identical distribution to the posterior distribution - in mathematical terms equilibrium distribution which matches our posterior distribution. 
+
+
+Before we dive deep into "solution", understanding Monte Carlo is essential in understanding probabilistic programming. Although, Monte Carlo methods vary, the general procedure is as follows:
+
+1. Define possible inputs based on your domain.
+
+2. Generate random inputs from a probability distribution within your domain.
+
+3. Perform a deterministic computation (i.e. based on a given set of inputs we will always produce the same outputs).
+
+4. Aggregate your results. 
+
+There are, however, two important caveats:
+
+1. Ensure points are uniformly distributed.
+2. Approximation tends to improve with increased number of points.
+
+## Markov Chain Monte Carlo
+
+
+The Markov chain does the Monte Carlo approximation.
+
+Probabilistic programming is getting faster and starting scale more. This is because of the advancements made in calculating the posterior distribution over all the models using Markov Chain Monte-Carlo. The algorithm addresses the main challenge in fitting Bayesian models which is accurately calculating the joint posterior distribution. This method is the most popular and widely used way in calculating the joint posterior distribution over other methods such as Laplace Approximation, Sampling Importance Resampling (SIR) and Maximum a Posterior (MAP) Estimate.
+
+MCMC uses Monte Carlo, which is a simulator that uses a random number generator, to simulate a Markov Chain for which some function of interest is the unique, invariant, stationary distribution. The Markov Chain is a stochastic process which produces an indexed set of random variables. It follows the Markovian condition whereby the probability of the next value given the previous values till the initial value is equal to the same probability of the next value given the previous value. 
+
+> Pr( X_t+1 = x_t+1| X_t = x_t, X_t-1 = x_t-1, ..., X_0 = x_0) = Pr( X_t+1 = x_t+1 | X_t = x_t)
+
+What a Markovian condition is essentially implying is that history does not matter apart from right now.
+
+>  The current state matters but historical states does not matter.
+
+For example, the position you end up when playing snakes and ladders is not based on your previous dice roles and solely based on your current position.
+
+The Markov Chain is a class of algorithms, one of which is the Metropolis sampling algorithm. This algorithm is very general and does not work best for larger models because the parameter space becomes exponentially larger. It essentially uses a random "walk" process to find new values. Fortunately, a better algorithm is available, the *Hamiltonian Monte Carlo algorithm*. The algorithm uses more information about the model, specifically gradient information to explore the posterior distribution.
+
+Just like gradient descent, it struggles to sample from distributions which have local minima, read more [here](https://arogozhnikov.github.io/2016/12/19/markov_chain_monte_carlo.html). 
+
+> Think of Hamiltonian Monte Carlo as a marble that has been placed at the edge of the inside of a bowl. The marble will explore all regions before falling to the minima.
+
+
+## Markov Chain Monte Carlo
+
+In simple terms the MCMC helps compute the posterior distribution. It helps fit a model to data that would not be possible with equivalent approximators such as Grid Approximation or Quadratic Approximation.
+
+The workflow of MCMC involves the following:
+1. Draw samples from a posterior distribution.
+2. Find the posterior probability of samples.
+3. Use these values to calculate next step.
+
+The MCMC involves a sequence of draws from a distribution. History does not matter and the only important thing is where you are now.
+
+To breakdown MCMC:
+
+Monte Carlo is a random simulation process based of an algorithm that uses randomization to perform a calculation. Markov Chain implies history does not matter and only considers where you are now, and the chain represents a sequence of draws from distribution.
+
+Likelihood ratio is the probability of an event happening given B, divided by the probability of the event not happening give B.
+
+The chance of having a royal flush given that you ARE cheating divided by the change of having a royal flush given that you a NOT cheating.
+
+
+## No U-Turn Sampler - NUTS
+
+This is an autotuned version of the Hamiltonian Monte Carlo sampler. As the name suggests, it does not perform any U-Turns and therefore, does not repeat previous calculations.
+
+> Using the marble in a bowl analogy. When the marble has rolled passed he minima to the top of the curve it then preceeds to role back down again along the same path it. The NUTS algorithm prevents this from happening, which reduces run time.
+
+To learn more about other MCMC samplers then check out [this](https://chi-feng.github.io/mcmc-demo/) interactive gallery by Chi Feng. 
+
+
+
+## Automatic graph rewrites
+ 
+As with all machine learning applications, you should be aware of any confounders. For example, If Z is a confounder for X and Y, we can find their is no association through stratify with levels of Z.
+
+
+## Types of Distribution we can use
+
+- Poisson Distribution. Events that have a long tail. For example, number of players to score a hat trick in a given match day. If the data distribution is in fact Poisson then all we would need is the average to able to determine the probability of an extreme case, such as 7 players scoring a hat trick on a given match day.
+
+- Binomial Distribution. Events that follow the central limit theorem tend to reduce in variation as we increase the number of samples. For example, if we wanted to know if a coin is fair. Initially, there will be large variations with the probability of obtaining tails but eventually the Law of Large Numbers (i.e. more coin flips or "trials") results in 50% probability of obtaining heads - assuming we have a fair coin. Probability over a large number of trials will average out to its true underlying change of being tails.
+
+
+
+
+---
+
+## Visualization in Probabilistic Programming
+
+The visualization step in a Bayesian workflow is crucial in understanding the performance of a model, posterior predictive checks and other juxtapositions of the data. Exploratory data analysis is more than simply plotting the data. Although not comprehensive, the 4 step workflow is widely recommended by Andrew Gelman et al in [this](https://arxiv.org/pdf/1709.01449.pd) paper.
+
+1. Visualizing the prior predictive distribution so that the data generating mechanism is broader than the distribution of the observed data. We should opt for weakly associated priors compared to priors that produce data that is indistinguishable from  the observed data. The aim here is to produce data that is plausible.
+
+2. Setting realistic priors to your model will help obtain realistic fake data which can be as valuable as the real data itself. We visualise the generated data through Bivariate plots and Parallel Coordinates plots. Both of these plots can be used to indicate starting points of divergent transitions - many divergent transitions indicate not very good priors. Bayesian models with proper priors are generative models.
+
+When examining the bivariate scatterplots, there should be no obvious pattern to the divergences. Similarly, the parallel coordinate plot should not show any particular structure. This indicates that the divergences that are found are most likely false positives.
+
+3. Posterior predictive checks are vital for model evaluation. This allows us to use a generative model that has been fitted to real data, rather than prior predictive checks which have just been fitted based on our assumption of the data.
+
+4. Pointwise plots to identify outliers and points with high leverage - data points which may be difficult to predict may not necessarily be influential, that is, the predictive distribution does not change much when they are left out. This can be useful for model comparison. We may find that a non-linear model outperforms linear regression based model or a using heavier tailed distribution for observation errors. Plotting the expected log predictive densities (ELPD) values can help us understand this.
+
+Visualisations of bayesian based models are crucial step in ensuring a good model can be used for prediction or inference. The steps highlighted above need to be used in order to iteratively improve the model.
+
+## Conclusion
+
+
+
+#### Further resources:
+
+- [Data Science Use Cases](https://docs.nersc.gov/machinelearning/science-use-cases/)
+- [Bayesian inference with PyMC 3](https://www.youtube.com/watch?v=VVbJ4jEoOfU&ab_channel=PyData)
+- [PyData  Global 2021 The State of the art for Probabilistic Programming](https://www.youtube.com/watch?v=Q9_S7rRnMRs&ab_channel=PyData)
+- [Intuitive Guide to Bayesian Statistics](https://twiecki.io/pages/an-intuitive-guide-to-bayesian-statistics.html)
+- [Anatomy of a Probabilistic Programming Framework by George Ho](https://www.georgeho.org/prob-prog-frameworks/)
+- [PyMC4 Coroutines](https://openreview.net/forum?id=rkgzj5Za8H)
+- [Visualuzations in Bayesian Workflow](https://arxiv.org/pdf/1709.01449.pdf)
+
+
+
+
+Tips when working with Probabilistic programming:
+
+Claimed to help with Hierarchical Bayesian Modelling. Gelman suggests rescaling by 2 standard deviations when working with binary untransformed predictors.
+ 
+This is to allow features to be within the same scale of 0 to 1. This makes the multiple regression coefficients on the same scale as correlations. Gelman said “you can interpret the coefficient as the number of standard deviation changes in y that correspond to a 1 standard deviation change in x.”
+ 
+The paper was written back in 2009. The authors claim that scaling features by dividing by 2 standard deviations helps with linear regression models and provide coefficients that are easily interpretable because it makes the coefficients directly comparable to binary predictors.
+
+Here is the original paper: http://www.stat.columbia.edu/~gelman/research/published/standardizing7.pdf
+ 
+ 
+Reference saying "There is a reasonable literature on various standardizing approaches, but mean-centering and dividing by 1 or 2 standard deviations are very common and usually produce good results." - https://bookdown.org/steve_midway/BHME/Ch5.html
+
+Chapter 6 Simple Models in JAGS | Bayesian Hierarchical Models in Ecology
+References:
+ 
+Gelman responded to a question about scaling: https://statmodeling.stat.columbia.edu/2010/04/12/a_question_abou_9/

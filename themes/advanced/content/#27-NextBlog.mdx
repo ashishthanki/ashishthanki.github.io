@@ -1,0 +1,78 @@
+---
+title: "Python Memory Management and GIL"
+cover: images/layers_of_abstraction.jpeg
+coverAlt: "Layers of Abstraction"
+description: "Python memory management and GIL"
+datePublished: "2023-12-31"
+dateModified: "2023-12-31"
+category: "Shorts"
+tags:
+  - Python
+  - Programming
+---
+
+TLDR: If you like Sci-kit learn, you'll love sk-time.
+
+Sktime is used for time series machine learning. It can be used for forecasting, time series classification, regression, clustering and working with hierarchical data.
+
+It has an interactive user experience with scikit-learn like interface conventions.
+
+Some documentation, when compared to sci-kit learn, with guides and tutorials throughout, however, sci-kit learn is obviously much more comprehensive.
+
+Before you get started with modelling it is really important to understand the time series problem you have. The documentation states one of the biggest pitfalls is [misdiagnosing forecasting as supervised regression](https://www.sktime.net/en/stable/examples/01a_forecasting_sklearn.html#The-pitfalls-of-misdiagnosing-forecasting-as-supervised-regression). The first step is to understand and explore your data. In regression you are using feature variables to predict the target variable in a cross sectional set up, meanwhile forecasting uses past values to predict future values in a sequential set up.
+
+Mixing these up causes information leakages and over optimistic model performance. The ordering of rows in regression problems is not important, while in forecasting it is. The train test split needs to be done correctly.
+
+In  most cases there is a lot of boiler plate to ensure the data is in the right format and the correct window of data is given to the model to learn. Another pitfull can occur due to this. When assessing the model performance across a given test size, we should not generate forecast across the entire test size. We must generate forecasts either using the recursive strategy, direct strategy or other hybrid strategy. 
+
+```Python
+#! Do not use this approach
+model.fit(x_train)
+y_pred = model.predict(x_test)
+```
+Using the approach above predicts the score for all test samples in one big test size step, however, your problem could be to predict just the next time step. The model performance here would not be accurate.
+
+The way we would do this is by introducing a window of data and having individual predictions using the data 1 time step prior.
+
+```python
+
+# recursive forecasting strategy using 1 time step prior
+predictions = []
+last_window = x_train[-1, :].reshape(1, -1)  # make it into 2d array
+
+last_prediction = model.predict(last_window)[0]  # take value from array
+
+for i in range(len(fh)):
+    predictions.append(last_prediction)
+
+    # update last window using previously predicted value
+    last_window[0] = np.roll(last_window[0], -1)
+    last_window[0, (len(last_window[0]) - 1)] = last_prediction
+
+    # predict next step ahead
+    last_prediction = model.predict(last_window)[0]
+
+# combine all predictions
+y_pred_rec = pd.Series(predictions, index=y_test.index)
+```
+
+As you can see, the prediction we want is exactly 1. We then expand and get the remainder of the predictions into one series. 
+
+`sktime` prevents all of this boilerplate code completely and handles this in the background with the code becoming modular and maintainable.
+
+```python
+from sklearn.neighbors import KNeighborsRegressor
+
+from sktime.forecasting.compose import make_reduction
+# all in two lines!
+regressor = KNeighborsRegressor(n_neighbors=1)
+forecaster = make_reduction(regressor, window_length=15,strategy="recursive")
+forecaster.fit(y_train)
+y_pred = forecaster.predict(fh)
+```
+
+
+
+#### Further Reading:
+
+- [PyData Talk Jonathan Bechtel - Forecasting With Classical and Machine Learning Methods](https://youtu.be/QPIimJphFu8?si=atXo032T9i9V18IH)

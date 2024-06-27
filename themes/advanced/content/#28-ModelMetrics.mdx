@@ -1,0 +1,44 @@
+---
+title: "Regression Model Metrics"
+cover: images/layers_of_abstraction.jpeg
+coverAlt: "Layers of Abstraction"
+description: "Regression Model Metrics"
+datePublished: "2023-12-31"
+dateModified: "2023-12-31"
+category: "Shorts"
+tags:
+  - Python
+  - Programming
+---
+
+Do you really understand model metrics? Yes, of course you know the definitions and the formulas but what do they actually mean when they interact with a model. When should you pick one over the other? How does training your model on MAE help estimate your values compared to using MSE as your loss function instead?
+
+
+I wanted to write this blog after reading the following sentence in Sci-kit learn's [documentation](https://scikit-learn.org/stable/auto_examples/applications/plot_cyclical_feature_engineering.html#sphx-glr-auto-examples-applications-plot-cyclical-feature-engineering-py).
+
+> The fit method of the models used in this notebook all minimize the mean squared error to estimate the conditional mean instead of the mean absolute error that would fit an estimator of the conditional median.
+
+I then asked chatGPT what does this mean? Sure I know what this means individually but how does it work together. I got back a response that helped explain this but I had more questions. So here goes, my thoughts on regression model metrics and which one would be good for you.
+
+## MSE vs MAE
+How does the chose of training on MSE or MAE in modelling reflect different priorities and considerations?
+
+When we have data with lots of outliers then using MAE will desensitize the model to these errors. MSE will square these values and therefore the model will penalize large deviations between predicted and actual values. 
+
+If we want our model to be robust to outliers then you need to use MAE. When minimising the MAE, as a loss function, then predictions will tend towards the median value.
+
+However, if our goal is to produce a model that penalizes these errors and have heavily fine tuned predictions then MSE is the way to go. When minimising the MSE, as a loss function, then predictions will tend towards the mean value.
+
+The RMSE has exactly the same reasoning with the only exception being interoperability of the metric. If the target variable is unit dependent (i.e. SI units, currency, people etc.) then having an error metric in the original units can be helpful.
+
+
+
+Conclusion
+
+When evaluating the performance of your model be sure to use a Naive Linear Regressor. It is a very basic or straightforward implementation of linear regression without additional complexities or enhancements. Acting like a starting point or a baseline model before using more sophisticated models to compare performance.
+
+The best way to decide which metric to use is understanding your data. So, stop skipping the first few steps of the [data science E2E](./DaraScienceE2E) steps so you can start modelling. Modelling is the smallest part of the workflow. If you do the other steps correctly you won't be spending no more than 10% of your time on this step.
+
+#### Further Reading:
+
+- [PyData Talk Jonathan Bechtel - Forecasting With Classical and Machine Learning Methods](https://youtu.be/QPIimJphFu8?si=atXo032T9i9V18IH)
