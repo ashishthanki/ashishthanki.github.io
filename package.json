@@ -48,7 +48,7 @@
   "dependencies": {
     "@stylelint/postcss-css-in-js": "^0.37.2",
     "babel-plugin-styled-components": "^1.13.3",
-    "gatsby": "^4.0.0",
+    "gatsby": "^4.25.9",
     "gatsby-plugin-styled-components": "^5.0.0",
     "gatsby-theme-amaranth": "*",
     "react": "^17.0.2",
