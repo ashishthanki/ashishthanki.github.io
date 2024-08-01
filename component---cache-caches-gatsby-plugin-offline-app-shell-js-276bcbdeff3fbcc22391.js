@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkgatsby_starter_advanced=self.webpackChunkgatsby_starter_advanced||[]).push([[306],{261:function(e,t,a){var n=a(5318);t.__esModule=!0,t.default=void 0;var u=n(a(5354)),r=n(a(7294)),d=function(e){function t(){return e.apply(this,arguments)||this}return(0,u.default)(t,e),t.prototype.render=function(){return r.default.createElement(r.default.Fragment,null)},t}(r.default.Component),l=d;t.default=l}}]);
+//# sourceMappingURL=component---cache-caches-gatsby-plugin-offline-app-shell-js-276bcbdeff3fbcc22391.js.map
