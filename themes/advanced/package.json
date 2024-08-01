@@ -112,7 +112,7 @@
     "jest": "^27.3.1",
     "markdownlint-cli2": "^0.3.2",
     "memfs": "^3.3.0",
-    "prettier": "^2.4.1",
+    "prettier": "^3.3.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-test-renderer": "^17.0.2",
