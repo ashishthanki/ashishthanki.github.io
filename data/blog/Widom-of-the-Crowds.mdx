@@ -1,14 +1,9 @@
 ---
-title: "Wisdom of the Crowds"
-cover: images/Wisdom-of-the-Crowds/Crowd-of-People.jpg
-coverAlt: "A crowd of people."
-description: "This blog covers the wisdom of the crowds effect and how we can apply it when developing machine learning models."
-datePublished: "2021-06-09"
-dateModified: "2021-06-09"
-category: "Shorts"
-tags:
-  - Ensemble
-  - Machine Learning
+title: 'Wisdom of the Crowds'
+summary: 'This blog covers the wisdom of the crowds effect and how we can apply it when developing machine learning models.'
+date: '2021-06-09'
+tags: ['Ensemble', 'Machine Learning']
+draft: false
 ---
 
 *This blog is part of the short blog series, where I will give a brief insight on various key topics within data science.*
@@ -19,25 +14,25 @@ This article describes the concept of the Wisdom of the Crowds and how we can re
 
 You have probably seen a game show, if not then Google [Who Wants to be a Millionaire](https://youtu.be/SpzZBYTdQO8?t=104). The show has an option, where the contestant can ask the audience and, most often, majority of the audience would get the question correct. However, there are a few exceptions where majority of audience gets it wrong and the contestant is none the wiser.
 
-![Audience Vote](./images/Wisdom-of-the-Crowds/audience_vote.PNG)
+![Audience Vote](/static/images/Wisdom-of-the-Crowds/audience_vote.PNG)
 
 This could have been because one row of the audience just copied each other, or, carried out the exact same methodology in answering the question. Similar to how an entire class of pupils get the same question wrong because of that one awful teacher that showed them the incorrect way to approach algebra!
 
-![Bad Mathematics Teacher](./images/Wisdom-of-the-Crowds/bad-maths-teacher.jpeg)
+![Bad Mathematics Teacher](/static/images/Wisdom-of-the-Crowds/bad-maths-teacher.jpeg)
 
 To avoid this outcome, we could split the audience so that they cannot copy each other, or offer pupils different teachers. This will allow the audience to think independently from one another and allow a decentralised approach to solving problems to pupils.
 
-![Ensemble Methods](./images/Wisdom-of-the-Crowds/Ensemble.png)
+![Ensemble Methods](/static/images/Wisdom-of-the-Crowds/Ensemble.png)
 
 This is exactly how an Ensemble model, that contains different types of machine learning models, works. Furthermore, because each model are trained using different algorithms we can be sure that each model is independent and decentralised.
 
 For example, rather than having 3 logistic regression models within the Ensemble, you should create 3 independent models that have different learning algorithms, such as a Support Vector Machine (SVM), Decision Tree and Logistic Regression. You can even add other complex ensemble models such as Bagging, Boosting and Random Forests together. A final meta-estimator can then be trained which takes the output of these models as its input and provides a final prediction.
 
-![MNIST Ensemble model](./images/Wisdom-of-the-Crowds/mnist_ensemble.png)
+![MNIST Ensemble model](/static/images/Wisdom-of-the-Crowds/mnist_ensemble.png)
 
 An example of an ensemble model is shown on the image below using the [MNIST Digit dataset](https://www.kaggle.com/c/digit-recognizer) - * I have produced a CNN model that came in the top 15% in the Kaggle competition - [see here](https://www.kaggle.com/ashishthanki95/competitions)*. As you can see, some classifiers have predicted the value of 2, however majority of the models within the ensemble has correctly predicted the value of 1. Therefore, the final model predicted 1.
 
-![MNIST_Ensemble_Classifier](./images/Wisdom-of-the-Crowds/mnist_ensemble_classifier.jpg)
+![MNIST_Ensemble_Classifier](/static/images/Wisdom-of-the-Crowds/mnist_ensemble_classifier.jpg)
 
 ### Summary
 

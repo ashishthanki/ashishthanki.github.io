@@ -1,14 +1,9 @@
 ---
-title: "ML Ops"
-cover: images/MLOps/MLOps.png
-coverAlt: "Ml Ops"
-description: "Performing a Statistic tests"
-datePublished: "2022-06-05"
-dateModified: "2022-06-05"
-category: "Ops"
-tags:
-  - Machine Learning
-  - DevOps
+title: ML Ops
+tags: ['Machine Learning', 'DevOps']
+summary: 'Performing a Statistic tests'
+date: '2022-06-05'
+draft: false
 ---
 
 # Introduction
@@ -20,7 +15,7 @@ There are two levels for monitoring a machine learning model in production: Func
 Functional monitoring involves monitoring the model performance, input, and output.
 Operational monitoring involves monitoring at the system and resource levels.
 
-![ML Ops Cycle](images/MLOps/MLOps_Cycle.png)
+![ML Ops Cycle](/static/images/MLOps/MLOps_Cycle.png)
 
 ## Functional monitoring
 
@@ -72,7 +67,7 @@ The input data is arguably one that could change the most. However, the model is
 Similar to data drift, model drift occurs when the relationship between the features and the target no longer holds due to changes over time. The model predictions become increasingly unreliable and less accurate over time, and no longer meet the benchmark, business metrics and KPIs set out.
 
 
-![Model Drift Example due to COVID-19](images/MLOps/model_drift.png)
+![Model Drift Example due to COVID-19](/static/images/MLOps/model_drift.png)
 
 There are several types of model drift:
 
@@ -133,7 +128,7 @@ This is primarily an infrastructure problem. We need to make sure that the appli
 
 The metrics that may be worth monitoring include, but not limited to: CPU/GPU utilization, memory utilization, failed requests, API calls, and response time. This may not be the direct responsibility but it's extremely helpful to be aware of the system that is powering your model. 
 
-![Model Retraining](images/MLOps/model_retraining.png)
+![Model Retraining](/static/images/MLOps/model_retraining.png)
 
 #### Pipelines
 
@@ -158,7 +153,7 @@ Overall, with proper monitoring we can ensure that model performance is optimal 
 
 To learn more, I would recommend reading Google Cloud's documentation on CI/CD for ML systems [here](https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning). The three levels of MLOps can clarify what needs to be developed in your ML pipeline and what you can do to build it, below is an image of level 2 - a robust and automated CI/CD system.
 
-![A Robust CI/CD System](images/MLOps/CI_CD_System.png)
+![A Robust CI/CD System](/static/images/MLOps/CI_CD_System.png)
 
 
 Further Reading:

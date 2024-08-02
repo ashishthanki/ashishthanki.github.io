@@ -1,24 +1,16 @@
 ---
-title: "Three Fundamentals"
-cover: images/software-fundamentals/data-science-venn-diagram.png
-coverAlt: "Three Fundamentals of Data Science."
-description: "This blog covers the 3 fundamentals a data scientist should be aware of, especially when coming from another field of study."
-datePublished: "2021-04-18"
-dateModified: "2021-04-18"
-category: "Shorts"
-tags:
-  - Fundamentals
-  - Software Engineering
+title: 'Three Fundamentals'
+summary: 'This blog covers the 3 fundamentals a data scientist should be aware of, especially when coming from another field of study.'
+date: '2021-04-18'
+tags: ['Fundamentals', 'Software Engineering']
+draft: false
 ---
-
-<!-- markdownlint-disable-->
-
 
 *This blog is part of the short blog series, where I will give a brief insight on various key topics.*
 
 **TLDR**: The best way to learn data science is by doing it in the form a project. I would not typically recommend MOOCs as many of them brush over key concepts without explaining algorithms or lines of code. This makes data science seem like an organised structured process with the same steps for every project. This could not be further from the truth. The word "science" from data science highlights why. You need to carry out controlled experiments and discuss what you have observed before making a final conclusion. Only proceeding forward when you have clear understanding on how things work. 
 
-![Degree Field of Study](./images/software-fundamentals/degree-field-study.png)
+![Degree Field of Study](/static/images/software-fundamentals/degree-field-study.png)
 
 I recently took Data Camp's [Software Development for Data Scientist](https://campus.datacamp.com/courses/software-engineering-for-data-scientists-in-python/software-engineering-data-science?ex=1) course and would highly recommend that you check it out too. It is a great course for someone who has some data science project experience but is lacking in the software development front - which most data scientists are! Most of us do not come from a computer science background. 80% of data scientists do not have computer science degree and learn on the job or outside of work. 
 
@@ -37,7 +29,7 @@ Many of us choose notebooks because it helps us visualize our code and data bett
 
 Another approach would be to code the data processing, visuals, and machine learning into separate `.py` files and import them into your notebook. This will prevent you from having lengthy cells with more than 5 lines of code. It is best to limit the code per cell to less than 5 lines of code. Every cell should have ONE process and outcome, not multiple. For example, data importing and cleaning should not happen in one cell. 
 
-![Cell with less than 5 lines of code combining the 2 datasets together.](./images/software-fundamentals/combine-dataset.PNG)
+![Cell with less than 5 lines of code combining the 2 datasets together.](/static/images/software-fundamentals/combine-dataset.PNG)
 
 Watch [this Pydata video](https://www.youtube.com/watch?v=2QLgf2YLlus) for more best practices for working with jupyter notebooks. The speaker even goes has far as saying that your notebooks should be as small as 4-10 cells each. 
 
@@ -92,13 +84,13 @@ The benefit of well documented code allows you to use tools such as [Sphinx](htt
 
 Having tests to check whether you get back what you expect from your code can increase your [productivity massively](https://realpython.com/python-testing/). You may be required to change a function or class within your code to factor in a new category or column. A well written test would be able to catch any bugs that may have been introduced from the changes. Google's approach is to write tests first before you code. This is a good practice to take on board. Without tests this would go by unnoticed. 
 
-![Tests](./images/software-fundamentals/tests.jpg)
+![Tests](/static/images/software-fundamentals/tests.jpg)
 
 Tests are a complex topic, which is why they are most often not carried out. However, having simple tests are better than having none. Being able to write maintainable methods to validate your code, alongside other tools, such as [Codecov](https://about.codecov.io/) will tell you which part of your code is being covered by your tests. This will make writing your test methods easier.
 
 As discussed in my [Starting with Package Managers](./Starting-with-Package-Managers) and [Docker Devcontainers](./Docker-Devcontainers) blogs, the problem of "does not work on my computer" can occur. Having a well written test in place can check and allow you to understand what the problems are. This can avoid having to interpret the generic `ImportError` or `ValueError`.
 
-![Travis CI with GCP](./images/software-fundamentals/continuous-delivery-with-travis-ci.png)
+![Travis CI with GCP](/static/images/software-fundamentals/continuous-delivery-with-travis-ci.png)
 
 Tools such as Travis CI can help, by continuously running your tests without you explicitly calling them via the command line. You can even introduce scheduled tests which can notify you if a test fails, this can allow you to catch bugs introduced by updates to your dependencies.
 

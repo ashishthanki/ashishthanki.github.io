@@ -1,17 +1,10 @@
 ---
-title: "Interpreting ML Models Part 2"
-cover: images/cover_6.jpeg
-coverAlt: "A view of mountains."
-description: "Second part in understanding ML Models."
-datePublished: "2021-09-26"
-dateModified: "2021-09-26"
-category: "Interpretability"
-tags:
-  - Machine Learning
+title: 'Interpreting ML Models Part 2'
+summary: 'Second part in understanding ML Models.'
+date: '2021-09-26'
+tags: ['Machine Learning', 'Interpretability']
+draft: false
 ---
-
-<!-- markdownlint-disable-->
-
 
 # Introduction
 
@@ -34,7 +27,7 @@ A shapley value is based on game theory. Each feature represents a “player” 
 ...If that didn't make sense then I would suggest learning a bit more about Game Theory, once you do that replace the word “features” with “players” in the above explanation and it should click.
 
 
-![SHAP values. Example SHAP value plot. Further explanation is provided below.](./images/Interpreting-ML-Models-Part2/SHAP_values.png)
+![SHAP values. Example SHAP value plot. Further explanation is provided below.](/static/images/Interpreting-ML-Models-Part2/SHAP_values.png)
 
 
 When a prediction is made, the summation of an instance's SHAP values for each feature explains why the prediction was different from the baseline. The baseline is the average shapley value for all predictions. If the SHAP value is large for a given feature than the contribution to the model's prediction is large. 
@@ -63,14 +56,14 @@ The [`SHAP`](https://shap.readthedocs.io/en/latest/index.html) library is able t
 
 ### 1. Force Plots
 
-![Force Plot example. A force plot example.](./images/Interpreting-ML-Models-Part2/force_plot.png)
+![Force Plot example. A force plot example.](/static/images/Interpreting-ML-Models-Part2/force_plot.png)
 
 
 A force plot shows, for a single instance, which features contribute towards pushing the model to a certain value. As you can see above the the feature values shown in blue are reducing the prediction value while the feature vales shown in red are increasing the prediction. 
 
 ### 2. Summary Plots
 
-![Summary Plots. Taken from research paper on interpreting machine learning models of biological age.](./images/Interpreting-ML-Models-Part2/SHAP_summary-plots-example.png)
+![Summary Plots. Taken from research paper on interpreting machine learning models of biological age.](/static/images/Interpreting-ML-Models-Part2/SHAP_summary-plots-example.png)
 
 We can combine multiple force plots together and then rotate it to have a summary across the entire dataset. Summary plots show many useful insights into all the features, each dot shows three characteristics: 
 
@@ -84,11 +77,11 @@ In the plots you can gain a strong intuition on how a decision was made by your 
 
 ### 3. SHAP Dependence Plots
 
-![SHAP Dependence Plots. SHAP Dependence plot showing the affects of feature magnitude (age) on predicted values (marital status) and SHAP value.](./images/Interpreting-ML-Models-Part2/SHAP_dependence_plots.png)
+![SHAP Dependence Plots. SHAP Dependence plot showing the affects of feature magnitude (age) on predicted values (marital status) and SHAP value.](/static/images/Interpreting-ML-Models-Part2/SHAP_dependence_plots.png)
 
 The SHAP dependence plots are used to identify how a feature magnitude affects the predicted value. You can then observe the general pattern (or not) on how the feature affects prediction.
 
-![Minimal Trend SHAP Dependence plot. SHAP Dependence plot showing a small trend between ball possession and goals scored. As you can see from the data, some teams record a 70% ball possession but fall short of scoring goals - which is what we would expect.](./images/Interpreting-ML-Models-Part2/minimal_trend_shap_dependence_plot.png)
+![Minimal Trend SHAP Dependence plot. SHAP Dependence plot showing a small trend between ball possession and goals scored. As you can see from the data, some teams record a 70% ball possession but fall short of scoring goals - which is what we would expect.](/static/images/Interpreting-ML-Models-Part2/minimal_trend_shap_dependence_plot.png)
 
 Conversely, if there was large standard deviation, with no apparent pattern, then we can assume that other features are interacting with this feature. Similarly, if a feature has arbitrary values then it would lead to arbitrary predictions. For example, a binary feature within the dataset of value 0 could make the feature under investigation more relevant but when the value is 1 makes the feature irrelevant. 
 
@@ -100,7 +93,7 @@ Lets reflect back on what we have learnt so far. Using `PI` and `PD` have their 
 
 LIME is a simple method that provides human-understandable model interpretation. It produces a local linear interpretable machine learning model which results in a reduced computational complexity. LIME is able to explain any complex model's prediction and allow logical intuitions about the features.
 
-![LIME Titanic Example. Example of LIME interpreting a XGM model on predicting whether a passenger survived the Titanic. The model has realised that sex is an important feature.](./images/Interpreting-ML-Models-Part2/LIME_titanic_example.png)
+![LIME Titanic Example. Example of LIME interpreting a XGM model on predicting whether a passenger survived the Titanic. The model has realised that sex is an important feature.](/static/images/Interpreting-ML-Models-Part2/LIME_titanic_example.png)
 
 The [`lime'](https://github.com/marcotcr/lime) library was created by the originators of LIME. It has a simple API that allows us to gain explanations about the model no matter how complex. You can visualize the output of the `Explainer` objects to understand how each of the features influences the prediction - the `Explainer` object is within the [`Explanation` module](https://lime-ml.readthedocs.io/en/latest/lime.html#module-lime.explanation).
 

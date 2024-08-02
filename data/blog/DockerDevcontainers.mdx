@@ -1,22 +1,14 @@
 ---
-title: "Docker Devcontainers"
-cover: images/Docker-Devcontainers/Docker.png
-coverAlt: "Docker Process."
-description: "'Doesn't work on my computer' is extremely common. Avoid it by using Docker."
-datePublished: "2021-03-21"
-dateModified: "2021-03-21"
-category: "Package Manager"
-tags:
-  - Container
-  - Docker
-  - Dependency
+title: Docker Devcontainers
+date: '2021-03-21'
+tags: ['Package Manager', 'Container', 'Docker', 'Dependency']
+draft: false
+summary: 'Does not work on my computer is extremely common. Avoid it by using Docker.'
 ---
-
-<!-- markdownlint-disable-->
 
 **TLDR**: Anaconda is good, but Docker offers many more benefits. You can configure Docker to allow live development within a container. This will let you to get up and running in a consistent development environment without having to worry about your local machine. Visual Studio Code Remote Development extension allows you to use a container, remote machine, or the Windows Subsystem for Linux (WSL) as a full-featured development environment.
 
-![understanding Devcontainers](./images/Docker-Devcontainers/understanding-devcontainers.png)
+![understanding Devcontainers](/static/images/Docker-Devcontainers/understanding-devcontainers.png)
 
 ## Introduction
 
@@ -30,7 +22,7 @@ These problems can be solved by using Docker! Where you will get the "*it does w
 
 Docker is an open platform that allows you to develop applications, in our case a data science project, in an isolated environment called a container. These containers can be shared easily with colleagues. Docker is lightweight, portable, and can easily be scaled quickly in cloud computing services as either Infrastructure as a Service (IaaS) or Platform as a Service (PaaS) - more blogs on cloud computing services to follow. These containers consist of Docker images.
 
-![Docker Image](./images/Docker-Devcontainers/architecture.PNG)
+![Docker Image](/static/images/Docker-Devcontainers/architecture.PNG)
 
 ### Terminology
 
@@ -170,7 +162,7 @@ docker rmi python-docker:v2
 
 The `python-docker` image has now been created. The next step is running a container. To do this, you need your local host to “connect” to the container. For this, you will need to specify the port number, via the `-p` flag. Otherwise, the container will run and not be "exposed" to your local machine. Consequently, there will be no "connection" into the virtual machine.
 
-![Docker Containers](./images/Docker-Devcontainers/what-is-container.png)
+![Docker Containers](/static/images/Docker-Devcontainers/what-is-container.png)
 
 As mentioned, it is always good to name your images, but you should also name containers. Do this with the `--name` flag. Otherwise, Docker will randomly allocate an unique name for you. 
 
@@ -349,7 +341,7 @@ Docker is extremely versatile. The above `Dockerfile` shows the `pip` flags that
 
 Once you have the `.devcontainer` folder, `devcontainer.json`, and `Dockerfile`, you can now build the development container. Click on the extension at the bottom left. When you are within your local machine you will only see the symbol, while when you are inside the container you will see the container name.
 
-![Container Name Junction ](./images/Docker-Devcontainers/container-name-junction-model.png)
+![Container Name Junction ](/static/images/Docker-Devcontainers/container-name-junction-model.png)
 
 You can now select the option you require. In this case, I have edited all the files so will now rebuild the container:
 
@@ -357,7 +349,7 @@ You can now select the option you require. In this case, I have edited all the f
 
 Your source code is outside of the container, (i.e. within your local machine), so you no longer have to rebuild the container for small code changes. You only need to rebuilt it when you make changes to Docker related files. If you use Anaconda as a base image, then you won't need to do that much.
 
-![Local Development](./images/Docker-Devcontainers/local-development-environments.jpg)
+![Local Development](/static/images/Docker-Devcontainers/local-development-environments.jpg)
 
 **Recommended Material:**
 - Microsoft Developing Inside a Container](https://code.visualstudio.com/docs/remote/containers) 

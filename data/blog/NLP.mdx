@@ -1,18 +1,10 @@
 ---
-title: "Natural Language Processing"
-cover: images/cover_5.jpeg
-coverAlt: "This Image"
-description: "Natural Language Processing is an extensive topic and this blog tries to summarise it."
-datePublished: "2021-11-09"
-dateModified: "2021-11-09"
-category: "NLP"
-tags:
-  - NLP
-  - TensorFlow
-  - HuggingFace
+title: 'Natural Language Processing'
+tags: ['NLP', 'TensorFlow', 'HuggingFace']
+summary: 'Natural Language Processing is an extensive topic and this blog tries to summarise it.'
+date: '2021-11-09'
+draft: false
 ---
-
-<!-- markdownlint-disable-->
 
 Natural Language Processing (NLP) is a bit of a buzzword nowadays with job posts asking for 10 years of experience on the BERT model that has only been around since 2018. NLP is still an active area of research and is changing very quickly every year. With new architectures and layers being wrapped together for the finest of improvements. This blog gives an overview of NLP and provides resources to allow you to explore further.
 
@@ -32,18 +24,18 @@ Without taking you back to primary/elementary school, we know that words can be 
 
 In my opinion, the most challenging part about working with text data is the data cleaning and processing stage. Most models will be off-the-shelf from TensorFlow Hub. It is unlikely that you'll be training your own NLP model. It is, however, likely that you'll have to preprocess your input data so that it is in the correct format (and shape!) for the selected model. Rather than providing the inidividuals steps for a single model, below are a few popular data processing techniques. Remember, the aim of these techniques are to provide additional features that the model can learn from.
 
-![Text Cleaning Pipeline](./images/natural-language-processing/text-pipeline.png)
+![Text Cleaning Pipeline](/static/images/natural-language-processing/text-pipeline.png)
 
 - **Removing StopWords**: words that add no value to the interpretation of the data should be removed. For example, words like “an”, “the”, “a”, “be” etc. create noise while modelling. 
 
 - **Tokenization**: break down the unstructured text data into chunks of information so it can be counted as discrete elements. For example, split a sentence into individual words. The BERT model has a specific tokenization processing step which can be read within the [BERT paper](https://arxiv.org/abs/1810.04805) and tensorflow's [`text.BertTokenizer`](https://www.tensorflow.org/text/api_docs/python/text/BertTokenizer) function.
 
-![Tokenization](./images/natural-language-processing/tokenization.jpeg)
+![Tokenization](/static/images/natural-language-processing/tokenization.jpeg)
 
 - **Tagging**: typically follows Tokenization in a NLP pipeline. This is the process of tagging each word with a speech tag. Outputs are in the form of `(word, tag)`. For example, “new” has a tag “ADJ” (adjective), “early” has a tag “ADV” (adverb) and “Europe” will have a tag “NOUN” (noun). See more tags [here](http://www.nltk.org/book/ch05.html#tab-universal-tagset).
 
 
-![Types of Tags](./images/natural-language-processing/types-of-tagging.jpeg)
+![Types of Tags](/static/images/natural-language-processing/types-of-tagging.jpeg)
 
 Tagging can often be incorrect based on the context, so performance is evaluated based on the gold standard test data. The gold standard test data is the “correct” tag as classified by a human expert – which could be incorrect and have biases. Nevertheless, the gold standard is widely considered the evaluation metric for automatic tagging.
 
@@ -52,7 +44,7 @@ Tagging can often be incorrect based on the context, so performance is evaluated
 
 - **Lemmatization**: using knowledge base called WordNet, you can convert similar words into the root word. For example, “ate” and “eat”.
 
-![Stemming and Lemmatization](./images/natural-language-processing/stemming-vs-lemmatization.png)
+![Stemming and Lemmatization](/static/images/natural-language-processing/stemming-vs-lemmatization.png)
 
 The general purpose behind **Stemming** and **Lemmatization** are to get words with the same meaning to be modelled together. 
 
