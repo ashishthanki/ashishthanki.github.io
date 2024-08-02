@@ -1,18 +1,14 @@
 ---
-title: Performing Stats Tests
-summary: 'Performing a Statistic tests'
-date: '2022-03-18'
-tags: ['Statistics']
+title: 'Performing Stats Test'
+tags: ['Statistics', 'Interpretability']
 draft: false
+date: '2022-03-18'
+summary: 'Performing a Statistic tests'
 ---
-
-# Introduction
 
 This blog discusses the statistic tests that are commonly used by data scientists during various stages of machine learning workflows, carry out data analytics, and answer questions that can make better-informed business decisions. Statistics are used to study, manipulate, gather, analyze and draw conclusions from data. The two major areas of statistics are descriptive and inferential statistics.
 
 ![ML vs Statistics](/static/images/stats-tests/ml-vs-stats.png)
-
-
 
 Descriptive statistics is what you *should* have learnt during high school. It involves aggregated values of your data, such as the mode, mean, median, max, min, kurtosis, skewness, variance, standard deviation and inter quartile range. I won't go over each of them but a single Google search of each word should be self explanatory. Once you have done that come back here. All these values can be grouped into the larger groups: measure of central tendency,  measure of variability, measure of frequency and measure of position. 
 
@@ -43,12 +39,12 @@ From hypothesis testing we gain an understanding about two mutually exclusive st
 
 Before we dive deep into the type of methodologies, lets briefly run though Type I and Type II error. These type of errors are analogous to the terminology we use for classification problems.
 
-#### *Type I and II Error*
+#### Type I and II Error
 
 
-*Type 1 Errors are **false positives**, where you reject the null hypothesis when it is actually true in the population. Meanwhile, Type II Errors are **false negatives**, where we fail to reject the null hypothesis when it is actually false in the population. See [Paper on Hypothesis Testing and Error Types](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2996198/).*
+*Type 1 Errors are **false positives**, where you reject the null hypothesis when it is actually true in the population. Meanwhile, Type II Errors are **false negatives**, where we fail to reject the null hypothesis when it is actually false in the population. See [Paper on Hypothesis Testing and Error Types](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2996198/).
 
-*The probability of a Type I Error is called alpha, while the probability of a Type II Error is called Beta. Ideally, these value should be zero but this is very rarely the case in real world problems. One way to reduce these probabilities are to **increase the sample size** - as with all data science problems!*
+The probability of a Type I Error is called alpha, while the probability of a Type II Error is called Beta. Ideally, these value should be zero but this is very rarely the case in real world problems. One way to reduce these probabilities are to **increase the sample size** - as with all data science problems!
 
 It is important to remember that we cannot completely eliminate these uncertainties and, when appropriate, should **report the uncertainty** whenever hypothesis testing. Another important point to remember is that we cannot ‘prove’ or ‘disprove’ anything by hypothesis testing and statistical tests.
 
