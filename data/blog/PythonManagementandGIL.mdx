@@ -1,0 +1,36 @@
+---
+title: "Python Memory Management and GIL"
+cover: images/layers_of_abstraction.jpeg
+coverAlt: "Layers of Abstraction"
+description: "Python memory management and GIL"
+datePublished: "2023-05-31"
+dateModified: "2023-05-31"
+category: "Shorts"
+tags:
+  - Python
+  - Programming
+---
+
+Memory can be thought of as an empty book. Where different authors negotiate with the memory manager on where to write their stories. If a story is no longer being referenced, then it can be removed from the book to create space for new stories. The person removing the old stories is called the garbage collector, also called the automatic garbage collection. 
+
+The memory manager determines where to put an application’s data and where applicable, free some space up. This process is called Memory Allocation. 
+
+When you write your Python code it goes through many layers of abstraction before it reaches the hardware. The Python language is written in the C programming language.
+
+
+Every object in Python is PyObject and it contains two things:
+- `ob_refcnt`: reference count for garbage collection, when this value it zero the memory is freed.
+
+- `ob_type`: pointer to another type, which describes a Python object, dict or int.
+
+Python’s Global Interpreter Lock (GIL) is used to prevent overlap in memory allocation, it locks the entire interpreter so there is only one thread running at a time. This has caused much debate in the Python community and is the reason why Python is easy to use but slow. 
+
+#### Further Reading:
+
+- [Real Python's Blog on Memory Management](https://realpython.com/python-memory-management)
+
+- [Real Python's Blog on Python's GIL](https://realpython.com/python-gil)
+
+- [Video on Understanding the GIL](https://www.youtube.com/watch?v=Obt-vMVdM8s)
+- [Infamous Python’s GIL](https://www.youtube.com/watch?v=KVKufdTphKs)
+- [Removing the GIL](https://www.youtube.com/watch?v=P3AyI_u66Bw)

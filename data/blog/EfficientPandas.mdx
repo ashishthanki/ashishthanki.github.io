@@ -1,0 +1,137 @@
+---
+title: 'Pandas Efficient Programming'
+date: '2021-10-03'
+tags: ['Programming', 'Pandas']
+draft: false
+summary: 'Pandas is used daily but with just a few changes we can speed it up.'
+---
+
+The [`Pandas`](https://pandas.pydata.org/) Python library is one of the [most popular](https://insights.stackoverflow.com/survey/2020) open source data analysis and manipulation tools. It is used regularly, if not daily, by data scientists. It is extremely flexible, easy to use and fast with code paths written in Cython and C! The open source community has contributed massively to its development and created a tool that is able to form the foundation of loading, processing, and exporting datasets to many output formats.   
+
+Unsurprisingly, there is a downside. Pandas loads data in-memory, therefore, the size of the dataset or operations are limited by the available RAM. Some Pandas operations create intermediate copies* which further exacerbates the problem - although, it should be said this can be reduced by using alternative methods, such as `iloc` or `loc`, see [this](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html) chapter, in order to index and select data efficiently.
+
+**note this is different from the [`.copy()`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.copy.html) function, which is used for another [reason](https://stackoverflow.com/a/27680109/14877533).*
+
+
+##### Out-of-Core
+
+Fortunately, there are other open source libraries which have been modeled after pandas but has out-of-core and parallelization benefits. To name a few of these libraries: [`cuDF`](https://docs.rapids.ai/api), [`Dask`](https://docs.dask.org/en/latest/) and [`PySpark`](https://spark.apache.org/docs/latest/api/python/index.html). However, many data scientist do not have the luxury of GPUs, firing up compute clusters, cloud computing or time to learn a new data manipulation package that might not have operations already within their existing workflow. They would be required to stick to their 8GB RAM and find an alternative way fast! 
+
+
+#### Use Chunking 
+
+One possible solution involves [chunking data into smaller manageable pieces](https://pandas.pydata.org/pandas-docs/stable/user_guide/scale.html). You can chunk the data either row wise or column wise, if the later is used, then it may be worth saving your data in [`parquet`](https://www.snowflake.com/guides/what-parquet) format instead of `csv` or `json`. Have a read of [this](https://aws.amazon.com/blogs/big-data/top-10-performance-tuning-tips-for-amazon-athena/) AWS blog post on how to tune your data.
+
+Chunking can become complex and result in convoluted code, especially if you are performing aggregation or complex operations within your dataset. This is particularly frustrating when you intend to plot your data but only can plot a small portion at a time (however, I would suggest columns not being used for the plot). If chunking is not for you then any single, combination, or, all of the following methods will reduce your RAM usage. 
+
+<br/> 
+
+##### 1. Change Data Types
+
+From my experience, by far the biggest reduction is changing the data types (dtype) to more efficient values. I have summarized which data types are more efficient in the table below. 
+
+
+| Previous Data Type | More Efficient Data type |
+| ------ | ---------------------------------------- |
+| Float64 | Float32 |
+| Float16 | Float32 |
+| String | Categorical |
+| int64 | int32 |
+| int16 | int8* |
+| int8 | int4* |
+
+\* If information is not lost then this is preferred, recall that each dtype stores the following: 
+- int8 can store integers from -128 to 127.
+- int16 can store integers from -32768 to 32767.
+- int64 can store integers from -9223372036854775808 to 9223372036854775807.
+
+```py
+df.Column1 = df.Column1.astype('int32')
+```
+
+<br/> 
+
+##### 2. Use `.to_numpy` method
+
+The `.to_numpy` method returns the dataframe, or series, into a Numpy representation - ndarray. Carrying out operations on your data using the Pandas data structures has shown to be [slower than Numpy](https://towardsdatascience.com/speed-testing-pandas-vs-numpy-ffbf80070ee7), regardless of the operation being row-wise or column-wise.
+
+```py
+numpy_values = df.Column1.to_numpy() # returns numpy array
+imaginary_func(numpy_values)
+```
+
+<br/> 
+
+##### 3. Use `numba` JIT compiler
+
+[`Numba`](http://numba.pydata.org/) is a Python package that is a just in time (JIT) compiler. It can speed up functions, loops and classes to run at machine code speed! The package has several decorators which can be applied to your functions to instruct Numba to compile them! I have discussed the two decorators out of the collection available: `@jit` and `@vectorize`. 
+
+<br/>
+
+##### **`@numba.jit`**
+
+The decorator `@numba.jit` can be used to enable the speed up of a function that uses numpy operators or loops. There is no need to change the function just add the decorator on top and you're ready to go!
+
+```py
+# @numba.jit
+import numba
+import math
+
+@numba.jit
+def square(x):
+    return x ** 2
+
+@numba.jit
+def pythagoras(a, b):
+  return math.sqrt(square(a) + square(b))
+
+def compute_numba(df, column1, column2):
+  n = df.shape[0]
+  result = np.empty(n, dtype='float64')
+  assert n == len(df.column1) == len(df.column2)
+  for i in range(n): # numba will speed this up too!
+    result[i] = pythagoras(df.column1[i], df.column2[i])
+  series_result = pd.Series(result, index=df.index, name='result')
+  return series_result
+
+compute_numba(df, column1='a', column='b')  
+```
+The `for` loop within the code above will also benefit from the speed boost introduced by the JIT compiler, as will the pythagoras and square function created. Although, one could argue there are faster solutions of this code.
+
+<br/> 
+
+##### **`@numba.vectorize`**
+
+The decorator `@numba.vectorize` allows us to write vectorized code without having to use a loop. The function will apply to every row automatically. 
+
+```py
+# @numba.vectorize
+import numba
+
+@numba.vectorize
+def basic_function(column):
+  return column * 2
+
+basic_function(df.Column1.to_numpy()) # huge speed gains observed
+```
+
+There are many more `numba` [decorators](http://numba.pydata.org/numba-doc/0.8/modules/decorators.html). In most cases your code will speed up, especially if you are using loops, however you may not observe any speed gains with native pandas operations because `numba` does not recognize these operations and is not able to convert it to machine code.
+
+<br/> 
+
+## Summary 
+
+Once the dataset gets large enough it may no longer fit in memory but we can reduce this with the easy techniques described above. There are more options available that have not beed discussed here, such as out-of-core packages and more advanced methods in Pandas [Enhancing Performance](https://pandas.pydata.org/pandas-docs/stable/user_guide/enhancingperf.html). Pandas will continue to grow in popularity with more operations being added by the large contribution from the open source community, which is why its crucial to learn how to speed it up with only minor code changes!  
+
+![Pandas Popularity](/static/images/pandas-efficient-programming/pandas_popularity_growth.png)
+
+
+#### Further Reading and Other Tips
+
+1. `df.info(deep_memory=True)`, returns the [memory usage](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.info.html) of the dataframe.  
+
+2. Do not use the `apply` method, a detailed discussion [here](https://stackoverflow.com/a/54432584/14877533).
+
+3. Use `%%time` [magic](https://ipython.readthedocs.io/en/stable/interactive/magics.html#magic-timeit), to time operations within a jupyter cell. 
+
+4. Look up Ian Ozsvald's O'Reilly [book](https://www.amazon.com/High-Performance-Python-Performant-Programming-ebook/dp/B087YTVL8F/ref=sr_1_1?crid=2TWHW4LRAIEP6&dchild=1&keywords=high+performance+python&qid=1590482442&sprefix=high+performance+pyt%2Caps%2C232&sr=8-1) and his PyData videos [Making Pandas Fly](https://www.youtube.com/watch?v=N4pj3CS857c&t=3s) and [Tools for High Performance](https://www.youtube.com/watch?v=I1xyjc-JgGM&t=1536s)

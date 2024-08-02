@@ -1,0 +1,164 @@
+---
+title: "Get Data using boto3"
+cover: images/aws-lambda.png
+coverAlt: "Waterfall Diagram"
+description: " "
+datePublished: "2022-08-06"
+dateModified: "2022-08-06"
+category: "Shorts"
+tags:
+  - Software Engineering
+  - Python
+---
+
+In this [shorts](./category/Shorts) blog I run through the Python code that I have used within AWS Lambda for calling an API and retrieving data using Amazon's [`boto3`](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) python package.
+
+This simple script uses the API credentials stored in AWS Secrets Manager and then saves the data within an AWS S3 bucket. More details on the infrastructure shall be discussed in later blogs.
+
+`boto3` package is extremely versatile and is the SDK for Python (Boto3) to create, configure, and manage AWS services. We can interact with Amazon Elastic Compute Cloud (Amazon EC2), Amazon Simple Storage Service (Amazon S3) and trigger other AWS services. The SDK provides an object-oriented API as well as low-level access to AWS services.
+
+
+Packages required are: 
+
+```py
+import boto3
+import json
+import requests
+
+from ssm_secrets import get_parameter  # store credentials in separate py file
+from datetime import date, timedelta
+```
+
+
+The function that you create must be named `lambda_handler` and accept two arguments `event` and `context`.
+
+```py
+def lambda_handler(event, context):
+```
+
+Define the Simple Storage Service name and use the instance methods to read, upload or delete the data stored.
+
+```py
+    # define S3 bucket object 
+    s3 = boto3.resource("s3")
+    s3_bucketname = "data-store"
+    s3_bucket = s3.Bucket(s3_bucketname)
+```
+
+Read the API docs to understand the arguments that are required. Below is an example of what can defined. Use [Postman](https://www.postman.com/) to help get you started. This example uses the API credentials to gain an access token which is valid for 10 minutes. You then use the temporary access token to call the API and retrieve data. 
+
+```py
+    # get secret keys from SSM
+    api_username = get_parameter("EXAMPLE_API_USERNAME")
+    api_password = get_parameter("EXAMPLE_API_PASSWORD")
+
+    # set API specific settings
+    url = "https://api.example.com/get-token"
+    payload = f"username={api_username}&password={api_password}"
+    headers = {"api-version": "2", "Content-Type": "application/x-www-form-urlencoded"}
+    payload = {}
+    headers = {"api-version": '"2"', "Authorization": f"Bearer {access_token}"}
+    
+
+    # get access token
+    response = requests.request("POST", url, headers=headers, data=payload)
+    access_token = json.loads(response.text)["access_token"]
+```
+
+The data is converted to a JSON object, we can access each member using a `for` loop. In this example, I save the values required to a new dictionary before saving this as a JSON object within S3.
+
+
+```py
+
+    # preprocess returned data into required format and JSON file
+    for id, x in data.items():
+        for key, value in x.items():
+            new_dict = {}
+            new_dict["id"] = id
+            new_dict["start_datetime"] = value["from"]
+            new_dict["end_datetime"] = value["to"]
+            new_dict["goals"] = value["goals"]
+```
+
+In this example, I save the data in a JSON format but you could also save the data in parquet, csv, xml etc. Parquet is commonly used to store big data and saves on cloud storage space by using highly efficient column-wise compression, and flexible encoding schemes for columns with different data types. Not to mention this works very well with AWS QuickSight and AWS Athena for faster visualizations and query.
+
+```py
+            # write data to s3 bucket
+            s3_obj = s3_bucket.Object(
+                new_dict["id"] + "_" + new_dict["start_datetime"] + ".json"
+            )
+
+            # data to provide into s3
+            s3_obj.put(Body=json.dumps(new_dict))
+```
+
+This example does not have any logging or error handling but I hope you find this as a good intuitive example of what `boto3` can offer and how easy it is to use, especially due to its object oriented design. 
+
+It should be said that AWS provides its own [logging functionality](https://docs.aws.amazon.com/lambda/latest/dg/python-logging.html) whenever we invoke AWS Lambda. It gives you instantaneous logs and shows information such as runtime and computing resources used. AWS [CloudWatch](https://aws.amazon.com/cloudwatch/) prevents us from having to write lengthy python scripts that have basic logging functionality.
+
+Here is the script all together.
+
+```py
+import boto3
+import json
+import requests
+
+from ssm_secrets import get_parameter  # store credentials in separate py file
+from datetime import date, timedelta
+
+def lambda_handler(event, context):
+    "Function used to save API data to S3 bucket."
+    # define S3 bucket object 
+    s3 = boto3.resource("s3")
+    s3_bucketname = "data-store"
+    s3_bucket = s3.Bucket(s3_bucketname)
+
+    # get secret keys from SSM
+    api_username = get_parameter("EXAMPLE_API_USERNAME")
+    api_password = get_parameter("EXAMPLE_API_PASSWORD")
+
+    # set API specific settings
+    url = "https://api.example.com/get-token"
+    payload = f"username={api_username}&password={api_password}"
+    headers = {"api-version": "2", "Content-Type": "application/x-www-form-urlencoded"}
+    payload = {}
+    headers = {"api-version": '"2"', "Authorization": f"Bearer {access_token}"}
+    
+
+    # get access token
+    response = requests.request("POST", url, headers=headers, data=payload)
+    access_token = json.loads(response.text)["access_token"]
+
+    # get goals data and set URL
+    timeto_query = date.today()  # e.g. "2022-08-04T00:00:00.000Z"
+    timefrom_query = timeto_query - timedelta(days=1)
+    url = f"https://api.example.com/counts?goals=&timeFrom={timefrom_query}&timeTo={timeto_query}"
+
+    # call api
+    response = requests.request("GET", url, headers=headers, data=payload)
+    data = response.json()
+
+    # preprocess returned data into required format and csv file
+    for id, x in data.items():
+        for key, value in x.items():
+            new_dict = {}
+            new_dict["id"] = id
+            new_dict["start_datetime"] = value["from"]
+            new_dict["end_datetime"] = value["to"]
+            new_dict["goals"] = value["goals"]
+
+            # write data to s3 bucket
+            s3_obj = s3_bucket.Object(
+                new_dict["id"] + "_" + new_dict["start_datetime"] + ".json"
+            )
+
+            # data to provide into s3
+            s3_obj.put(Body=json.dumps(new_dict))
+
+    print("API Called and data saved in S3 bucket")
+```
+
+
+By using the code above, within Lambda, I was able to retrieve data daily and store it within the designated S3 bucket. This data can then continue along the AWS pipeline. I recommend reading this [AWS Blog](https://aws.amazon.com/blogs/big-data/transform-data-and-create-dashboards-simply-using-aws-glue-databrew-and-amazon-quicksight/) to gain an understanding of the other services required to visualize the data in a dashboard.
+
+AWS Lambda is just one of the services but this is just one of the services that I used. In order to have a reliable pipeline we have to use many other services not mentioned in this [shorts](./category/Shorts) blog. I will write about the infrastructure in a later blog.

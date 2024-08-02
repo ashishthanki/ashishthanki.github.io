@@ -1,0 +1,269 @@
+---
+title: 'Starting with Package Managers'
+summary: 'The importance of an easy to use package manager is often over looked. Being able to manage and create virtual environments is a key skill for Data Scientists.'
+date: '2021-01-31'
+draft: false
+tags: ['Package Manager', 'PIP', 'Anaconda', 'Dependency']
+---
+
+
+
+**TLDR**: Most Data Scientists need Anaconda, rather than Mini-Anaconda, as it comes with all the important packages we would want. Anaconda is necessary as it helps us to manage our packages and package versions across multiple projects.
+
+
+**EDIT:** * Package managers are a great starting point, but when you start to develop applications, dashboards or sharing your code with others it becomes difficult to replicate the environment you were using. This is where Docker containers, images and daemons come in! I would recommend reading [this](./docker-devcontainers) blog.*
+
+> Learning a programming language is a marathon, where hard work always beats talent when talent fails to work hard.
+
+
+#### The Beginner Problem
+
+As more individuals start their programming journey, they begin by downloading the programming language of their choice, then an integrated development environment (IDE) and, finally, start to write code. Ultimately, they would like to do something a bit more adventurous with their newly acquainted coding skills, because, by now, they are experts at manipulating lists and dictionaries. Perhaps, they want to build a game, explore some data or, connect to an application programming interface (API)!
+
+Alas, a stumbling block has been reached. The `for` loops are beginning to get out of hand and can no longer help in the quest of becoming a coding guru. Multiply a list with another list becomes a complex task (of a series of `for` loops) and makes them question if learning a programming language is even necessary, or worth it, almost turning back to the dreaded Excel spreadsheet.
+
+If the above “they” or “them” is you, then you have found the right blog! This is where packages come in! So, hold fire on installing Excel and making the next code you write being `=A1*B1` in cell `C1`.
+
+![Excel Reference](/static/images/Starting-with-Package-Managers/excel_ref.jpg)
+
+
+##### The Beginner Solution
+
+Downloading and importing packages are a key part of using any programming language. It unlocks the door to all the open source code and allows programmers to incorporate and modify code, for their use case, that was originally written by millions of people around the world! 
+
+Python comes with an ample of packages pre-installed, located [here](https://docs.python.org/3/library), that can easily be imported, such as the packages `sys`, `os`, `re`; each of which unlocks many more doors and possibilities. Importing packages are as easy as writing:
+
+```py
+import sys
+import os
+import re
+# note all these modules are part of Python’s Standard Library
+```
+
+<br />
+
+#### World of Packages
+
+The project has progressed with the use of a few packages from the Standard Library, but you need to add a villain in your game, plot a few things and possibly hit an API or two. This is where you enter the world of downloading packages using a command line argument `pip`. Python makes it super easy to download modules, simply go to your operating systems command line and type the following:
+
+```bash noLineNumbers
+pip install <package-you-want-to-install>
+```
+For example,
+
+```bash noLineNumbers
+pip install pandas
+```
+
+To check if this has been downloaded, go on your IDE and import the package.
+
+```py
+import pandas
+```
+
+##### *SSL Errors*
+
+If you get an error, then it could be a number of potential problems and, unfortunately, you will have to do some troubleshooting, but if you have not then congratulations! You have successfully downloaded your first 3rd party package!
+
+However, if you get back an `SSL error` or `TLS error`, then these issues downloading the module are due to a company firewall that may have blocked downloading the package. I would suggest, at first instance using a personal computer rather than a company provided laptop, however if you do not have that option then try:
+
+```bash noLineNumbers
+pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org < package-you-want-to-install>
+```
+
+Further details on `SSL errors` can be read [here](https://stackoverflow.com/questions/49943410/pip-ssl-error-on-windows/52286163#52286163).
+
+Another option is to download the wheel files for the package you require, make sure you download the correct version based on the version of Python you have installed (see next section to find out which Python version you have), the command line command arguments are similar:
+
+``` bash noLineNumbers
+pip install C:/some-dir/some-file.whl
+```
+
+If you have spaces in your directory path, then insert the path in quotation marks `C:/some directory name with spaces/some-file.whl`.
+
+```bash noLineNumbers
+pip install "C:/some directory name with spaces/some-file.whl"
+```
+
+
+You can find the wheel files in the 'Download Files' section of the module on the [PyPi](https://pypi.org/) website or in Christoph Gohlke Unofficial Windows Binaries for [Python Extension Packages](https://www.lfd.uci.edu/~gohlke/pythonlibs/)
+
+
+##### *Path Environment*
+
+You may ask, where has the package downloaded? The package will be installed in Python’s system path directory within the lib folder where a folder named after the package should, now, be present, you can find this by typing: 
+
+```py
+import sys
+sys.version # any thing above >3.X is Python 3, if you have Python 2.X then this is Python 2 and you should consider upgrading
+sys.path # returns Python’s path
+```
+<br />
+
+# WAIT!
+Before you go crazy and start downloading modules, it should be said that the Python Standard Library shouldn’t be overlooked, you will find many useful functions within those packages so please do your research before you start to download and import a package that was made by Dave from French Polynesia; Moreover, many of the packages in the Standard Library have been around for a long time and have been optimized to make Python scripts run fast. 
+<br />
+
+#### *Too Many Packages*
+Success, your project is off and running! You have built that game, drafted a business case from the data you have explored or, connected to an API!
+
+> A good project is kind of like planning a good holiday. The amount of fun you have on the holiday will be dependent on many variables (i.e. modules), such as the weather, leisure activities, places to eat, and/or ease of travel etc. Understanding these variables will allow you to thoughtfully plan what type of clothes you should pack (i.e. tasks you can perform). In Python, a project that **minimizes** the number of dependencies, uses dependencies that are **well maintained**, and, **holistically integrates** with the wider Python community draws a lot more attention – just like a good holiday!
+
+
+Your project works on many packages and specific versions of each of those packages, see this by running the following in the command line:
+```bash noLineNumbers
+pip list
+```
+To save the dependencies into a file, run the following in the command line: 
+```bash noLineNumbers
+pip freeze > requirements.txt
+```
+<br />
+
+
+#### Virtual Environments
+
+Virtual Environments are not as hard as you think! You can use Python’s Standard Library module `venv` or `virtualenv` library but you will soon find out, as a Data Scientist, that you are downloading the same modules over and over again with most of your projects having the same dependencies – popular Data Science packages include `Pandas`, `Seaborn`, `Numpy`, `Matplotlib` – blog posts on these will follow!
+
+> Imagine working on a project and carrying out all your plotting and data analysis on a jupyter notebook, you then present your findings to your superiors. One, successful, year later, your apprentice needs to carry out the same task (i.e. reproduce the graphs). You find that some of the key plots no longer work as `seaborn` authors have decided to deprecate and rename several `functions`, `classes` and `arguments`. Your apprentice now has the task to rewrite the entire notebook…
+
+
+![Conda Illustration](/static/images/Starting-with-Package-Managers/conda_illustration.png)
+
+You could have exported a `requirements.txt` file or introduced multiple `assert` statements when importing your packages in the jupyter notebook.  However, using `pip` to install the packages from the past will cause problems with current projects.
+
+Fortunately, Anaconda is the tool for Data Scientists to simultaneously manage dependencies and environments. 
+
+> You now go back in time and download Anaconda, so you can export the virtual environment’s dependencies via a `yaml` file. One, even more successful, year later, the apprentice approaches and you advise to create a virtual environment based on the `yaml` file, this allows the apprentice to pick up where you left off while you carry on building the Machine Learning model for the next project. 
+
+
+
+#### Anaconda
+
+Data Scientists need Anaconda to help manage packages and environments, hence allowing you to understand the dependencies each project has and recreate them, when required.
+
+> Anaconda is like a travel agent that takes care of all the variables in order for you to have a good holiday. You no longer need to think about the dependencies as Anaconda does it all for you!  
+
+
+Note, there is also Mini-Anaconda, and as the name suggests, it is a smaller version of Anaconda with fewer pre-installed modules. This is typically for programmers who do more than just Data Science work, like web developers or software engineers. If you struggle to identify which one to pick from then I suggest looking at the diagram below. Most Data Scientists should opt with Anaconda.
+
+
+![MinivsAnaconda](/static/images/Starting-with-Package-Managers/Mini-CondavsAncaconda.png)
+
+I experimented with both Mini-Anaconda and Anaconda, but here are a couple of videos and a summary table to help you decide:
+- [Which Python Package Manager Should You Use?](https://www.youtube.com/watch?v=3J02sec99RM) by Google
+- [How I Manage Multiple Projects, Virtual Environments, and Environment Variables](https://www.youtube.com/watch?v=cY2NXB_Tqq0) by Corey Schafer
+- Other documentation can be found on the [Conda website](https://docs.conda.io/projects/conda/en/latest/user-guide/install/download.html#anaconda-or-miniconda).
+
+
+|Package Manager|	Job Description|
+|---------------|-------------------------|
+|**Mini**|	A web developer that does not require any data science packages|
+| |carries out Python work but does not require any data science tools|
+|**Anaconda**|	Uses Python to analyse and clean data|
+| | Uses Python to build machine learning libraries and pipelines|
+
+
+Your project now has many dependencies, which is not a bad thing but downloading dilapidated packages will have its consequences in the long run. Some of these packages may not integrate well with others while, some, will fail to run entirely in a year. The best thing to do now is somehow pause any additional version upgrades. This is where virtual environments come in! 
+
+
+#### Anaconda Command Prompt
+Similar to `pip` you can download packages using the command line arguments:
+``` bash noLineNumbers
+conda install <package-name>
+```
+
+
+##### *HTTP Connection Failed*
+
+Again, if you are using a company laptop I would suggest a personal laptop instead. Similar to using `pip` and the `SSL Error`, you may see `HTTP Connection Failed` errors. You could download individual package files (the `.tar.bz2` file type NOT `.whl` files) from the [Anaconda Package Repository](https://anaconda.org/anaconda/repo). But this will get out of hand very quickly as you may end up having to individually download packages and their dependencies – give it a go, I did! 
+
+**Never set SSL verification off as this could introduce you to non-certified packages.**
+
+To bypass the corporate firewall you will need to speak to your administrator for the proxy server settings, you need to create a `config` file within the home directory of conda. To do this pass the following argument into the Anaconda command prompt:
+```bash noLineNumbers
+conda config
+``` 
+This will create a `.condarc` file which can be opened in a text editor. Once you have this opened you need to input the following into the file: 
+
+``` noLineNumbers
+ssl_verify: true
+channels:
+  - defaults
+proxy_servers:
+    http: http://username:password@corp.com:8080 #  change this with your company settings
+    https: https://username:password@corp.com:8080 #  change this with your company settings
+```
+
+This should allow you to download modules just by using:
+
+```bash noLineNumbers
+conda install <package name>.
+```
+Further details can be found here: 
+- Anaconda Website [Guide](https://docs.anaconda.com/anaconda/user-guide/tasks/proxy/)
+- [This](https://stackoverflow.com/questions/36729023/how-to-make-anaconda-work-behind-http-proxy-not-https) StackOverflow post
+
+#### Basic Conda Environment commands
+
+Here are a list of basic Anaconda commands: 
+
+**Creating an Environment:** 
+```bash noLineNumbers
+conda create –name <insert environment name> python=3.X
+```
+
+**List all environments:** 
+```bash noLineNumbers
+conda env list
+```
+
+**Remove an environment:**
+```bash noLineNumbers
+conda env remove --name myenv
+```
+
+**Activate environment:** 
+```bash noLineNumbers
+conda activate <insert environment to activate>
+```
+
+**Deactivate current environment:** 
+```bash noLineNumbers
+conda deactivate
+```
+
+**See all packages within conda environment:** 
+```bash noLineNumbers
+conda list
+```
+
+**Create a clone of an environment:**
+```bash noLineNumbers
+conda create --name newenv --clone py38
+```
+
+**Create an environment file:**
+```bash noLineNumbers
+conda env export -f environment.yml
+# DO NOT USE conda list --explicit > spec-file.txt 
+# as > ruins with the encoding, the issue has now been fixed by Conda.
+```
+
+**Create an environment with a `.yml` file:** 
+```bash noLineNumbers
+conda env create -f .\environment.yml -n testenv
+```
+
+
+Just like with `git` and how you should avoid developing on the `master` branch, you should avoid developing projects based on the default `base` environment. A new environment should be created, and development work should be done on that. Further command line arguments can be found in the Conda website [guide](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-with-commands).
+
+
+## Conclusion
+
+Beginners often struggle to solidify their skills with Python due to the lack of exposure to more complex Python modules and personal project ambition.
+
+You will need to be persistent and think long term. Having the fundamental Python knowledge and the right packages is all you need to make a game, create data visualizations or, connect to an API.  So, be persistent! Being comfortable in using Anaconda and different virtual environments can help you gain an intuition of the long-term strategy. 
+
+Learning a programming language requires both effort and time, which is why it is fitting to end this blog with the following:
+> Learning a programming language is a marathon, where hard work always beats talent when talent fails to work hard.

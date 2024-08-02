@@ -1,0 +1,127 @@
+---
+title: "End to End Data Science Workflow"
+cover: images/data-science/data-science-process.png
+coverAlt: "E2E Pipeline"
+description: "The typical data science E2E workflow and pipeline."
+datePublished: "2023-07-15"
+dateModified: "2023-07-15"
+category: "Data Science"
+tags:
+  - Machine Learning
+---
+
+The data science workflow can be cumbersome for beginners to handle and often some parts are forgotten completely, such as splitting the data set into test, validation and training data. In this blog post I cover each step of a typical data science workflow and explain what we will achieve during the step, some of my watch-its and the packages or tools that can help you along the way - know what size your data is.
+
+> Apart from the data science workflow below, I would recommend adopting a software development approach by adding version control (git), package and dependency management (poetry or conda), testing frameworks (pytest) and following the SOLID principles if you are using Python. All of which I have covered in previous blog posts!
+
+## 1. Data Ingestion 
+
+The first step is to understand where your data is coming from and how to get this data into the required format, structure and quality. This can often take a very long time and may end up extremely time consuming if your data is scattered across many different sources.
+
+
+## 2. Data storage
+
+The data storage may require a bit of help from more experienced colleagues or a software development team. The solution could be as simple as storing the data locally or as 'complex' as multiple AWS Relational database instances or S3 buckets. Either way, storing and accessing the data is the first step. 
+
+
+## 3. Importing Data 
+
+If there is a large amount of data (more than x10 billion) and it cannot be stored in-memory then pandas might not work for you, although, one could argue that you could make it work by using the technique described on my Efficient Pandas blog.
+
+Another approach would be to use `cuda` or chunking the data using `numpy` or `pandas`.
+
+PySpark may be an option because it uses parallel operations in a cluster - when this blog was written I have never *needed* to use this solution. Instead, I worked on the principle of 'load only what needs to be loaded', if you don't need the ID column or all numerical columns then don't load or save it in the file in the first place! I would also encourage changing the data types of each column when you do manage to load it into a dataframe.
+
+Either way loading the data could be a big challenge and may require hardware upgrades or even using cloud computing tools such as AWS Data Brew Glue and Amazon SageMaker Data Wrangler which are both written in PySpark - so technically I have used PySpark.
+
+Before we move on to the 'fun' part, after you have loaded your data into memory (or other way) make sure you split your data into test, validation and training. No peaking in the test dataset. We want to avoid data leakage, aka cheating!
+
+## 4. Data exploration and data processing
+
+This step involves exploring the data, but you also need to be mindful of the next step of data cleaning. This is probably the bulk of the project and a key skill you need in data science. Both these steps will be performed hand in hand and several loops will be made between them before we get to modelling at all.
+
+You can use python based tools like [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/), [hvPlot](https://hvplot.holoviz.org/) or even dashboarding tools like [Power BI](https://learn.microsoft.com/en-us/power-bi/).
+
+## 5. Data cleaning and preparing for ML
+
+As mentioned, this step goes hand in hand with data exploration and processing. We need to clean up the misspelled words, remove obvious outliers and anomalies, impute missing values, combing features or remove features entirely (more on that later!), encoding the data (e.g. one hot encoding, ordinal encoding), or scaling. The list honestly goes on, you may even figure that you ingested data incorrectly from source and would have to start all over again!
+
+> You don't need to scale (i.e. MinMax or Standard Scale) your data if you plan on using a tree based method, but you will if you are using a gradient based such as generalized linear models. This is because tree based do not require scaling. 
+
+More preprocessing steps can be found on Sci-kit Learn [here](https://scikit-learn.org/stable/modules/preprocessing.html#).
+
+## 6. Ditch the jupyter notebook and make `.py` files
+
+At this point you may have been using the jupyter notebook or interactive VS code window. Ditch it and start coding in `.py` files.
+
+This encourages good software development and allows you to change the pipeline that you hopefully should have created in step 4. This makes your code more repeatable and the mess that jupyter notebook creates when you start changing the cell locations - we have all done!
+
+> I was once given a jupter notebook with specific instructions on which cells to run. Never do that. Your notebook should run from top to bottom, and I encourage splitting the notebooks up so that each step in the data science process has its own jupyter notebook, with the exception of data exploration step which can be 2 or more! 
+
+At this point, you might want to add version control and testing to the project so we can track changes and minimise code or data changes introducing bugs in production.
+
+Also, while you are at it set the seed to the project at the top of your main function or wherever you feel randomization might affect things, you don't want randomness to ruin the repeatability of your 'good' model performance. I also would set the `ramdom_state` of your model too.
+
+
+
+## 7. Modelling
+
+Stop. Don't go all guns blazing and use the most complex model you have heard of. Start simple and work your way up, being aware of the metrics that you should train your model on. 
+
+The popular metrics and, also the ones I have used are:
+
+- Regression Supervised Model: mean squared error, mean absolute error, room mean squared error, max error, r2 and adjusted r2*.
+
+*Send me a message on LinkedIn if you need to learn more about this one! ;).
+
+- Classification Supervised Model: accuracy, f1, precision, recall and AUC (technical not a metric but a good graph to plot).
+
+There are many more metrics that you can check out on [this](https://scikit-learn.org/stable/modules/model_evaluation.html#common-cases-predefined-values) Sci-Kit Learn webpage, be sure to understand the one you are being asked or have chosen to use! Also, don't be afraid to make your own metric(s) and use the domain experts that are within your company - data scientists need to be holistic in their approach to solving problems. 
+
+> Side note, if you see an `r2` of 1, or, `RMSE` score of 0, or, an `accuracy` of 0.99. Don't get excited, it is likely there was some sort of data leakage and your model is over-fitting. Fight the temptation of using the test set to evaluate the model. Instead, continue reading below!
+
+## 8. Evaluate Model Performance
+
+Since we split the dataset into test, validation and training, you use the validation set to evaluate the viability of the chosen model and then compare one or several metrics to understand if the model is doing what you think it is doing. The validation set can also be used to compare your models.
+
+## 9. Tuning
+
+Tuning can be fun and you can use several frameworks that have asynchronous or parallel backends -  [optuna](https://optuna.org/), [ray](https://docs.ray.io/en/latest/tune/index.html) and [hyperopt](http://hyperopt.github.io/hyperopt/) to name a few. You could go brute force and do [Grid Search](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV) or [Randomized Search](https://scikit-learn.org/stable/modules/grid_search.html#randomized-parameter-optimization) too but I would avoid those since when we deploy the model into production this would take a lot of unnecessary compute and therefore, monies ££££!!!
+
+Instead, opt in for a 'bayesian' tuning approach that efficiently searches and prunes trials. Meaning, it uses prior information based on previous hyperparameter runs while tracking model performance to change the parameters used next. It dynamically construct the search space and the parameters we use next. For example, if performance drops when decreasing learning rate, say `0.015`, tuning framework would try run larger learning rates, say `0.02`, eventually making its way to the optimal value, say `0.05`. If model performance increases then it would continue doing a deeper dive!
+
+
+## 10. Feature importance
+
+Now that you have the best model and parameters, we now need to understand how good the features are. Again, there are many ways to do this, which I have covered in my Interoperability [blogs](./category/Interpretability).
+
+You have simple ways such as the model gradients for a linear model or feature importance values defined as attributes within the model object, or the many ways you can obtain feature importance described in the [blogs](./category/Interpretability).
+
+Once you do this, you may find some features are absolute rubbish. If that is the case then try remove these and run the pipeline and tuning steps again.
+
+> WARNING! Do not remove features if it is a requirement for your domain to understand how bad the features are. If the domain requires stock data to be included you must include it. If you are doing a Kaggle/practice dataset, do whatever you want.
+
+Lastly, plot all the feature importances and just from logic does it make sense? Do the stand out features align with your EDA and business logic?
+
+This may be the last step for you as some domains require interoperability to use part of a wider analysis or decision making task and may not need a traditional prediction given input data per say. However, if your model is going to be used for prediction then carry on reading.
+
+
+## 11. Test set
+
+Finally, you made it this far, which means you understand your features, data and model very well. From hereon, there are no more model changes because we now need to evaluate model performance against the hidden away test dataset.
+
+The metrics that you evaluate using the test dataset will be what you will observe in production and should be the reported figure you give back the chain of command.
+
+
+## 12. MLOps and Model drift
+
+Once you evaluate the performance on the test dataset, you should now add to the pipeline to trigger hyperparameter tuning when model performance drops below a certain threshold. Read more about it in my MLOperation [blog](./ml-ops). 
+
+
+# 13. Plotting and Summarise
+
+Make more nice plots which explains your model and its performance against the test set and whether it is under-fitting or over-fitting the dataset or even better perhaps explain the precision-recall tradeoff. The idea here is to summarise your model performance and make sure others understand it through visuals and brief non-technical sentences.
+
+# Conclusion
+
+Congratulations! You have made it to the end of a typical E2E data science pipeline and workflow. A few iterations of this typical workflow will you give you much more confidence and prepares you to adapt to the domain changes - as domain changes this workflow changes too so watch out! Regardless, the best thing is to start practising now! 
