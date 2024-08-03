@@ -1,0 +1,125 @@
+---
+title: 'Data Cleaning Tips and Tricks'
+date: '2024-08-01'
+tags: ['Data Science', 'Data Cleaning', 'Python', 'Pandas']
+summary: 'This blog post provides practical tips and tricks for data cleaning, covering methods to handle missing values, standardize formats, remove duplicates, deal with outliers, clean text, and automate the cleaning process. It emphasizes the importance of proper data cleaning as a foundation for meaningful data analysis.'
+draft: false
+layout: PostSimple
+---
+
+Data cleaning can sometimes feel like a chore, but it's a crucial step in turning raw data into something meaningful and insightful. Think of it like prepping ingredients before cooking a delicious meal—you want everything to be just right before you dive in. So, let's roll up our sleeves and explore some practical, down-to-earth tips and tricks for making data cleaning a bit less daunting.
+
+From my experience, every dataset requires completely different cleaning methodologies. Some will require the basic out the box pandas functions and some will require complex functions that will require the slow `.apply` method - avoid this if you can! 
+
+Below are the out the box methods you will probably end up using.
+
+## 1. Handling Missing Values
+**Spotting Missing Data**
+
+First things first, you need to find those missing values. It's like searching for lost socks in the laundry—where did they go? In Pandas, you can easily spot them with:
+
+```python
+import pandas as pd
+data = pd.read_csv('data.csv')
+missing_values = data.isnull().sum()
+print(missing_values)
+```
+
+Once you've identified the missing pieces, you've got a few options:
+
+- Mean/Median Imputation: Great for filling in gaps with a bit of statistical magic.
+- Forward/Backward Fill: Use the value before or after the missing one to fill the gap.
+- Predictive Models: For the adventurous, use algorithms to predict what should be there.
+- Deciding to Drop
+	Sometimes, it's best to cut your losses and drop rows or columns with too many missing values:
+
+```python
+data_cleaned = data.dropna()  # Bye-bye missing values!
+```
+
+## 2. Standardizing Formats
+**Consistent Data Types**
+Make sure all your data columns have the right data type—like making sure all your ingredients are measured correctly. Convert data types with:
+
+```python
+data['column_name'] = data['column_name'].astype(int)
+```
+
+Standardize dates ([a common problem]!(https://pandas.pydata.org/docs/user_guide/timeseries.html) - make sure you understand the difference between Pandas TimeStamp and DateTime) and text capitalisation formats:
+
+```python
+data['date_column'] = pd.to_datetime(data['date_column'])
+data['text_column'] = data['text_column'].str.lower().str.strip()
+```
+
+Note: If you want to speed up your code, then I encourage changing those string columns to categorical! You'll see some serious speed improvements. 
+
+```python
+data['column_name'] = data['column_name'].astype("category")
+```
+
+## 3. Remove Duplicates
+**Identify Duplicates**: Check for duplicate rows in the dataset.
+```python
+duplicates = data.duplicated().sum()
+print(f'Duplicate rows: {duplicates}')
+```
+**Remove Duplicates**: Drop duplicate rows.
+```python
+data_cleaned = data.drop_duplicates()
+```
+
+## 4.  Deal with Outliers
+
+I would encourage plotting data column by column (when feasible) and using visualizations like box plots to identify outliers. Performing detailed data analysis and offering conclusions on what the data looks like is often more valuable for business decisions than relying solely on summary statistics like the mean, which can be skewed by extreme outliers that occur less than 1% of the time.
+
+In many cases, providing accurate analysis for 80% of the data can be sufficient. For example, if we can make reliable predictions or draw useful insights from the majority of the data, this can still be highly valuable for decision-making, even if it doesn't account for every extreme case.
+
+For example, if we can provide an analysis that reliably forecasts future sales with 80% of the data, after we removed outliers, we have an actionable insight and can do the relevant strategic planning for majority of the customers.
+```python
+import seaborn as sns
+sns.boxplot(data['column_name'])
+``` 
+- **Handle Outliers**: Decide whether to remove or transform outliers.
+```python
+data_cleaned = data[data['column_name'] < threshold] # Example of removing outliers
+```
+
+## 5.  Clean the text by replacing
+
+Text Cleaning: Remove unwanted characters and preprocess text are pretty easy to do in pandas.
+```python
+data['text_column'] = data['text_column'].str.replace('[^a-zA-Z0-9]', ' ')
+```
+Another thing that can catch you out is misspelling. I would recommend listing the categories out: 
+ ```python
+data['categorical_column'].unique()
+```
+Then using the replace function in pandas.
+
+```python
+df['categorical-column'].str.replace({'existing_category_name': 'new_category_name'})
+
+```
+
+## 6.  Automate and Document
+Once you have established what steps you need to do to clean you data then you should automate cleaning tasks by using scripts to automate repetitive tasks.
+
+
+```python
+def clean_data(data: pd.DataFrame) -> pd.DataFrame:
+    # Perform cleaning steps …
+    return data_cleaned
+```
+
+I would then document within a markdown cell what was required and then save the cleaned data (if memory size permits) to a `./data/processed/` folder. And as recommended in a previous blog post, you should create a new notebook because it is likely that all the cleaning steps required multiple cells to be run. 
+
+## Conclusion
+
+Data cleaning might seem like a meticulous and sometimes tedious process, but it's the foundation of any successful data analysis or model. By treating it like the essential prep work it is—much like preparing ingredients for a meal—you set yourself up for more meaningful and reliable insights.
+
+Through the steps we've covered, from handling missing values and standardizing formats to removing duplicates and dealing with outliers, you've got a toolkit to ensure your data is both clean and actionable. Remember, every dataset is unique and might require its own blend of techniques, so stay adaptable and use the right tools for the job.
+
+By focusing on 80% of your data, particularly when it comes to outliers and irregularities, you can still achieve robust results that are valuable for decision-making. This approach not only makes the cleaning process more manageable but also allows you to derive insights that can drive strategic decisions.
+
+Finally, automating and documenting your data cleaning process ensures that your workflow is repeatable and transparent, saving you time in the long run. Embrace these practices to transform your raw data into actionable intelligence and empower your data-driven decisions.
