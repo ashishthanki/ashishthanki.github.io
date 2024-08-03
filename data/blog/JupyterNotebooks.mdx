@@ -1,0 +1,150 @@
+---
+title: 'How to Use Jupyter Notebooks...Properly' 
+date: 2024-07-31
+tags: ['Fundamentals', 'Programming', 'Python']
+summary: 'This blog post provides a comprehensive guide on leveraging JupyterLab to enhance data science workflows, emphasizing best practices for notebook management, advanced features for interactivity and customization, and integration with various tools and services'
+draft: false
+layout: PostSimple
+---
+
+Jupyter Notebooks have long been a staple in data science, providing a versatile platform for interactive computing. For advanced data scientists, JupyterLab takes this a step further by offering a more robust and feature-rich environment. This post will guide you through how to leverage JupyterLab's advanced capabilities to streamline your data science workflows, enhance collaboration, and integrate with various technologies.
+
+## 1. Introduction to JupyterLab
+
+JupyterLab is an evolved interface for Jupyter Notebooks, offering a flexible workspace with tabbed views, code consoles, and integrated terminals. Unlike the classic Jupyter Notebook interface, JupyterLab provides a more customizable environment that can be tailored to fit complex data science tasks.
+
+## 2. My Best Practices for Using JupyterLab
+
+
+### a. Ensure Your Notebooks Run Smoothly
+
+The foundational rule for using JupyterLab—or any notebook environment—is to ensure that your notebooks run from top to bottom without errors. It's not uncommon for notebooks to break during execution, especially if cells are run out of order. Always verify that your notebooks are executable from start to finish to avoid confusion and errors.
+
+### b. Keep Notebooks Manageable
+
+If your notebook exceeds 20 cells, it might be too cumbersome for other developers to follow. Break down your notebooks according to the 'traditional' data science workflow:
+
+- Data Ingestion: Loading data from various sources.
+- Data Preprocessing/Cleaning: Transforming and preparing data for analysis.
+- Data Analysis: Exploring and analyzing the data.
+- Modeling: Building and evaluating models.
+- Recommendations/Conclusions: Summarizing findings and proposing recommendations.
+
+For complex functions and visualizations, consider modularizing your code by moving them into separate `.py` files. This approach not only simplifies the notebook but also promotes code reusability. The data analysis notebook can also be broken down into a seperate Data Visualisation notebook too where you would like to highlight key insights or want to make particular visuals for your audience. This can be particularly useful if you plan on making a presentation. 
+
+### c. Emphasize Documentation
+
+Documenting your notebooks with Markdown cells is crucial. Include explanations of your methodology, insights from plots, and interpretations of your results. This practice enhances readability and makes your work more understandable for others.
+
+### d. Use Virtual Environments 
+The amount of times I have been given a notebook and it doesn't work due to the lack of dependency installation instructions is unreal. Be sure to provide python versions and package versions on how to use your notebook. 
+
+
+## 3. Advanced Features in JupyterLab
+
+### a. Enhanced Interactivity and Customization
+
+#### Interactive Widgets:
+
+JupyterLab supports interactive widgets through the `ipywidgets` library, which can create dynamic and interactive interfaces within your notebooks. Below is an interactive slider widget.
+
+Example:
+
+```python
+import ipywidgets as widgets
+from IPython.display import display
+
+slider = widgets.IntSlider(value=10, min=0, max=100, description='Value:')
+display(slider)
+```
+
+#### Custom Layouts and Themes:
+
+Customize your JupyterLab interface with themes and layout configurations. You can switch between light and dark themes and arrange your workspace to fit your specific needs.
+
+#### Change Theme:
+Navigate to `Settings` > `JupyterLab Theme` and select your preferred theme to adjust the visual appearance of your environment. A darker theme is scarier when sharing the code to non-developers - in that case I would go for the lighter theme! 
+
+### b. Integration with Other Tools and Services
+
+#### Cloud Integration:
+
+Leverage cloud-based storage and computing resources directly within JupyterLab. Integrate with services like AWS, Azure, and Google Cloud to handle large datasets and perform heavy computations. Although, I would argue that you can easily achieve computational improvements by changing the data types into more efficient `dtypes`. Using AWS should be last resort once all other speed improvement options have been explored. 
+
+We can ingest data from AWS S3 into your notebook by using the `boto3` library. 
+
+```python
+import boto3
+
+session = boto3.Session(
+    aws_access_key_id='your-access-key',
+    aws_secret_access_key='your-secret-key',
+    region_name='your-region'
+)
+s3 = session.resource('s3')
+```
+
+##### Version Control Integration:
+
+Manage your code and track changes using Git integration in JupyterLab. The [Git extension](https://github.com/jupyterlab/jupyterlab-git) allows you to handle repositories, commit changes, and view diffs directly within the notebook interface.
+
+#### Install Git Extension:
+```bash
+jupyter labextension install @jupyterlab/git
+```
+
+## Jupyter Line Magic
+
+In Jupyter Notebooks and Labs, `%` and `%%` are used to denote magic commands, which provide additional functionalities for interactive computing. Line and cell magics are like the secret sauce for making single-line and cell commands more powerful.
+
+By starting the line with a `%` you apply the special command to that line of code. One of the most commonly used line magic commands is `%timeit`
+
+```python
+%timeit sum(x*x for x in range(1000))
+```
+The code above is run multiple times to give an accurate measurement of how long it takes to execute the line. This makes it easy to benchmark your code without leaving the notebook.
+
+The `%%` is cell magic. It does exactly the same thing as the line magic but applies it to the whole cell. 
+
+`timeit` is essentially a built-in stopwatch for your code. A good example to explore is comparing the pandas `.apply` and numpys`.vectorize` functions. 
+
+There are many more line and cell magic commands:
+
+- `%matplotlib inline` which ensures your plots are displayed inline within the notebook. 
+- `%load your_script.py` loads code from an external script into a cell.
+- `%run your_script.py` runs a script as a subprocess.
+- `%%capture` suppresses the output of the cell so it prevents large outputs from clustering your notebook. 
+- `%%writefile` writes the content of the cell to a file
+```
+%%writefile example.txt
+This is an example text file and will now be written to the text file.
+
+```
+- `%%bash` runs the code cell as a bash script.
+- `%%prun` profiles the code cell and provides detail information on where time is being spent - my personal favourite since not many data scientists care about code performance!!!
+
+
+There are many many more commands! And if you've used ipython back in the day then you'll probably recognise that most of these commands are from there! Here's a [link](https://ipython.readthedocs.io/en/stable/interactive/magics.html) to the other magics.
+
+
+## Conclusion
+
+JupyterLab provides a comprehensive environment for advanced data science tasks, enhancing both functionality and user experience. By following best practices and utilizing JupyterLab's advanced features, you can streamline your data science workflows, improve collaboration, and integrate with a wide range of technologies. Embrace JupyterLab to elevate your data science projects and achieve greater efficiency and effectiveness.
+
+Further Reading:
+
+### Useful Resources for JupyterLab
+
+1. [JupyterLab Official Documentation](https://jupyterlab.readthedocs.io/en/stable/)
+   The official documentation for JupyterLab, covering installation, features, and usage.
+
+2. [JupyterLab GitHub Repository](https://github.com/jupyterlab/jupyterlab)
+   The GitHub repository for JupyterLab where you can find source code, issues, and contribute to the project.
+
+3. [JupyterLab Tutorial](https://jupyterlab-tutorial.readthedocs.io/en/latest/)
+   A tutorial that walks you through the basics of using JupyterLab, including its interface and functionality.
+
+4. [Project Jupyter Documentation](https://jupyter.org/documentation)
+   Documentation and resources for all Jupyter projects, including JupyterLab.
+
+5. [JupyterLab Extensions Documentation](https://jupyterlab.readthedocs.io/en/stable/user/extensions.html)
