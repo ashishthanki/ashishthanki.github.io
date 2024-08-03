@@ -45,7 +45,7 @@ Make sure all your data columns have the right data type—like making sure all 
 data['column_name'] = data['column_name'].astype(int)
 ```
 
-Standardize dates ([a common problem]!(https://pandas.pydata.org/docs/user_guide/timeseries.html) - make sure you understand the difference between Pandas TimeStamp and DateTime) and text capitalisation formats:
+Standardize dates ([a common problem](https://pandas.pydata.org/docs/user_guide/timeseries.html)) - make sure you understand the difference between Pandas TimeStamp and DateTime) and text capitalisation formats:
 
 ```python
 data['date_column'] = pd.to_datetime(data['date_column'])
