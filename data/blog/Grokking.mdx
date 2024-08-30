@@ -6,7 +6,6 @@ date: '2024-08-29'
 draft: false
 ---
 
-# Introduction
 
 In the evolving field of machine learning, particularly with neural networks, understanding how models generalise from limited data is a crucial challenge. The paper "Grokking: Generalization Beyond Overfitting on Small Algorithmic Datasets" by OpenAI explores a fascinating phenomenon in this domain - grokking. This study sheds light on how neural networks can achieve remarkable generalisation, surpassing memorisation, even when trained on small datasets.
 
@@ -16,37 +15,37 @@ Grokking refers to a deep, intuitive understanding of a concept. In the context 
 
 ## Key Findings from the Paper
 
-#### 1. Grokking Phenomenon
+### 1. Grokking Phenomenon
 
 The paper identifies and investigates the grokking phenomenon in neural networks trained on small, algorithmically generated datasets. These datasets are carefully designed to be simple and controlled, allowing researchers to isolate and study the generalisation process in detail.
 
 Initially, their Neural Network was Overfitting, where performance on the training set improves while performance on a test set degrades. After a certain period of training, the model's performance on the test set improves dramatically, often reaching near-perfect accuracy. This indicates a shift from overfitting to grokking, where the model has learned to generalise beyond the training data.
 
-#### 2. Dataset Size and Generalization
+### 2. Dataset Size and Generalization
 
 The study explores how dataset size impacts grokking and generalization. On small datasets, it requires extending training to achieve generalisation. The paper demonstrates that as the dataset size decreases, the model needs more optimisation time to grok the underlying pattern effectively.
 
 A smaller dataset necessitates efficient use of data and increased optimisation effort to improve generalisation. This finding emphasises the importance of training strategies in scenarios with limited data.
 
-#### 3. Model and Training Dynamics
+### 3. Model and Training Dynamics
 
 The model architecture and training dynamics influence grokking. The Neural Network Complexity impacts the grokking. The phenomenon of grokking is observed in various neural network architectures, suggesting that the grokking behaviour is a general property of neural networks rather than specific to certain types.
 
 The optimization process that involves prolonged training and careful optimisation are crucial for grokking. The study indicates that models may require additional training beyond the point where they start to overfit, revealing their deeper understanding of the data.
 
-#### 4. Implications for Deep Learning
+### 4. Implications for Deep Learning
 
 The findings of this paper have had significant implications for deep learning. Grokking challenges traditional notions of overfitting. It provides a nuanced perspective where models can move beyond memorisation to achieve high generalisation. The training strategies for small datasets that include extended training and optimisation strategies are essential. Data scientists should be prepared to invest additional training time to achieve better generalisation.
 
 ## Practical Insights
 
-#### 1. Model Training and Evaluation
+### 1. Model Training and Evaluation
 
 Monitor training dynamics and tracking a model's performance on both training and test datasets over time. Be prepared for an initial period of overfitting before grokking behaviour emerges.
 
 Extend training time, especially for small datasets, to allow the model to transition from overfitting to grokking.
 
-#### 2. Dataset Design and Optimisation
+### 2. Dataset Design and Optimisation
 
 Optimise small datasets and use optimisation techniques to make the most of small datasets. Techniques such as data augmentation and synthetic data generation can help improve generalisation.
 
