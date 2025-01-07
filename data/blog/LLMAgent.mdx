@@ -9,9 +9,9 @@ draft: false
 
 ## Introduction
 
-Large Language Models (LLMs) like OpenAI’s ChatGPT have become integral to many workflows, revolutionizing how we interact with AI. These models have enhanced productivity and creativity but also face significant limitations. One key challenge is the tendency of LLMs to “hallucinate”—generate responses that are factually inaccurate or unsupported by a reliable source. This becomes particularly problematic when users require accurate, up-to-date, and evidence-based information.
+Large Language Models (LLMs) like OpenAI’s ChatGPT have become integral to many workflows, revolutionizing how we interact with AI. These models have enhanced productivity and creativity but also face significant limitations. One key challenge is the tendency of LLMs to “hallucinate” — generate responses that are factually inaccurate or unsupported by a reliable source. This becomes particularly problematic when users require accurate, up-to-date, and evidence-based information.
 
-![How Large are LLMS](/static/images/how-large-llms.png)
+![How Large are LLMs?](/static/images/how-large-llms.png)
 
 ## Large Language Models
  
@@ -19,12 +19,14 @@ Before diving into the advancements made to LLMs, let’s break down what they a
 
 LLMs are advanced AI models designed to understand and generate human-like text based on the patterns in vast datasets. They achieve this by learning the statistical relationships between words, phrases, and sentences. LLMs, such as OpenAI’s GPT, are versatile and can perform tasks ranging from answering factual questions to composing poetry, without task-specific training.
 
+Creating and using the latest LLMs in your applications hasn't been easier with python. Hugging Face have numerous (tutorials)[https://huggingface.co/docs/transformers/en/llm_tutorial] on how to do this.
+
 
 ### LLM Architecture
 
 This can be its own blog post and for most data scientists knowing the buzzwords is enough so here’s a brief overview of the architecture.
 
-The foundation of most LLMs is the transformer architecture, introduced in the seminal paper “Attention Is All You Need” by Vaswani et al. in 2017. The general architecture follows the includes the following key components:
+The foundation of most LLMs is the transformer architecture, introduced in the seminal paper “Attention Is All You Need” by (Ashish!) Vaswani et al. in 2017. The general architecture includes the following key components:
 
 ![Transform Architecture](/static/images/Transformer-architecture.png)
 
@@ -47,13 +49,13 @@ LLMs are trained on massive datasets containing text from books, articles, websi
 ![Overview of training LLMs](/static/images/LLM-training-process.png)
 
 Steps in Training:
-1. **Pretraining**: The model learns general language representations by predicting the next word in a sentence (causal language modeling) or filling in missing words (masked language modeling).
+**1. Pretraining**: The model learns general language representations by predicting the next word in a sentence (causal language modeling) or filling in missing words (masked language modeling).
 Example: Given “The sun rises in the ___,” the model predicts “east.”
 
-2. **Fine-Tuning**: Adapts the pretrained model to specific tasks using smaller, domain-specific datasets.
+**2. Fine-Tuning**: Adapts the pretrained model to specific tasks using smaller, domain-specific datasets.
 Example: Fine-tuning for legal document summarization.
 
-3. **Reinforcement Learning with Human Feedback (RLHF)**: Aligns model outputs with human preferences by incorporating human feedback into the training loop. This approach improves usability and reduces harmful or biased responses.
+**3. Reinforcement Learning with Human Feedback (RLHF)**: Aligns model outputs with human preferences by incorporating human feedback into the training loop. This approach improves usability and reduces harmful or biased responses.
 
 ### Tokenization
 
@@ -79,14 +81,14 @@ Hallucinations often occur due to several reasons. A common factor is the lack o
 
 For example, an LLM might incorrectly state,
 
-> “Einstein invented the telephone.”
+> Einstein invented the telephone.
 
 because its training data links Einstein with innovation. Mitigating such hallucinations requires advanced techniques such as Retrieval-Augmented Generation (RAG), more on that later, which supplements the model with real-time factual data, rigorous fact-checking pipelines, and task-specific fine-tuning. These approaches ensure more reliable and accurate outputs.
 
 
 ### Evaluating LLM Outputs
 
-Assessing the quality of outputs from Large Language Models (LLMs) is essential to ensure accuracy, usability, and relevance. Various metrics allow for a deeper evaluation of these outputs, each serving a unique purpose and providing insights into specific aspects of the model’s performance. Below are the popular, as of late 2024, but I am sure this will quickly become out of date (this section could have been its own blog post).
+Assessing the quality of outputs from Large Language Models (LLMs) is essential to ensure accuracy, usability, and relevance. Various metrics allow for a deeper evaluation of these outputs, each serving a unique purpose and providing insights into specific aspects of the model’s performance. Below are the popular, as of late 2024, but I am sure this will quickly become out of date (this section could have been its own blog post!).
 
 - **Perplexity**: This metric evaluates how well the LLM predicts a sequence of text by measuring its uncertainty in generating the next word or token. The model assigns probabilities to possible continuations of a text, and perplexity is derived from these probabilities. A lower perplexity score indicates that the model’s predictions are more confident and aligned with the actual data. For example, when the model accurately predicts the next word in a well-known phrase, its perplexity decreases. This metric is widely used during training to monitor how effectively the model learns language patterns.
 
@@ -110,15 +112,19 @@ Retrieval-Augmented Generation (RAG) addresses some of the LLMs limitations by e
 ![Retrieval Augmented Generation overview](/static/images/Retrieval-Augmented-Generation.webp)
 
 For example, if an LLM was asked:
-> “Which country has the largest population?”
+> Which country has the largest population?
 
-a model trained on data from late 2020 would likely answer “China". However, with RAG and an updated content store reflecting 2024 census data, the answer would be “India.”
+a model trained on data from late 2020 would likely answer “China". However, with RAG and an updated content store reflecting 2024 census data, the answer would be “India”.
 This eliminates the need for costly and time-consuming retraining of the model—simply updating the content store suffices.
 
 ## AI Agents
 While RAG improves response accuracy, it may still struggle with complex tasks requiring reasoning or multi-step problem-solving. AI agents address these challenges by breaking down tasks into subtasks and coordinating the execution process. These agents integrate reasoning, memory, and action capabilities to achieve high-level objectives.
 
+
 ### AI Agent Components
+
+![General Components of an Agent](/static/images/agent-components.png)
+
 **1. Agent Core**: The decision-making hub identifies the agent’s goals, evaluates available resources, and interacts with the memory module.
 
 **2. Memory Module**: Stores and retrieves relevant content, structured into short-term (temporary data for current tasks) and long-term (persistent knowledge).
@@ -127,7 +133,6 @@ While RAG improves response accuracy, it may still struggle with complex tasks r
 
 **4. Planning Module**: Develops step-by-step action plans to complete queries or solve complex problems.
 
-![General Components of an Agent](/static/images/agent-components.png)
 
 
 ## LLM Specialisation
@@ -138,7 +143,7 @@ Given the advancement in LLM agents, the next logical step is specific LLM agent
 ## Prompt Engineering
 
 RAG systems relies on prompt engineering to ensure that the LLM synthesizes the retrieved data correctly without introducing hallucinations. For example, the system might craft dynamic prompts like:
-> "Using the following information from the content store: [retrieved data], answer the user's question: [query].”
+> Using the following information from the content store: [retrieved data], answer the user's question: [query].
 
 There are several techniques used in prompt engineering, each technique can be used for specific tasks: 
 - **Zero-shot**: The model is asked to perform a task without being given any examples of how to complete it. The only information provided is the task description. Use for general-purpose tasks like translation, summarization, or factual Q&A.
@@ -147,7 +152,9 @@ There are several techniques used in prompt engineering, each technique can be u
 
 ## Conclusion
 
-LLMs combined with RAG and AI agents unlock powerful capabilities, moving beyond simple question-answering toward sophisticated problem-solving. These advancements are paving the way for more reliable, efficient, and adaptable AI solutions.
+LLMs combined with RAG and AI agents unlock powerful capabilities, moving beyond simple question-answering, toward sophisticated problem-solving. These advancements are paving the way for more reliable, efficient, and adaptable AI solutions.
+
+
 
 ### Further References
 
