@@ -1,0 +1,161 @@
+---
+title: LLM Agents Explained
+tags: ['Machine Learning', 'NLP', ]
+summary: 'LLMs are being enhanced by RAG and AI Agents, which are improving accuracy and limiting hallucinations.'
+date: '2025-01-06'
+draft: false
+---
+
+
+## Introduction
+
+Large Language Models (LLMs) like OpenAI’s ChatGPT have become integral to many workflows, revolutionizing how we interact with AI. These models have enhanced productivity and creativity but also face significant limitations. One key challenge is the tendency of LLMs to “hallucinate”—generate responses that are factually inaccurate or unsupported by a reliable source. This becomes particularly problematic when users require accurate, up-to-date, and evidence-based information.
+
+![How Large are LLMS](/static/images/how-large-llms.png)
+
+## Large Language Models
+ 
+Before diving into the advancements made to LLMs, let’s break down what they actually are and what happens under the hood. 
+
+LLMs are advanced AI models designed to understand and generate human-like text based on the patterns in vast datasets. They achieve this by learning the statistical relationships between words, phrases, and sentences. LLMs, such as OpenAI’s GPT, are versatile and can perform tasks ranging from answering factual questions to composing poetry, without task-specific training.
+
+
+### LLM Architecture
+
+This can be its own blog post and for most data scientists knowing the buzzwords is enough so here’s a brief overview of the architecture.
+
+The foundation of most LLMs is the transformer architecture, introduced in the seminal paper “Attention Is All You Need” by Vaswani et al. in 2017. The general architecture follows the includes the following key components:
+
+![Transform Architecture](/static/images/Transformer-architecture.png)
+
+- **Self-Attention Mechanism**: Enables the model to focus on relevant parts of a sentence, regardless of its length.
+For example, in the sentence “The cat sat on the mat, and it was soft,” the model uses attention to link “it” with “mat.”
+
+- **Multi-Head Attention**: Processes different aspects of input data in parallel, improving efficiency and comprehension.
+
+- **Feedforward Layers**: Linear layers that transform attention outputs to generate predictions. It passes information through the network from the input layer.
+
+- **Positional Encoding**: Adds positional information to the input tokens, allowing the model to understand word order.
+
+The transformer’s parallel processing and ability to handle long-range dependencies make it superior to previous architectures like recurrent neural networks (RNNs) and long short term memory (LSTM).
+
+
+### Training LLMs
+
+LLMs are trained on massive datasets containing text from books, articles, websites, and other sources.
+
+![Overview of training LLMs](/static/images/LLM-training-process.png)
+
+Steps in Training:
+1. **Pretraining**: The model learns general language representations by predicting the next word in a sentence (causal language modeling) or filling in missing words (masked language modeling).
+Example: Given “The sun rises in the ___,” the model predicts “east.”
+
+2. **Fine-Tuning**: Adapts the pretrained model to specific tasks using smaller, domain-specific datasets.
+Example: Fine-tuning for legal document summarization.
+
+3. **Reinforcement Learning with Human Feedback (RLHF)**: Aligns model outputs with human preferences by incorporating human feedback into the training loop. This approach improves usability and reduces harmful or biased responses.
+
+### Tokenization
+
+Tokenization is the process of breaking input text into smaller units, such as words, subwords, or characters, which the model processes.
+
+![Tokenization in LLMs](/static/images/tokenization-llms.webp)
+
+Types of Tokenization:
+- **Word-Level**: Splits text into words. Simple but less effective for unknown words.
+
+- **Subword-Level**: Breaks text into meaningful subwords (e.g., “running” → “run” + “##ning”). Balances efficiency and generalization.
+
+- **Character-Level**: Splits text into individual characters, useful for languages without clear word boundaries.
+
+The choice of tokenization affects model performance, particularly in handling rare or complex words.
+
+
+### Hallucinations in LLMs
+
+Large Language Models (LLMs) can sometimes produce outputs that seem plausible but are factually incorrect or lack a basis in data. These errors, known as hallucinations, can undermine trust in AI systems and limit their effectiveness in critical applications.
+
+Hallucinations often occur due to several reasons. A common factor is the lack of grounding in factual databases, which leaves the model reliant solely on its training data. Additionally, over-reliance on patterns within that data can cause the model to infer incorrect associations. Generalization errors, especially when faced with ambiguous or incomplete prompts, also contribute to this issue.
+
+For example, an LLM might incorrectly state,
+
+> “Einstein invented the telephone.”
+
+because its training data links Einstein with innovation. Mitigating such hallucinations requires advanced techniques such as Retrieval-Augmented Generation (RAG), more on that later, which supplements the model with real-time factual data, rigorous fact-checking pipelines, and task-specific fine-tuning. These approaches ensure more reliable and accurate outputs.
+
+
+### Evaluating LLM Outputs
+
+Assessing the quality of outputs from Large Language Models (LLMs) is essential to ensure accuracy, usability, and relevance. Various metrics allow for a deeper evaluation of these outputs, each serving a unique purpose and providing insights into specific aspects of the model’s performance. Below are the popular, as of late 2024, but I am sure this will quickly become out of date (this section could have been its own blog post).
+
+- **Perplexity**: This metric evaluates how well the LLM predicts a sequence of text by measuring its uncertainty in generating the next word or token. The model assigns probabilities to possible continuations of a text, and perplexity is derived from these probabilities. A lower perplexity score indicates that the model’s predictions are more confident and aligned with the actual data. For example, when the model accurately predicts the next word in a well-known phrase, its perplexity decreases. This metric is widely used during training to monitor how effectively the model learns language patterns.
+
+- **BLEU (Bilingual Evaluation Understudy)**: BLEU measures the overlap between the model’s generated text and a reference text by comparing n-grams (short word sequences). It focuses on precision, evaluating how many of the generated words are present in the reference. For instance, a translation task where the output “Hello, how are you?” closely matches the reference sentence will score highly. BLEU is effective in assessing tasks like translation where capturing specific word choices is crucial, though it may struggle with capturing semantic or contextual differences.
+
+- **ROUGE (Recall-Oriented Understudy for Gisting Evaluation)**: ROUGE checks how much of the important information from the reference text is included in the generated text. It compares common words or phrases between the two texts. For example, in a summarization task, if the generated summary includes key terms from the original text, it gets a higher ROUGE score. ROUGE-L is a version that also looks at the longest matching sequence of words to see if the structure of the sentences is similar.
+
+- **Human Evaluation**: Human evaluators assess outputs based on qualitative factors such as coherence, relevance, factual accuracy, and overall fluency. Unlike automated metrics, human reviewers can account for nuanced aspects like tone, logical flow, and cultural appropriateness. For example, in a conversational AI setting, human evaluation ensures that the model’s responses are not only correct but also contextually relevant and empathetic. This approach is labor-intensive but critical for tasks requiring high accuracy and trustworthiness.
+
+Each of these metrics offers unique insights into different aspects of an LLM’s output, and using them in combination provides a comprehensive understanding of the model’s strengths and weaknesses.
+
+### Future of LLMs
+
+LLMs continue to evolve, offering exciting possibilities such as Multimodal models (combining multiple text, image and audio models together), Real-time adaption (leveraging techniques like RAG to keep the outputs up to date and reduce hallucinations) and incorporating ethical AI where reinforcement learning human feedback is used to make models safer and reliable.
+
+
+## Retrieval-Augmented Generation
+
+Retrieval-Augmented Generation (RAG) addresses some of the LLMs limitations by enabling LLMs to fetch relevant and up-to-date information from external sources instead of relying solely on their initial training data. A content store—such as a private database, the internet, or open-source repositories—provides the LLM with access to updated information to enhance response accuracy.
+
+![Retrieval Augmented Generation overview](/static/images/Retrieval-Augmented-Generation.webp)
+
+For example, if an LLM was asked:
+> “Which country has the largest population?”
+
+a model trained on data from late 2020 would likely answer “China". However, with RAG and an updated content store reflecting 2024 census data, the answer would be “India.”
+This eliminates the need for costly and time-consuming retraining of the model—simply updating the content store suffices.
+
+## AI Agents
+While RAG improves response accuracy, it may still struggle with complex tasks requiring reasoning or multi-step problem-solving. AI agents address these challenges by breaking down tasks into subtasks and coordinating the execution process. These agents integrate reasoning, memory, and action capabilities to achieve high-level objectives.
+
+### AI Agent Components
+**1. Agent Core**: The decision-making hub identifies the agent’s goals, evaluates available resources, and interacts with the memory module.
+
+**2. Memory Module**: Stores and retrieves relevant content, structured into short-term (temporary data for current tasks) and long-term (persistent knowledge).
+
+**3. Tools**: Interfaces with external systems like APIs or databases to gather or update information dynamically.
+
+**4. Planning Module**: Develops step-by-step action plans to complete queries or solve complex problems.
+
+![General Components of an Agent](/static/images/agent-components.png)
+
+
+## LLM Specialisation
+
+Given the advancement in LLM agents, the next logical step is specific LLM agents that are domain specific. There numerous examples of specialised LLMs, for example, Codex for code models and MedPaLM for medical models. This trend is likely to increase as more domain specific complex tasks arise.
+
+
+## Prompt Engineering
+
+RAG systems relies on prompt engineering to ensure that the LLM synthesizes the retrieved data correctly without introducing hallucinations. For example, the system might craft dynamic prompts like:
+> "Using the following information from the content store: [retrieved data], answer the user's question: [query].”
+
+There are several techniques used in prompt engineering, each technique can be used for specific tasks: 
+- **Zero-shot**: The model is asked to perform a task without being given any examples of how to complete it. The only information provided is the task description. Use for general-purpose tasks like translation, summarization, or factual Q&A.
+- **One-shot**: The model is provided with one example of the desired output format to help guide its understanding of the task. Use when the task is slightly unusual or requires specific formatting.
+- **Few-shot**: The model is provided with multiple examples of the desired task and output, giving it more context about what is expected. Use for domain-specific tasks like legal document summarization, medical diagnoses, or creative writing with a particular style.
+
+## Conclusion
+
+LLMs combined with RAG and AI agents unlock powerful capabilities, moving beyond simple question-answering toward sophisticated problem-solving. These advancements are paving the way for more reliable, efficient, and adaptable AI solutions.
+
+### Further References
+
+- [What is Retrieval Augment Generation (RAG)](https://www.youtube.com/watch?v=T-D1OfcDW1M)
+- [LLM Agents Explained](https://www.youtube.com/watch?v=5CLNoPiMbUc)
+- [Visual Representation of Transformer Neural Networks](https://www.youtube.com/watch?v=dichIcUZfOw)
+- [Large Language Models by Microsoft](https://microsoft.github.io/Workshop-Interact-with-OpenAI-models/llms/)
+- [Large Language Models in Medicine: the potentials and pitfalls.](https://www.researchgate.net/publication/373642018_Large_language_models_in_medicine_the_potentials_and_pitfalls)
+- [Tokenization in LLMs](https://medium.com/@alphaiterations/tokenization-in-llms-fc750e6c922a)
+
+
