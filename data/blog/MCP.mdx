@@ -1,0 +1,98 @@
+---
+title: Model Context Protocol on AWS
+tags: ['AI', 'Machine Learning',]
+summary: 'Deploying AI on your AWS applications has become much easier by using Model Context Protocol (MCP), allowing your AI models to get more contextual information.'
+date: '2025-04-06'
+draft: false
+---
+
+
+## Introduction
+
+In the world of machine learning, we often obsess over model performance — feature selection, hyperparameters, ensemble techniques, and all the usual suspects. But there's one less-talked-about component that can quietly make or break the success of your model once it's deployed: context.
+ 
+### Enter: Model Context Protocol (MCP).
+ 
+MCP is a relatively new concept introduced in AWS's growing generative AI ecosystem, and it's already gaining serious traction among machine learning engineers, data scientists, and solution architects. In this post, we'll break down what MCP is, why it matters from a data science standpoint, and how it shifts the way we think about operationalizing models.
+
+#### So, what is MCP?
+
+At its core, the Model Context Protocol is a standardized way of passing contextual information to models at inference time. Think of it like giving your model extra sensory input about the environment it's working in — like the user persona, location, device type, or even the business vertical — without hardcoding any of it.
+
+You're not training your model with more data. You're making your deployed model aware of relevant metadata when it's making decisions.
+
+#### The Old Way: Context Blindness
+
+Let's say you trained a recommendation model on ecommerce data. It's slick, accurate, and performs great offline. But when you deploy it — you realize different regions, user types, or campaign timings affect performance drastically. So what do you do?
+    •    You version models per region? Ew.
+    •    Retrain on new context? Expensive.
+    •    Add business rules post-hoc? Now you're duct-taping AI.
+
+This is the context blindness problem — and it's what MCP aims to solve.
+
+#### Why Data Scientists Should Care
+
+    1.    Cleaner separation of concerns
+With MCP, you separate model logic from contextual logic. Your training pipeline doesn't need to embed all possible situations — because the model will be told what context it's operating in at runtime.
+
+This means:
+    •    Fewer retrains
+    •    Less feature bloat
+    •    Better generalizability
+
+    2.    Higher reusability across use cases
+A sentiment analysis model trained on product reviews? With MCP, the same model can be adapted to different product categories, customer types, or even countries — simply by passing in different context.
+No need for 15 cloned models to serve slightly different audiences.
+
+    3.    Smarter experiments and A/B testing
+By passing in structured context, you can run cleaner experiments. Imagine logging how different contexts affect performance — now your model isn't just a black box; it's aware.
+
+### How It Works in Practice (with AWS)
+
+AWS is baking MCP into services like SageMaker, Bedrock, and even their agents and copilots. During inference, developers can pass a context payload that follows the MCP structure, including:
+    •    user_id, persona, device_type
+    •    business_unit, region, locale
+    •    Custom key-value pairs
+
+
+For example:
+
+
+```json
+"context": {
+"user_type": "premium",
+"region": "CA",
+"season": "spring",
+"language": "en-CA"
+}
+```
+
+The model doesn't just receive input text or tabular features — it also receives a rich, structured context about who's asking, where, and when.
+
+From a data scientist's perspective, this is golden: we finally get a way to parameterize the environment in a standardized, consistent, and model-friendly format.
+
+### Real-World Examples
+
+Let's say you're working on:
+
+- A marketing attribution model
+You can add context like campaign type, ad platform, or even budget tier — making the model's recommendations more personalized and actionable.
+
+- A pricing model
+Pass in product category, demand band, competitor pressure — all without needing to retrain the model every time external conditions shift.
+
+- A generative assistant
+The assistant can dynamically respond based on whether the user is a developer, an analyst, or a sales rep — all by reading the context.
+ 
+
+## Conclusion
+ 
+The idea of context in modeling isn't new — but standardizing it as a protocol is. MCP brings that missing glue between training and inference, between data and decisions.
+
+As data scientists, we've spent years crafting careful pipelines and hyper-optimized models. But if the model doesn't understand where it is when deployed, it's like dropping it in the middle of a conversation with no idea what's going on.
+
+Model Context Protocol gives your models situational awareness.
+
+And that, honestly, feels like the beginning of a much smarter AI stack.
+
+If you're curious to dive deeper, I highly recommend watching this AWS Show & Tell episode: https://www.youtube.com/watch?v=15XhkcQdSrI — it covers MCP from an engineering and platform perspective, but the implications for ML workflows are massive.
