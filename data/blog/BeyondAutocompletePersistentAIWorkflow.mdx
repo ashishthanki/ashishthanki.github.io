@@ -1,0 +1,84 @@
+---
+title: 'Beyond Autocomplete: Engineering a Persistent AI Workflow for Data Science'
+date: '2026-05-15'
+summary: 'Why session-by-session chat is a trap for data science work, and how to layer repo rules, user memory, and a knowledge vault so AI workflows compound instead of resetting every tab.'
+tags: ['AI', 'Data Science', 'Workflow', 'Engineering']
+draft: false
+---
+
+Most data scientists I talk to use AI the same way: open a chat, paste some code, ask a question, take what's useful, close the tab. It's autocomplete with extra steps. The model never gets smarter about your codebase, your team, or the mistakes you've already corrected three times this month. Every session starts at zero.
+
+That's the wrong frame. The real leverage of an AI workflow isn't faster typing — it's _persistent context_. A system that remembers your repos, your conventions, the corrections you've already made, the people you work with, and the lessons you've learned. After about a year of building this out for my own work, I'm convinced this is the part most teams are missing. It also happens to be the part nobody talks about, because it's less glamorous than benchmarks and demos.
+
+This is a practical walkthrough of how I've structured a persistent AI workflow as a data scientist, what's worth the effort, and what isn't.
+
+## The stateless trap
+
+The default failure mode is repetition. You correct the model on a naming convention. You explain that the production dbt cluster is on AWS not Snowflake. You re-paste the same client config because the model forgot which schema you're working in. None of it sticks. Tomorrow you correct the same things again.
+
+The deeper cost is judgement. Without context, the model defaults to generic best practices. It suggests pytest fixtures when your team uses a thinner pattern. It writes overly defensive code because it can't tell whether the input is trusted. It hedges on every recommendation because it has no idea what tradeoffs you've already settled. The output looks fine in isolation and is wrong for your codebase.
+
+You can fight this with longer prompts, but it doesn't scale. Long prompts are fragile — one missing detail and the answer is generic again — and they push context-window costs into every interaction.
+
+The fix is to externalise context.
+
+## Three layers of persistence
+
+I run three distinct layers, each with a different decay rate.
+
+**1. Project memory (`CLAUDE.md` files).** Repo-level instructions checked into git. They cover the things that change rarely: conventions, where tests live, how to run the pipeline, what _not_ to do (no `git push --no-verify`, no committing without tests). These should be short. Long `CLAUDE.md` files get ignored. Mine are usually 30–100 lines per repo, focused on the gotchas that aren't obvious from reading code.
+
+**2. User memory (cross-session, in-tool).** Persistent across every conversation. This is where I store who I am, what I'm working on right now, recurring feedback ("don't summarise what you just did"), and current project state (which ticket, what stage, what's blocked). The model writes to this itself when corrected. The point is the conversation gets shorter over time, not longer — fewer re-explanations.
+
+**3. The knowledge vault.** A private Obsidian-style folder for everything that doesn't belong in a repo or in a chat: domain explanations, people context, architectural decisions, post-incident lessons. I run a script at the start of every non-trivial task that loads the relevant vault pages into context. It's the long-term memory layer — the part that survives even when a model version changes or I switch tools.
+
+The split matters. Repo memory belongs to the repo and gets reviewed in PRs. User memory is mine and follows me across projects. The vault is the institutional knowledge — it doesn't need to be reloaded on every interaction, only the relevant pages, on demand.
+
+## A concrete example: running a dev pipeline
+
+Here's what this buys you. I run a workflow most weeks: spin up a cloned dev database for a client, run the model pipeline against it, validate the output, hand a dashboard to a stakeholder.
+
+Pre-workflow, that was a 30-step process I half-remembered from a runbook. Now I type a single command. Behind it sits a _skill_ — a small set of instructions and a script — that:
+
+- Reads the client's config from the repo
+- Pulls default payload keys from my user memory (the ones I always forget)
+- Picks the right AWS profile and region based on whether it's UK or US dev
+- Calls the orchestrator Lambda
+- Surfaces the run ID and tells me where to watch logs
+
+I haven't typed those payload keys in months. The skill encodes them, the user memory holds the defaults, and the model picks the right combination. When something breaks — a new payload key gets added, a region changes — I correct it once, the memory updates, and the next run gets it right.
+
+This isn't AI being clever. It's just persistence applied to a workflow.
+
+## Multi-agent validation
+
+The other pattern that's earned its keep is shadow validation. Any time I'm running a database query, deriving a number, or making a claim about model lineage, I spawn two extra agents:
+
+- **A parallel shadow agent** that runs alongside the main investigation, using different tables or methods where possible, and reports agreement or disagreement at each checkpoint (schema, intermediate results, final answer).
+- **A final-gate agent** that re-derives the answer from scratch _without seeing my analysis_, and either confirms or contradicts.
+
+This sounds expensive. It is not. Each agent runs in the background while I do something else, and the cost is trivial compared to the cost of presenting a wrong number to a stakeholder. The pattern has caught real bugs — a schema reference pointing at a staging table, an off-by-one on a date window — that I would have shipped.
+
+The principle generalises beyond DB work: for anything where the cost of being wrong is high, an independent re-derivation is cheap. We do this with humans (peer review, code review). It works just as well with agents, and it's faster.
+
+## The lessons loop
+
+The piece that ties this together is a feedback loop. Every time I correct the model — wrong table, wrong assumption, wrong tone — I have a rule that updates a `lessons.md` file with what happened and the rule going forward. At the start of every session, that file is read in.
+
+The result is that the same mistake doesn't survive twice. The first time costs you a correction. The second time it's pre-empted. After a few months of this, the model is genuinely calibrated to how _I_ work, not how a generic data scientist works. That's the asset.
+
+Importantly, the rule captures _why_, not just _what_. "Don't mock the database in tests" is a rule. "Don't mock the database in tests because we got burned last quarter when a mocked test passed but the migration failed in prod" is a rule plus a reason — and the reason is what lets the model judge edge cases.
+
+## What's worth it, what isn't
+
+**Worth it:** the three memory layers, the validation pattern, the lessons loop, and skills for any workflow you run more than three times. These compound. The investment is a few hours; the return is months of cleaner output.
+
+**Not worth it:** micro-optimising prompts, building elaborate per-project agent hierarchies for one-off tasks, or trying to encode every possible rule upfront. The lessons loop will fill those gaps far better than your upfront imagination.
+
+Also not worth it, in my experience: trusting the model on numeric DB results without a second pair of eyes (agent or human). Always validate.
+
+## Where this goes
+
+The pattern I keep coming back to is that AI workflows are an engineering problem, not a prompting problem. The teams getting outsized leverage aren't the ones with cleverer prompts. They're the ones who've externalised context, automated their workflows, and built feedback loops that survive across sessions.
+
+If you're a data scientist starting out, my honest advice is to spend a weekend on the memory and skills layer before optimising anything else. It's the highest-return change you can make. The autocomplete will still be there when you get back to it.
